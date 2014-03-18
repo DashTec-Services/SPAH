@@ -1,0 +1,86 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+<?php require __DIR__ . '/../header.phtml' ?>
+<?php foreach ($newsListing as $news): ?>
+    <div class="alert alert-info">
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+        <h4 class="alert-heading">
+            <h3><?= $news['headline'] ?></h3>
+        </h4>
+        <?= $news['message'] ?>
+    </div> <!-- /.alert -->
+<?php endforeach; ?>
+
+    <div class="account-container login">
+
+        <div class="content clearfix">
+
+            <p style="text-align: center;"><img src="/img/title.png" style="background-color: #000000" width="200"
+                                                height="27"></p>
+
+            <p class="infoText">
+                <br>
+                <?= _('Enter your user-name and password'); ?><br>
+                <b>
+                    <?php foreach ($flash as $severity => $flashMessage): ?>
+                        <?= $severity ?>: <?= $flashMessage ?><br/>
+                    <?php endforeach ?>
+                </b>
+            </p>
+
+
+            <form action="/login" method="post">
+
+                <h1><?= _('Registration'); ?></h1>
+
+                <div class="login-fields">
+
+                    <p><?= _('Your registration is required!'); ?></p>
+
+                    <div class="field">
+                        <label for="username"><?= _('Username'); ?>:</label>
+                        <input type="text" id="username" name="username" value="" placeholder="<?= _('Username'); ?>"
+                               class="login username-field"/>
+                    </div>
+                    <!-- /field -->
+
+                    <div class="field">
+                        <label for="password"><?= _('Password'); ?>:</label>
+                        <input type="password" id="password" name="password" value=""
+                               placeholder="<?= _('Password'); ?>"
+                               class="login password-field"/>
+                    </div>
+                    <!-- /password -->
+
+                </div>
+                <!-- /login-fields -->
+
+                <div class="login-actions">
+
+                    <button type="submit" name="submit"
+                            class="button btn btn-secondary btn-large"><?= _('Login'); ?></button>
+
+                </div>
+                <!-- .actions -->
+
+
+            </form>
+        </div>
+        <!-- /content -->
+
+    </div> <!-- /account-container -->
+
+<?php require __DIR__ . '/../footer.phtml' ?>

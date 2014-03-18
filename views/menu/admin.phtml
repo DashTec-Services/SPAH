@@ -1,0 +1,161 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+<?php require_once __DIR__ . '/../header.phtml' ?>
+<div id="header">
+
+    <div class="container">
+
+        <h1><a href="/">Streamers:Panel</a></h1>
+
+        <div id="info">
+
+            <a href="javascript:;" id="info-trigger">
+                <i class="icon-cog"></i>
+            </a>
+
+            <div id="info-menu">
+
+                <div class="info-details">
+
+                    <h4><?php echo _('Welcome'); ?>, <?php echo $_SESSION['USERNAME']; ?></h4>
+
+                    <p>
+                        <?php
+                        DB::query("SELECT * FROM support WHERE user_id != 0");?>
+                        <?php echo _('You have'); ?> <a href="javascript:;"><?php echo DB::count(); ?> </a><?php echo _('messages'); ?><br>
+                        <a href="/logout">Logout</a>
+                    </p>
+                    <br>
+                </div>
+                <!-- /.info-details -->
+
+                <div class="info-avatar">
+
+                    <img src='../../../../img/avatar.jpg' alt="avatar">
+
+                </div>
+                <!-- /.info-avatar -->
+
+            </div>
+            <!-- /#info-menu -->
+
+        </div>
+        <!-- /#info -->
+
+    </div>
+    <!-- /.container -->
+
+</div> <!-- /#header -->
+
+
+<div id="nav">
+
+    <div class="container">
+
+        <a href="javascript:;" class="btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <i class="icon-reorder"></i>
+        </a>
+
+        <div class="nav-collapse">
+
+            <ul class="nav">
+
+                <li class="nav-icon active">
+                    <a href="/">
+                        <i class="icon-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-th"></i>
+                        <?php echo _('News'); ?>
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/news/list"><?php echo _('View News'); ?></a></li>
+                        <li><a href="/news/addnews"><?php echo _('Add New'); ?></a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-th"></i>
+                        <?php echo _('Stream'); ?>
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/station/list"><?php echo _('View Streams'); ?></a></li>
+                        <li><a href="/station/add"><?php echo _('Add Stream'); ?></a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-camera"></i>
+                        <?php echo _('Users'); ?>
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/user/list"><?php echo _('View User'); ?></a></li>
+                        <li><a href="/user/register"><?php echo _('Add User'); ?></a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-th"></i>
+                        <?php echo _('Server'); ?>
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <!-- <li><a href="#">Radioserver-Konfiguration</a></li>     Templates für Streamconfigs-->
+                        <li><a href="/server/conf"><?php echo _('Server configuration'); ?></a></li>
+                        <li><a href="/server/license"><?php echo _('License'); ?></a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-th"></i>
+                        <?php echo _('Support'); ?>
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/support/list"><?php echo _('Support messages'); ?></a></li>
+
+                    </ul>
+                </li>
+
+            </ul>
+
+            <ul class="nav pull-right">
+
+            </ul>
+
+        </div>
+        <!-- /.nav-collapse -->
+
+    </div>
+    <!-- /.container -->
+
+</div> <!-- /#nav -->

@@ -1,0 +1,109 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+    <div id="content">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="span12">
+
+                    <div class="widget widget-table">
+
+                        <div class="widget-content">
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th> <?= _('User'); ?></th>
+                                    <th> <?= _('Date'); ?></th>
+                                    <th> <?= _('Title'); ?></th>
+                                    <th> <?= _('Message'); ?></th>
+                                    <th> <?= _('Option'); ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                foreach ($supportTickets as $row) {
+
+                                    echo '<form action="/support/chticket" method="post"><tr>';
+                                    $userName = DB::queryFirstRow("SELECT * FROM accounts WHERE id=%s", $row['user_id']);?>
+
+                                    <td><b><?= $userName['vorname'] . ' ' . $userName['nachname'] ?>"</b> <br>
+                                        <?= _('Consumer ID:') . " <b>" . $userName['kundennummer'] ?>"</b></td>
+                                    <td><?= $row['add_time'] ?></td>
+                                    <td><?= $row['titel'] ?></td>
+                                    <td><? $row['text'] ?>
+                                        <?php
+                                        $reptext = DB::query("SELECT * FROM support WHERE replyid=%s", $row['id']);
+                                        foreach ($reptext as $repshow) {
+                                            if ($repshow['is_adm_answ'] == '') {
+                                                echo '<p><b>' . _('Administrator') . '<br></b></p>';
+                                            } else {
+                                                echo '<p><b>' . _('Reply:') . '</b><br></p>';
+                                            }
+                                            echo $repshow['text'];
+                                        }
+
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <button name="submit_button" value="edit.<?= $row['id'] ?>"><?= _('Answer') ?>
+                                        </button>
+                                        <br>
+
+                                        <select name="status" size="1" onchange="this.form.submit()">
+                                            <option <?php if ($row['status'] == 'Offen') {
+                                                echo 'selected';
+                                            } ?> value="<?= $row['id'] . '.Offen' ?>"><?= _('Open'); ?>
+                                            </option>
+                                            <option <?php if ($row['status'] == 'in Bearbeitung') {
+                                                echo 'selected';
+                                            } ?> value="<?= $row['id'] . '.in Bearbeitung' ?>"><?= _('busy'); ?>
+                                            </option>
+                                            <option <?php if ($row['status'] == 'erledigt') {
+                                                echo 'selected';
+                                            } ?> value="<?= $row['id'] . '.erledigt' ?>"><?= _('Done'); ?>
+                                            </option>
+                                        </select><br>
+                                        <button name="delentry"
+                                                value="del.<?= $row['id'] ?>"><?= _('Delete') ?></button>
+                                    </td>
+                                    </tr>
+                                    </form>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /item-row -->
+
+                    </div>
+                    <!-- /widget-content -->
+
+                </div>
+                <!-- /widget -->
+
+            </div>
+            <!-- /span6 -->
+
+        </div>
+        <!-- /row -->
+
+    </div>
+    <!-- /.container -->
+
+    </div> <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>

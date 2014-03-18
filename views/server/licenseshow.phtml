@@ -1,0 +1,88 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+    <div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span8">
+                <div id="control" class="widget widget-form">
+                    <div class="widget-header">
+                        <h3>
+                            <i class="icon-pencil"></i>
+                            <?= _('License Information'); ?>
+                        </h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="disabledInput"><?= _('Owner'); ?></label>
+
+                                    <div class="controls">
+                                        <input class="input-large disabled" id="disabledInput" type="text"
+                                               placeholder="<?= "sdasd" ?>" disabled="">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="disabledInput"><?= _('License Key'); ?></label>
+
+                                    <div class="controls">
+                                        <input class="input-xxlarge disabled" id="disabledInput" type="text"
+                                               placeholder="<?= "dasdasd" ?>" disabled="">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="disabledInput"><?= _('Mail'); ?></label>
+
+                                    <div class="controls">
+                                        <input class="input-large disabled" id="disabledInput" type="text"
+                                               placeholder=" <?= "asdasd" ?>" disabled="">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /.widget -->
+            </div>
+            <!-- /span8 -->
+            <div class="span4">
+                <div id="formToc" class="widget highlight">
+                    <div class="widget-header">
+                        <h3><?= _('S:P License Information'); ?></h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <p>
+                            <?= _('Information about License'); ?>
+                        </p>
+                        <br>
+
+                        <p>
+                        </p>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+            </div>
+            <!-- /.span4 -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /.container -->
+</div> <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>

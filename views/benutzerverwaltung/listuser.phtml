@@ -1,0 +1,97 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+<?php require_once __DIR__ . '/../header.phtml' ?>
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <div class="widget widget-table">
+                    <div class="widget-header">
+                        <h3>
+                            <i class="icon-th-list"></i>
+                            <?= _('Userlist'); ?>
+                        </h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered table-highlight" id="example">
+                            <thead>
+                            <tr>
+                                <th><?= _('Consumer ID'); ?></th>
+                                <th><?= _('Name'); ?></th>
+                                <th><?= _('Address'); ?></th>
+                                <th><?= _('Phone'); ?></th>
+                                <th><?= _('Mail'); ?></th>
+                                <th><?= _('Usergroupe'); ?></th>
+                                <th><?= _('Is Aktiv?'); ?></th>
+                                <th><?= _('Edit'); ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach ($Users as $row) {
+                                echo '<form action="/user/list" method="post"><tr>';
+                                echo "<td>" . $row['kundennummer'] . "</td> \n";
+                                echo "<td>" . $row['vorname'] . ' ' . $row['nachname'] . "</td> \n";
+                                echo "<td>" . $row['street'] . ' ' . $row['hausnummer'] . ', ' . $row['plz'] . ' ' . $row['ort'] . "</td> \n";
+                                echo "<td>" . $row['handy'] . "</td> \n";
+                                echo "<td>" . $row['mail'] . "</td> \n";
+                                if ($row['usr_grp'] == 'adm') {
+                                    echo "<td>Admininstrator</td> \n";
+                                } elseif ($row['usr_grp'] == 'user') {
+                                    echo "<td>Benutzer</td> \n";
+                                } elseif ($row['usr_grp'] == 'dj') {
+                                    echo "<td>DJ</td> \n";
+                                }
+                                ?>
+                                <td>
+                                    <select name="is_aktiv" size="1" onchange="this.form.submit()">
+                                        <option <?php if ($row['is_aktiv'] == '1') {
+                                            echo 'selected';
+                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?= _('aktiv'); ?>
+                                        </option>
+                                        <option <?php if ($row['is_aktiv'] == '0') {
+                                            echo 'selected';
+                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?= _('inaktiv'); ?>
+                                        </option>
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select name="useredit" size="1" onchange="this.form.submit()">
+                                        <option selected></option>
+                                        <option value="<?php echo $row['id'] . '.edituser' ?>"><?= _('edit'); ?></option>
+                                        <option value="<?php echo $row['id'] . '.deluser' ?>"><?= _('del'); ?></option>
+                                    </select>
+                                </td>
+                                <?php
+                                echo '</tr></form>';
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+            </div>
+            <!-- /span12 -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /.container -->
+</div> <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>

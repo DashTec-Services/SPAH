@@ -1,0 +1,67 @@
+<?php
+/**
+* Created by David Schomburg (DashTec - Services)
+*      www.dashtec.de
+*
+*  S:P (StreamersPanel)
+*  Support: http://board.streamerspanel.de
+*
+*  v 0.18
+*
+*  Kundennummer:   @KDNUM@
+*  Lizenznummer:   @RECHNR@
+* Lizenz: http://login.streamerspanel.de/user/terms
+*/
+?>
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $site_title ?></title>
+    <meta charset="iso-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Styles -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap-overrides.css" rel="stylesheet">
+
+    <link href="/css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+    <link href="/css/components/signin.css" rel="stylesheet" type="text/css">
+    <link href="/css/slate.css" rel="stylesheet">
+    <link href="/css/slate-responsive.css" rel="stylesheet">
+
+    <link href="/css/pages/invoice.css" rel="stylesheet">
+
+    <link href="/css/pages/reports.css" rel="stylesheet">
+    <link href="/css/msgGrowl.css" rel="stylesheet">
+    <link href="/js/plugins/msgAlert/css/msgAlert.css" rel="stylesheet">
+
+    <!-- Javascript -->
+    <script src="/js/jquery-1.7.2.min.js"></script>
+    <script src="/js/jquery-ui-1.8.21.custom.min.js"></script>
+    <script src="/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+
+    <script src="/js/plugins/msgGrowl/js/msgGrowl.js"></script>
+    <script src="/js/plugins/msgAlert/js/msgAlert.js"></script>
+    <script src="/js/plugins/timepicker/jquery.ui.timepicker.min.js"></script>
+    <script src="/js/plugins/colorpicker/js/bootstrap-colorpicker.js"></script>
+
+    <script src="/js/Slate.js"></script>
+
+
+    <script src="/js/ui-elements.js"></script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <?php foreach ($css_files as $css_file): ?>
+        <link rel="stylesheet" href="<?= $css_file ?>"/>
+    <?php endforeach ?>
+    <?php foreach ($js_files as $js_file): ?>
+        <script src="<?= $js_file ?>"></script>
+    <?php endforeach ?>
+</head>
+<body>

@@ -1,0 +1,58 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+    <div id="content">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="span6">
+                    <form action="/support/addticket" method="post">
+
+                        <div class="widget toolbar-bottom">
+
+                            <div class="widget-header">
+                                <h3> <?= _('Support'); ?></h3>
+                            </div>
+                            <!-- /.widget-header -->
+
+                            <div class="widget-content">
+
+                                <textarea name="text" style="width: 500px;" cols="50" rows="10"></textarea>
+
+                            </div>
+                            <!-- /.widget-content -->
+
+                            <div class="widget-toolbar">
+                                <input class="btn btn-small btn-secondary" type="submit" name="eintragen"
+                                       value="<?= _('Send') ?>">
+                            </div>
+                            <!-- /.widget-toolbar -->
+
+                        </div>
+                        <!-- /.widget -->
+                    </form>
+                </div>
+                <!-- /.span6 -->
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+    </div> <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>

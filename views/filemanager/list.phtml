@@ -1,0 +1,105 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <div class="widget widget-table">
+                    <div class="widget-header">
+                        <h3>
+                            <i class="icon-th-list"></i>
+                            Datein
+                        </h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered table-highlight" id="example">
+                            <thead>
+                            <tr>
+                                <th>Titel</th>
+                                <th>Größe</th>
+                                <th>Bitrate</th>
+                                <th>Spielzeit</th>
+                                <th>Löschen</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+
+                            $TIMEFUNC = new core\time\time();
+
+
+                            $Size ='0';
+                            $TimeSecond = '0';
+                            $results = DB::query("SELECT * FROM mp3_usr_rel WHERE user_id=%s", $_SESSION['account_id']);
+                            foreach ($results as $row) {
+                                $mp3titel = DB::query("SELECT * FROM mp3 WHERE id=%s", $row['mp3_id']);
+                                foreach ($mp3titel as $title) {
+                                    echo '<form action="/sap/filemanager/list" method="post"><tr>';
+                                    echo "<td>".$title['org_file_titel']."</td> \n";
+                                    echo "<td>".$title['size']."</td> \n";
+                                    echo "<td>".$title['bitrate']."</td> \n";
+                                    echo "<td>".$title['playtime']."</td> \n";
+                                    echo '<td><button class="btn btn-danger" type="submit" value="DelFromDB.'.$row['id'].'" name="DelFromDB" >Löschen</button></td>';
+                                    echo '</tr></form>';
+
+                                    $Size += $title['size'];
+                                    $TimeSecond += $TIMEFUNC->time2Seconds($title['playtime']);
+                                }
+                            }
+
+                            // TODO: Aus der DB und dem Ordner löschen!
+                            ?>
+                            <td>
+                                    Gesamtstatistiken
+                            </td>
+                            <td>
+                                <?php
+                                        $FileSize = new core\file\filesize();
+                                        echo $FileSize->format_filesize($Size);
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+
+
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                        echo $TIMEFUNC->seconds2Time($TimeSecond);
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+
+
+                                ?>
+                            </td>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+            </div>
+            <!-- /span12 -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /.container -->
+</div> <!-- /#content -->

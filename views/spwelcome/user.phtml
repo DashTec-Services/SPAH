@@ -1,0 +1,104 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+<div id="content">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="span12">
+
+                <div id="big-stats-container" class="widget">
+
+                    <div class="widget-content">
+
+                        <div id="big_stats" class="cf">
+                            <div class="stat">
+                                <h4><?php echo _('DJ User'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM dj_accounts WHERE dj_of_user_id=%s", $_SESSION['account_id']);
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div class="stat">
+                                <h4><?php echo _('MP3'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM mp3_usr_rel WHERE user_id=%s", $_SESSION['account_id']);
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div class="stat">
+                                <h4><?php echo _('Streams'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM sc_rel WHERE accounts_id=%s", $_SESSION['account_id']);
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div class="stat">
+                                <h4><?php echo _('Playtime'); ?></h4>
+                    <span class="value">
+                        <?php
+                        $TIMEFUNC = new core\time\time();
+                        $Size ='0';
+                        $TimeSecond = '0';
+                        $results = DB::query("SELECT * FROM mp3_usr_rel WHERE user_id=%s", $_SESSION['account_id']);
+                        foreach ($results as $row) {
+                            $mp3titel = DB::query("SELECT * FROM mp3 WHERE id=%s", $row['mp3_id']);
+                            foreach ($mp3titel as $title) {
+                                $Size += $title['size'];
+                                $TimeSecond += $TIMEFUNC->time2Seconds($title['playtime']);
+                            }
+                        }
+
+                        echo $TIMEFUNC->seconds2Time($TimeSecond);
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div id="big_stats" class="cf">
+                                <div class="stat">
+                                    <h4><?php echo _('Usage Memory'); ?></h4>
+                    <span class="value">
+                        <?php
+
+                        $FileSize = new core\file\filesize();
+                        echo $FileSize->format_filesize($Size);
+                        ?></span>
+                                </div>
+                                <!-- .stat -->
+
+
+                            </div>
+                            <!-- /widget -->
+
+                        </div>
+                        <!-- /span12 -->
+
+
+                    </div>
+                    <!-- /.container -->
+
+                </div>
+                <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>

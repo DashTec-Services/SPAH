@@ -1,0 +1,168 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.18
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ * Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+<div id="content">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="span12">
+
+                <div id="big-stats-container" class="widget">
+
+                    <div class="widget-content">
+
+                        <div id="big_stats" class="cf">
+                            <div class="stat">
+                                <h4><?php echo _('User'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM accounts");
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div class="stat">
+                                <h4><?php echo _('MP3'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM mp3");
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div class="stat">
+                                <h4><?php echo _('Stream-Server'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM sc_serv_conf");
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+
+                            <div class="stat">
+                                <h4><?php echo _('New support tickets'); ?></h4>
+                    <span class="value">
+                        <?php
+                        DB::query("SELECT * FROM support WHERE status='offen'");
+                        echo DB::count();
+                        ?></span>
+                            </div>
+                            <!-- .stat -->
+                        </div>
+
+                    </div>
+                    <!-- /widget-content -->
+
+                </div>
+                <!-- /widget -->
+
+            </div>
+            <!-- /span12 -->
+
+            <div class="span4">
+
+                <div class="widget">
+
+                    <div class="widget-header">
+
+                        <h3>
+                            <i class="icon-tasks"></i>
+                            <?php echo _('Quick Stats'); ?>
+                        </h3>
+
+                    </div>
+                    <!-- /.widget-header -->
+
+                    <div class="widget-content">
+
+                        <p><?php echo _('comming soon'); ?></p>
+
+
+                        <div class="stat">
+
+                            <div class="stat-header">
+
+                                <div class="stat-label">
+                                    <?php echo _('Streams online'); ?>
+                                </div>
+                                <!-- /.stat-label -->
+
+                                <div class="stat-value">
+                                    3
+                                </div>
+                                <!-- /.stat-value -->
+
+                            </div>
+                            <!-- /stat-header -->
+
+                            <div class="progress progress-secondary progress-striped">
+                                <div class="bar" style="width: 37%;"></div>
+                                <!-- /.bar -->
+                            </div>
+                            <!-- /.progress -->
+
+                        </div>
+                        <!-- /.stat -->
+
+                        <div class="stat">
+
+                            <div class="stat-header">
+
+                                <div class="stat-label">
+                                    <?php echo _('Support - Tickets last 30 Days'); ?>
+                                </div>
+                                <!-- /.stat-label -->
+
+                                <div class="stat-value">
+                                    18
+                                </div>
+                                <!-- /.stat-value -->
+
+                            </div>
+                            <!-- /stat-header -->
+
+                            <div class="progress progress-tertiary progress-striped">
+                                <div class="bar" style="width: 65%;"></div>
+                                <!-- /.bar -->
+                            </div>
+                            <!-- /.progress -->
+
+                        </div>
+                        <!-- /.stat -->
+
+
+                        <br/>
+
+                    </div>
+                    <!-- /.widget-content -->
+
+                </div>
+                <!-- /.widget -->
+
+
+
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /.container -->
+
+    </div> <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>
