@@ -13,7 +13,6 @@
  * Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
-<?php require __DIR__ . '/../header.phtml' ?>
     <div id="content">
 
         <div class="container">
@@ -30,7 +29,6 @@
                                 <thead>
                                 <tr>
                                     <th><?= _('Date') ?></th>
-                                    <th><?= _('Title') ?></th>
                                     <th><?= _('Message') ?></th>
                                     <th><?= _('Setting') ?></th>
                                 </tr>
@@ -39,10 +37,9 @@
                                 <?php
                                 foreach ($supportTickets as $row) {
                                     ?>
-                                    <form action="/sap/support/user_list" method="post">
+                                    <form action="/support/list" method="post">
                                         <tr>
                                             <td><?= $row['add_time'] ?></td>
-                                            <td><?= $row['titel'] ?></td>
                                             <td><?=
                                                 $row['text'];
                                                 $reptext = DB::query("SELECT * FROM support WHERE replyid=%s", $row['id']);
