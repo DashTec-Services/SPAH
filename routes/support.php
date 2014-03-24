@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.18
+ *  v 0.19
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -90,21 +90,48 @@ $app->post('/support/chticket', function () use ($app) {
 
 $app->post('/support/list', function () use ($app) {
 
-    $changer = explode(".", $_POST['delentry']);
+    if (isset($_POST['delentry'])){
+        $changer = explode(".", $_POST['delentry']);
+        if ($changer['0'] == 'del'){
+            DB::delete('support', "id=%s", $changer['1']);
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
+            $app->render('support/supportlist.phtml', compact('supportTickets'));
+        }
+    }
 
-    if ($changer['0'] == 'del'){
-        DB::delete('support', "id=%s", $changer['1']);
+    if(isset($_POST['sendreply'])){
+        $changer = explode(".", $_POST['sendreply']);
+        $_SESSION['replyID'] = $changer['1'];
         $SPMenu = new SP\Menu\MenuInclusion();
         $SPMenu->MenuInclude($app);
         $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
-        $app->render('support/supportlist.phtml', compact('supportTickets'));
+        $app->render('support/supportuserlist.phtml', compact('supportTickets'));
+        $app->render('support/replyticket.phtml', compact('supportTickets'));
     }
-
-
-
 
 })->name('doLogin');
 
 
 
+$app->post('/support/reply', function () use ($app) {
+    DB::insert('support', array(
+        'replyid' => $_SESSION['replyID'],
+        'text' => $_POST['reptext']
+    ));
+    $joe_id = DB::insertId();
 
+    if($_SESSION['group'] == 'user'){
+        DB::update('support', array(
+            'is_adm_answ' => $_SESSION['account_id']
+        ), "id=%s", $joe_id);
+    }
+
+    unset($_SESSION['replyID']);
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
+    $app->render('support/supportuserlist.phtml', compact('supportTickets'));
+
+})->name('doLogin');
