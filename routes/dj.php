@@ -26,10 +26,6 @@ $app->get('/dj/add', function () use ($app) {
 })->name('not-restricted');
 
 
-
-
-
-
 $app->post('/dj/list', function () use ($app) {
 
     if (isset($_POST['editDjList']) AND !isset($_POST['entryDjtoStream'])) {
@@ -40,8 +36,11 @@ $app->post('/dj/list', function () use ($app) {
         if($changer[0] == 'delDj'){
             // TODO: Absichern!!
             DB::delete('dj_accounts', "id=%s", $_SESSION['DJID']);
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
             $growl = new core\sp_special\growl();
             $growl->writeGrowl('success','DJ - wurde zurgelöscht!','Zur Übernahme muss der Server neu gestartet werden');
+            $app->render('dj/listdj.phtml');
         }
 
         # Lädt das Auswahlfenster um einen Benutzer einer Station hinzuzufügen
@@ -53,7 +52,6 @@ $app->post('/dj/list', function () use ($app) {
         }
     }
 
-
 # Auswahl Menü um DJ einen Stream zuzuordnen
     if(isset($_POST['entryDjtoStream'])){
         DB::update('dj_accounts', array(
@@ -63,6 +61,21 @@ $app->post('/dj/list', function () use ($app) {
         $SPMenu->MenuInclude($app);
         $growl = new core\sp_special\growl();
         $growl->writeGrowl('info',_('Add DJ to Station'),_('Server reboot requierd'));
+        $app->render('dj/listdj.phtml');
+    }
+
+    if (isset($_POST['entryDjUser'])){
+
+        $fromwork = new core\postget\postgetcoll();
+        $mywork[] = $fromwork->collvars('POST');
+        $mywork['0']['dj_of_user_id'] = $_SESSION['account_id'];
+         unset($mywork['0']['entryDjUser']);
+        \DB::insert('dj_accounts', $mywork);
+
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $growl = new core\sp_special\growl();
+        $growl->writeGrowl('info',_('DJ add'),_('DJ add to Account'));
         $app->render('dj/listdj.phtml');
     }
 
