@@ -45,7 +45,7 @@ $app->post('/filemanager/playlist', function () use ($app) {
             DB::delete('playlist', "id=%s", $changer['1']);
             $SPMenu = new SP\Menu\MenuInclusion();
             $SPMenu->MenuInclude($app);
-            $app->render('filemanager/playlist.phtml', compact('Users'));
+            $app->render('filemanager/editplaylist.phtml', compact('Users'));
         }
 
         if($changer['0'] == 'activ'){
@@ -61,8 +61,15 @@ $app->post('/filemanager/playlist', function () use ($app) {
             $SPMenu->MenuInclude($app);
             $app->render('filemanager/playlist.phtml', compact('Users'));
         }
-
-
+    }
+    if (isset($_POST['addTitel'])){
+        DB::insert('playlist_mp3_rel', array(
+            'playlist_id' => $_SESSION['playlistactiv'],
+            'mp3_id' => $_POST['addTitel']['id']
+        ));
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $app->render('filemanager/editplaylist.phtml', compact('Users'));
     }
 
     if (isset($_POST['addplaylst']) && !empty($_POST['playlist_name'])){
@@ -81,6 +88,15 @@ $app->post('/filemanager/playlist', function () use ($app) {
         $SPMenu->MenuInclude($app);
         $app->render('filemanager/playlist.phtml', compact('Users'));
     }
+
+    if (isset($_POST['ddd'])){
+        DB::delete('playlist_mp3_rel', "id=%s", $_POST['delTitel']['id']);
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $app->render('filemanager/editplaylist.phtml', compact('Users'));
+    }
+
+
 
 })->name('doLogin');
 
