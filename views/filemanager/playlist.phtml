@@ -30,7 +30,7 @@
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">
-                                <form method="post" action="/sap/filemanager/playlist">
+                                <form method="post" action="/filemanager/playlist">
                                     <table class="table table-striped table-bordered table-highlight" id="example">
                                         <thead>
                                         <tr>
@@ -44,7 +44,7 @@
                                         <?php
                                         $results = DB::query("SELECT * FROM playlist WHERE user_id=%s", $_SESSION['account_id']);
                                         foreach ($results as $row) {
-                                            echo '<form action="/sap/filemanager/playlist" method="post"><tr>';
+                                            echo '<form action="/filemanager/playlist" method="post"><tr>';
                                             echo "<td>" . $row['playlist_name'] . "</td> \n";
                                             DB::query("SELECT * FROM playlist_mp3_rel WHERE playlist_id=%s", $row['id']);
                                             $counter = DB::count();
@@ -55,7 +55,6 @@
                                             <option>bitte wählen</option>
                                             <option value="activ#' . $row['id'] . '">Bearbeiten</option>
                                             <option value="play#' . $row['id'] . '">Zufällig</option>
-                                            <option value="play#' . $row['id'] . '"></option>
                                             <option value="del#' . $row['id'] . '">Löschen</option>
                                             </select>
                                             </td> ' . "\n";
@@ -85,7 +84,7 @@
 
                         <h3>Playliste hinzufügen</h3>
 
-                        <form method="post" action="/sap/filemanager/playlist">
+                        <form method="post" action="/filemanager/playlist">
                             <input type="text" name="playlist_name" value=""/>
                             <input type="submit" name="addplaylst" id="submit_id" value="Anlegen"/>
                         </form>
