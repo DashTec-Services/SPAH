@@ -51,11 +51,11 @@
                                     echo '<td>'.$StreamName['stream_userName'].'</td>';
                                     ?>
                                     <td>
-                                        <form action="/sap/dj/list" method="post">
+                                        <form action="/dj/list" method="post">
                                             <select name="editDjList" size="1" onchange="this.form.submit()">
                                                 <option value=""></option>
                                                 <option value="<?php echo 'djtoStation.'.$row['id'] ?>"><?php echo _('Add Stream to User'); ?></option>
-                                                <option value="<?php echo 'editDj.'.$row['id'] ?>"><?php echo _('Edit User'); ?></option>
+                                               <!-- SOON  <option value="<?php echo 'editDj.'.$row['id'] ?>"><?php echo _('Edit User'); ?></option> -->
                                                 <option value="<?php echo 'delDj.'.$row['id'] ?>"><?php echo _('Delete User'); ?></option>
                                             </select>
                                         </form>

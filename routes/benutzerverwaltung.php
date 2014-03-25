@@ -42,17 +42,7 @@ $app->get('/user/register', function () use ($app) {
  *      User Routes
  *
  */
-$app->get('/dj/list', function () use ($app) {
-    $SPMenu = new SP\Menu\MenuInclusion();
-    $SPMenu->MenuInclude($app);
-    $app->render('dj/listdj.phtml');
-})->name('not-restricted');
 
-$app->get('/dj/add', function () use ($app) {
-    $SPMenu = new SP\Menu\MenuInclusion();
-    $SPMenu->MenuInclude($app);
-    $app->render('dj/adddj.phtml');
-})->name('not-restricted');
 
 /*
  *
