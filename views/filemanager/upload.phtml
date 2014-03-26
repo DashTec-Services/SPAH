@@ -13,6 +13,11 @@
  * Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
+<script type="text/javascript">
+    $(window).ready(function(){
+        $(".smalluploader").SmallFileUploader();
+    });
+</script>
 <div id="content">
 <div class="container">
 <div class="row">
@@ -26,39 +31,40 @@
                 </div> <!-- /.widget-actions -->
             </div> <!-- /.widget-header -->
             <div class="widget-content">
-                <script type="text/javascript">
-                    $(window).ready(function(){
-                        $(".smalluploader").SmallFileUploader({
-				endpoint: '/sap/filemanager/post-upload?raw'
-			});
-                    });
-                </script>
 
-                <style type="text/css">
-                    html { overflow-y: scroll; }
-                    #wrapper { width: 600px; margin: 20px auto; overflow: hidden; }
-                </style>
+                <div id="wrapper">
 
-                <div class="smalluploader">
-                    <div class="dragspace hidden">
-                        <p class="zonemessage">Drag your files in here</p>
-                        <p class="message">unlimited number of files allowed </p>
+                    <!-- uploader html begins here -->
+
+                    <div class="smalluploader">
+                        <div class="dragspace hidden">
+                            <p class="zonemessage">Drag your files in here</p>
+                            <p class="message">unlimited number of files allowed </p>
+                        </div>
+                        <div class="buttons">
+                            <a class="addbutton greenbutton hidden">
+                                Add File
+                                <form enctype="multipart/form-data" method="post" action="src/ajaxuploader.php">
+                                    <input type="file" name="filedata"/>
+                                </form>
+                            </a>
+                        </div>
+                        <div class="uploadspace hidden"></div>
+                        <div class="buttons">
+                            <a class="startbutton redbutton hidden">Upload Files</a>
+                            <a class="clearbutton redbutton hidden">Clear Queue</a>
+                        </div>
                     </div>
-                    <div class="buttons">
-                        <a class="addbutton greenbutton hidden">
-                            Add File
-                            <form action="/sap/filemanager/post-upload?raw" enctype="multipart/form-data" method="post" >
-                                <input type="file" name="filedata"/>
-                            </form>
-                        </a>
-                    </div>
-                    <div class="uploadspace hidden"></div>
-                    <div class="buttons">
-                        <a class="startbutton redbutton hidden">Upload Files</a>
-                        <a class="clearbutton redbutton hidden">Clear Queue</a>
-                    </div>
+                    <!-- end of uploader html -->
+
                 </div>
-                </div>
+
+
+
+
+
+
+
             </div> <!-- /.widget-content -->
         </div> <!-- /.widget -->
     </div> <!-- /.span6 -->

@@ -26,7 +26,7 @@
 
 .startbutton.hidden, .addbutton.hidden, .clearbutton.hidden, .hidden { display: none; }
 
-.file { position: relative; padding: 8px 8px 8px 60px; background: #fff url(../img/icons.png) no-repeat 18px 11px; margin-bottom: 1px; color: #000; }
+.file { position: relative; padding: 8px 8px 8px 60px; background: #fff url(../module/filemanager/img/icons.png) no-repeat 18px 11px; margin-bottom: 1px; color: #000; }
 p.failedupload { position: relative; padding: 5px 5px 5px 60px; background-color: #FF714B; border-top: 1px solid #FF511B; margin-bottom: 5px; margin-top: -1px; color: #fff; font-size: 13px; font-weight: bold; }
 .file .title { font-size: 12pt; font-weight: bold; line-height: 1.2em; margin-right: 40px; overflow: hidden; white-space: pre; }
 .file .info { font-size: 10pt; padding: 5px 0 0 0; margin: 0;}
@@ -51,11 +51,11 @@ p.failedupload { position: relative; padding: 5px 5px 5px 60px; background-color
 .doc, .docx { background-position: 18px -821px }
 .pps, .ppsx { background-position: 18px -322px }
 
-.close { position: absolute; height: 16px; width: 16px; right: 10px; top: 10px; text-decoration: none; display: block; background: url(../img/close.png) no-repeat; }
-.indicator { position: absolute; height: 16px; width: 16px; right: 10px; top: 10px; display: block; background: url(../img/loading_waiting.gif) no-repeat; }
-.uploading { background: url(../img/loading.gif) no-repeat; }
-.failed { background: url(../img/failed.png) no-repeat center center; }
-.done { background: url(../img/done.png) no-repeat center center; }
+.close { position: absolute; height: 16px; width: 16px; right: 10px; top: 10px; text-decoration: none; display: block; background: url(../module/filemanager/img/close.png) no-repeat; }
+.indicator { position: absolute; height: 16px; width: 16px; right: 10px; top: 10px; display: block; background: url(../module/filemanager/img/loading_waiting.gif) no-repeat; }
+.uploading { background: url(../module/filemanager/img/loading.gif) no-repeat; }
+.failed { background: url(../module/filemanager/img/failed.png) no-repeat center center; }
+.done { background: url(../module/filemanager/img/done.png) no-repeat center center; }
 
 .ie6 { right: 30px; }
 

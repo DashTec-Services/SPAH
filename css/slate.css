@@ -54,13 +54,13 @@ p {
 	
 	height: 93px;
 	
-	background: #263849 url(../../../../Desktop/download/themes/slate/header-bg.png) repeat-x 0 0;
+	background: #263849 url(../img/header-bg.png) repeat-x 0 0;
 	
 	border-bottom: 1px solid #16222C;
 }
 
 #header h1 {
-	background: url(../../../../img/title.png) no-repeat 0 0;
+	background: url(../img/title.png) no-repeat 0 0;
 	width: 200px;
 	height: 27px;
 	line-height: 500px;
