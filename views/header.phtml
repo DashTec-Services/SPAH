@@ -22,20 +22,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="/css/ajaxuploader.css" rel="stylesheet">
 
     <!-- Styles -->
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/bootstrap-overrides.css" rel="stylesheet">
-
     <link href="/css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="stylesheet">
     <link href="/css/components/signin.css" rel="stylesheet" type="text/css">
     <link href="/css/slate.css" rel="stylesheet">
     <link href="/css/slate-responsive.css" rel="stylesheet">
-
     <link href="/css/pages/invoice.css" rel="stylesheet">
-
     <link href="/css/pages/reports.css" rel="stylesheet">
     <link href="/css/msgGrowl.css" rel="stylesheet">
     <link href="/js/plugins/msgAlert/css/msgAlert.css" rel="stylesheet">
@@ -58,46 +54,6 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="/js/ajaxuploader.min.js"></script>
-
-
-    <script type="text/javascript">
-        $(window).ready(function(){
-            $(".smalluploader").SmallFileUploader({
-                endpoint: "src/ajaxuploader.php",
-                maxAllowedFiles: 3,
-                maxFileSize: 1024 * 1024 * 1,
-                allowedTypes: ["jpeg", "jpg", "png", "gif", "pdf"],
-                onInit: function(uploader){
-                    console.log("Uploader initialized");
-                },
-                onEnqueue: function(file){
-                    console.log("File Enqueued");
-                },
-                onDequeue: function(file) {
-                    console.log("File Dequeued");
-                },
-                onClearAll: function(uploader){
-                    console.log("Queue Cleared");
-                },
-                onUploadStart: function(uploader){
-                    console.log("Upload started");
-                    return true;
-                },
-                onUploadFail: function(file){
-                    console.log("File Failed");
-                },
-                onUploadComplete: function(file){
-                    console.log("File Complete");
-                },
-                onAllComplete: function(uploader){
-                    console.log("All Complete");
-                }
-            });
-
-            prettyPrint();
-        });
-    </script>
 
 
 </head>

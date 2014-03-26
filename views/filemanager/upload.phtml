@@ -36,34 +36,11 @@
 
                     <!-- uploader html begins here -->
 
-                    <div class="smalluploader">
-                        <div class="dragspace hidden">
-                            <p class="zonemessage">Drag your files in here</p>
-                            <p class="message">unlimited number of files allowed </p>
-                        </div>
-                        <div class="buttons">
-                            <a class="addbutton greenbutton hidden">
-                                Add File
-                                <form enctype="multipart/form-data" method="post" action="src/ajaxuploader.php">
-                                    <input type="file" name="filedata"/>
-                                </form>
-                            </a>
-                        </div>
-                        <div class="uploadspace hidden"></div>
-                        <div class="buttons">
-                            <a class="startbutton redbutton hidden">Upload Files</a>
-                            <a class="clearbutton redbutton hidden">Clear Queue</a>
-                        </div>
-                    </div>
-                    <!-- end of uploader html -->
+                    <form action="/filemanager/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" id="file" name="files[]" multiple="multiple" accept="image/*" />
+                        <input type="submit" value="Upload!" />
 
                 </div>
-
-
-
-
-
-
 
             </div> <!-- /.widget-content -->
         </div> <!-- /.widget -->
