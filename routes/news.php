@@ -100,22 +100,6 @@ $app->post('/news/list', function () use ($app) {
 })->name('doLogin');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  *
  *      User Routes
@@ -126,7 +110,24 @@ $app->get('/news/messages', function () use ($app) {
 
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
-
     $app->render('news/usernews.phtml', compact('Users'));
+
+})->name('list');
+
+
+$app->post('/news/messages', function () use ($app) {
+
+
+
+    DB::insert('news_to_read', array(
+        'user_id' => $_SESSION['account_id'],
+        'news_id' => $_POST['close'],
+        'user_read_it' => '1'
+    ));
+
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('news/usernews.phtml', compact('Users'));
+
 
 })->name('list');

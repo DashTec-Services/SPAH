@@ -12,7 +12,7 @@
  *  Lizenznummer:   @RECHNR@
  * Lizenz: http://login.streamerspanel.de/user/terms
  */
-namespace module\station\controller;
+namespace core\sp_special;
 
 
 class sctrans

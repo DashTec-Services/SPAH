@@ -56,8 +56,8 @@ $app->post('/support/addticket', function() use ($app){
         $sp_growl = new core\sp_special\growl();
         $sp_growl->writeGrowl('success', _('Send Reply'), '');
     }
-    $app->render('support/addticket.phtml');
-})->name('support');
+    $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
+    $app->render('support/supportuserlist.phtml', compact('supportTickets'));})->name('support');
 
 
 
@@ -94,10 +94,19 @@ $app->post('/support/list', function () use ($app) {
         $changer = explode(".", $_POST['delentry']);
         if ($changer['0'] == 'del'){
             DB::delete('support', "id=%s", $changer['1']);
-            $SPMenu = new SP\Menu\MenuInclusion();
-            $SPMenu->MenuInclude($app);
-            $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
-            $app->render('support/supportlist.phtml', compact('supportTickets'));
+
+            if($_SESSION['group'] == 'adm'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
+                $app->render('support/supportlist.phtml', compact('supportTickets'));
+            }elseif($_SESSION['group'] == 'user'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
+                $app->render('support/supportuserlist.phtml', compact('supportTickets'));
+            }
+
         }
     }
 

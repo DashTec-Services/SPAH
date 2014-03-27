@@ -40,7 +40,7 @@
                             <?php
                             $results = DB::query("SELECT * FROM sc_rel");
                             foreach ($results as $row) {
-                                echo '<form action="/sap/station/view" method="post"><tr>';
+                                echo '<form action="/station/showstream" method="post"><tr>';
                                 $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);
                                 $account = DB::queryFirstRow("SELECT * FROM accounts WHERE id=%s", $row['accounts_id']);
                                 echo "<td>" . $row['stream_userName'] . "</td> \n";
@@ -48,7 +48,7 @@
                                 echo '<td><a href="http://' . $_SERVER["HTTP_HOST"] . ':' . $sc_serv['PortBase'] . '">' . $sc_serv['PortBase'] . "</td> \n";
                                 ?> </form>
                                 <td>
-                                    <form action="/sap/station/view" method="post">
+                                    <form action="/station/showstream" method="post">
                                         <?php if ($row['sc_serv_pid'] == '0') {
                                             echo '<img src="/image/fuge/status-busy.png" >';
                                         } else {
@@ -68,7 +68,7 @@
                                 </td>
 
                                 <td>
-                                    <form action="/sap/station/view" method="post">
+                                    <form action="/station/showstream" method="post">
                                         <select name="changeConfServ" size="1" onchange="this.form.submit()">
                                             <option value=""></option>
                                             <option value="<?php echo $row['id'] . '.edit' ?>"><?php echo _('bearbeiten'); ?></option>
