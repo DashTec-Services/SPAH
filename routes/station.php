@@ -63,6 +63,49 @@ $app->post('/station/showstream', function () use ($app) {
     $sp_growl = new core\sp_special\growl();
 
 
+    # Server + Transc conf sichern nach bearbeitung
+    if (isset($_POST['servconfsave'])) {
+
+        $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
+
+        DB::update('sc_trans_conf', array(
+            'unlockkeyname' => $_POST['unlockkeyname'],
+            'unlockkeycode' => $_POST['unlockkeycode'],
+            'irc' => $_POST['irc'],
+            'icq' => $_POST['icq'],
+            'aim' => $_POST['aim'],
+            'streamtitle' => $_POST['streamtitle'],
+            'streamurl' => $_POST['streamurl'],
+            'encoder_1' => $_POST['encoder_1'],
+            'genre' => $_POST['genre'],
+            'djpassword' => $_POST['djpassword'],
+            'shuffle' => $_POST['shuffle'],
+            'public' => $_POST['public']
+
+        ), "id=%s", $serv_id['sc_trans_id']);
+
+        DB::update('sc_serv_conf', array(
+            'PublicServer' => $_POST['PublicServer'],
+            'URLFormat' => $_POST['URLFormat'],
+            'TitleFormat' => $_POST['TitleFormat']
+        ), "id=%s", $serv_id['sc_serv_conf_id']);
+
+        DB::update('sc_rel', array(
+            'stream_userName' => $_POST['stream_userName']
+        ), "id=%s", $_SESSION['sec_rel_id']);
+
+
+        # Laden der Übersicht nach Änderungen
+        if($_SESSION['group'] == 'adm'){
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $app->render('station/adminshowlist.phtml', compact('license'));
+        }elseif($_SESSION['group'] == 'user'){
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $app->render('station/usershowstreams.phtml', compact('license'));
+        }
+    }
 
 
 
@@ -77,6 +120,16 @@ $app->post('/station/showstream', function () use ($app) {
             $serv->killSc_Serv($changer['0']);
             $sp_growl->writeGrowl('info',  _('Server stopped'), '');
         }
+        # Laden der Übersicht nach Änderungen
+        if($_SESSION['group'] == 'adm'){
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $app->render('station/adminshowlist.phtml', compact('license'));
+        }elseif($_SESSION['group'] == 'user'){
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $app->render('station/usershowstreams.phtml', compact('license'));
+        }
     }
 
     # Laden der Konfiguration für die Ausgabe der Servereinstellungen
@@ -85,41 +138,36 @@ $app->post('/station/showstream', function () use ($app) {
 
         if ($changer[1] == 'edit') {
             $changer = explode(".", $_POST['changeConfServ']);
-// TODO: Sichern prüfen ob Server den User gehört!
+            // TODO: Sichern prüfen ob Server den User gehört!
             $_SESSION['sec_rel_id'] = $_POST['changeConfServ'];
-            $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
-            $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
-            $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
 
-            if($_SESSION['usr_grp'] == 'adm'){
-                include_once $DTF->LoadView('adm_editsetup', 'station');
-            }elseif($_SESSION['usr_grp'] == 'user'){
-                include_once $DTF->LoadView('us_editsetup', 'station');
+            if($_SESSION['group'] == 'adm'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
+                $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
+                $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
+                $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+            }elseif($_SESSION['group'] == 'user'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
+                $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
+                $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
+                $app->render('station/usereditserver.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
             }
-
 
 
         } elseif ($changer[1] == 'clear') {
             $changer = explode(".", $_POST['changeConfServ']);
-// TODO: Sichern prüfen ob Server den User gehört!
+            // TODO: Sichern prüfen ob Server den User gehört!
             $_SESSION['sec_rel_id'] = $_POST['changeConfServ'];
             $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
             DB::delete('sc_rel', "id=%s", $changer['0']);
             DB::delete('sc_serv_conf', "id=%s", $sc_rel['sc_serv_conf_id']);
             DB::delete('sc_trans_conf', "id=%s", $sc_rel['sc_trans_id']);
             include_once $DTF->LoadView('list', 'station');
-
             $sp_growl->writeGrowl('success', _('Server delete'), '');
         }
     }
-
-
-
-
-
-
-
-    $SPMenu = new SP\Menu\MenuInclusion();
-    $SPMenu->MenuInclude($app);
-    $app->render('station/usershowstreams.phtml', compact('license'));
 })->name('doLogin');
