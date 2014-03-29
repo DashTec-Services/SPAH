@@ -41,7 +41,7 @@
                             <?php
                             $results = DB::query("SELECT * FROM sc_rel WHERE accounts_id=%s", $_SESSION['account_id']);
                             foreach ($results as $row) {
-                                echo '<form action="/sap/station/autodj" method="post"><tr>';
+                                echo '<form action="/station/autodj" method="post"><tr>';
                                 $account = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);
                                 echo '<td><a href="' . $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'] . '">' . $row['stream_userName'] . '</a></td>';
                                 echo "<td>" . $account['MaxUser'] . "</td> \n";
@@ -57,13 +57,15 @@
                                     <select name="playlstswitch" size="1" onchange="this.form.submit()">
                                         <option value=""></option>
                                         <?php
-                                        $results = DB::query("SELECT * FROM playlist WHERE user_id=%s", $_SESSION['user_id']);
+                                        $results = DB::query("SELECT * FROM playlist WHERE user_id=%s", $_SESSION['account_id']);
                                         foreach ($results as $pllst) {
                                             ?>
                                             <option <?php if ($pllst['id'] == $row['play_list_id']) {
                                                 echo 'selected';
                                             } ?>
-                                                value=" <?php echo $row['id'] . '.' . $pllst['id'] . '.' . $pllst['playlist_name']; ?>"> <?php echo $pllst['playlist_name']; ?></option>
+                                                value=" <?php echo $row['id'] . '.' . $pllst['id'] . '.' . $pllst['playlist_name']; ?>">
+                                                <?php echo $pllst['playlist_name']; ?>
+                                            </option>
 
                                         <?php
                                         }
@@ -80,6 +82,7 @@
                                         echo _('please start the stream server');
                                     } else {
                                         ?>
+
                                         <select name="djSwitch" size="1" onchange="this.form.submit()">
                                             <option <?php if (isset($row['sc_trans_pid'])) {
                                                 echo 'selected';

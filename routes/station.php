@@ -56,7 +56,7 @@ $app->get('/station/editserv', function() use ($app){
     $app->render('station/usereditserver.phtml', compact('license'));
 })->name('license');
 
-# USER - POST Action
+# USER - POST Action SC_Serv
 $app->post('/station/showstream', function () use ($app) {
 
     $trans = new core\sp_special\sctrans();
@@ -248,7 +248,173 @@ $app->post('/station/showstream', function () use ($app) {
             $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
             $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
             $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
-
     }
 
+
+
+
+
+    # Neuen Server anlegen
+    # Server hinzufügen
+    if (isset($_POST['addsrv'])) {
+
+        $config = DB::queryFirstRow("SELECT doc_root FROM config WHERE id=%s", '1');
+        $DocRoot = $config['doc_root'];
+
+        $serverPort = $_POST['PortBase'];
+
+        $form = new \core\postget\postgetcoll();
+        $formData = $form->collvars('POST');
+
+        $FolderDir = $DocRoot . "/shoutcastconf/" . $serverPort;
+
+        // Ordner anlegen
+        mkdir($FolderDir, 0700);
+
+        DB::insert('sc_serv_conf', array(
+            'MaxUser' => $formData['MaxUser'],
+            'Password' => $formData['Password'],
+            'PortBase' => $formData['PortBase'],
+            'logfile' => $FolderDir . '/sc_serv.log',
+            'RealTime' => '1',
+            'ScreenLog' => '0',
+            'ShowLastSongs' => '0',
+            //'TchLog' => 'NULL',
+            //'WebLog' => 'NULL',
+            'W3CEnable' => 'Yes',
+            'W3CLog' => $FolderDir . '/sc_w3c.log',
+            //'SrcIP' => '',
+            //'DestIP' => '',
+            //'Yport' => '',
+            'NameLookups' => '0',
+            // 'RelayPort' => '',
+            // 'RelayServer' => '',
+            'AdminPassword' => $formData['AdminPassword'],
+            'AutoDumpUsers' => '0',
+            'AutoDumpSourceTime' => '30',
+            //'ContentDir' => '',
+            //'IntroFile' => '',
+            //'BackupFile' => '',
+            //'TitleFormat' => '',
+            //'URLFormat' => '',
+            'PublicServer' => $formData['PublicServer'],
+            'AllowRelay' => 'Yes',
+            'AllowPublicRelay' => 'Yes',
+            'MetaInterval' => '32768',
+            //'ListenerTimer' => '',
+            //'BanFile' => '',
+            // 'RipFile' => '',
+            // 'RIPOnly' => '',
+        ));
+        $sc_serv_id = DB::insertId();
+
+        if ($formData['PublicServer'] == 'public') {
+            $IsPublic = 1;
+        } else {
+            $IsPublic = 0;
+        }
+
+
+        DB::insert('sc_trans_conf', array(
+            'encoder_1' => $formData['encoder_1'],
+            'bitrate_1' => $formData['bitrate_1'],
+            'samplerate_1' => $formData['samplerate_1'],
+            'channels_1' => $formData['channels_1'],
+            'outprotocol_1' => '1',
+            'serverip_1' => '127.0.0.1',
+            'serverport_1' => $serverPort,
+            'password_1' => $formData['Password'],
+            //'streamurl' => '',
+            // 'genre' => '',
+            'public' => $IsPublic,
+            'log' => '1',
+            //'playlistfile' => '',
+            //'shuffle' =>'',
+            'xfade' => '2',
+            'xfadethreshold' => '20',
+            'logfile' => $FolderDir . '/sc_trans.log',
+            'screenlog' => '1',
+            'applyreplaygain' => '0',
+            'calculatereplaygain' => '0',
+            'djport' => $formData['djport'],
+            'djpassword' => $formData['djpassword'],
+            'autodumpsourcetime' => '30',
+            'djcapture' => '0',
+            //'streamtitle' =>'',
+            //'aim' => '',
+            //'icq' => '',
+            //'irc' => '',
+            //'unlockkeyname' =>'',
+            //'unlockkeycode' =>''
+        ));
+        $sc_trans_id = DB::insertId();
+
+
+        DB::insert('sc_rel', array(
+            'accounts_id' => $formData['usr_id'],
+            'sc_serv_conf_id' => $sc_serv_id,
+            'sc_serv_version_id' => $formData['sc_serv_version'],
+            'stream_userName' => 'Dein neuer Stream',
+            'sc_trans_id' => $sc_trans_id,
+            'sc_trans_version_id' => $formData['sc_trans_version']
+        ));
+
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $app->render('station/adminshowlist.phtml', compact('license'));
+    }
+
+})->name('doLogin');
+
+# User POST SC_Trans
+$app->post('/station/autodj', function () use ($app) {
+
+
+# Neue Playliste übernehmen
+    if (isset($_POST['playlstswitch'])) {
+        # Trennen der übergebenen Par.
+        $changer = explode(".", $_POST['playlstswitch']);
+
+        # Ausleden der conf ID
+        $servTrans = DB::queryFirstRow("SELECT sc_serv_conf_id FROM sc_rel WHERE id=%s", $changer['0']);
+
+        # Setzen der neuen ID
+        \DB::update('sc_rel', array(
+            'play_list_id' => $changer['1']
+        ), "id=%s", $changer['0']);
+
+        # Port abfragen
+        $PortBase = DB::queryFirstRow("SELECT PortBase FROM sc_serv_conf WHERE id=%s", $servTrans['sc_serv_conf_id']);
+
+        # Eintragen der Playliste in die DB
+        \DB::update('sc_trans_conf', array(
+            'playlistfile' => $_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $PortBase['PortBase'] . '/' . $changer['2'] . '.lst'
+        ), "id=%s", $changer['1']);
+
+        #Ausgabe zum Testen der Pfade
+      #  echo $_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $PortBase['PortBase'] . '/' . $changer['2'] . '.lst';
+
+        $playlist = new core\sp_special\station();
+        $trans = new core\sp_special\sctrans();
+        # Neue Playliste Schreiben
+        $playlist->createPlaylst($changer['0']);
+
+        # Neue Konfiguration schreiben
+        $trans->writeSc_TransConf($servTrans['sc_serv_conf_id']);
+    }
+
+    # Start - Stop Transcoder
+    if (isset($_POST['djSwitch'])) {
+        $changer = explode(".", $_POST['djSwitch']);
+        if ($changer['1'] == '1') {
+            $trans->startSc_Trans($changer['0']);
+        } elseif ($changer['1'] == '0') {
+            $trans->killSc_Trans($changer['0']);
+        }
+    }
+
+
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('station/userautodj.phtml', compact('license'));
 })->name('doLogin');
