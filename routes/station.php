@@ -59,9 +59,44 @@ $app->get('/station/editserv', function() use ($app){
 # USER - POST Action
 $app->post('/station/showstream', function () use ($app) {
 
+    $trans = new core\sp_special\sctrans();
     $serv = new core\sp_special\scserv();
     $sp_growl = new core\sp_special\growl();
 
+
+    # Starten der Server + Transcoder nach ReBoot
+    if (isset($_POST['rebooton'])) {
+        $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid!='0' ");
+
+        foreach ($pid as $row) {
+            $serv->startSc_Serv($row['id']);
+            $trans->startSc_Trans($row['id']);
+        }
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $app->render('station/adminshowlist.phtml', compact('license'));
+    }
+
+
+    # Alle starten + Stoppen
+    if (isset($_POST['switch'])) {
+        if ($_POST['switch'] == 'off') {
+            $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid!='0' ");
+            foreach ($pid as $row) {
+                $serv->killSc_Serv($row['id']);
+            }
+        }
+
+        if ($_POST['switch'] == 'on') {
+            $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid='0' ");
+            foreach ($pid as $row) {
+                $serv->startSc_Serv($row['id']);
+            }
+        }
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $app->render('station/adminshowlist.phtml', compact('license'));
+    }
 
     # Server + Transc conf sichern nach bearbeitung
     if (isset($_POST['servconfsave'])) {

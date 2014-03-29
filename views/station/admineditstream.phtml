@@ -38,7 +38,7 @@
 </div>
 <!-- /widget-header -->
 <div class="widget-content">
-    <form class="form-horizontal" method="post" action="/sap/station/list">
+    <form class="form-horizontal" method="post" action="/station/showstream">
         <fieldset>
             <div class="control-group">
                 <label class="control-label" for="input01"><?php echo _('Stream name'); ?></label>
@@ -202,7 +202,7 @@
 
                 <div class="controls">
                     <input type="text" class="input-large" name="URLFormat"
-                           value="<? echo $sc_trans['URLFormat']; ?>" id="input01">
+                           value="<? echo $sc_serv['URLFormat']; ?>" id="input01">
                 </div>
             </div>
             <div class="control-group">
@@ -210,7 +210,7 @@
 
                 <div class="controls">
                     <input type="text" class="input-large" name="TitleFormat"
-                           value="<? echo $sc_trans['TitleFormat']; ?>" id="input01">
+                           value="<? echo $sc_serv['TitleFormat']; ?>" id="input01">
                 </div>
             </div>
             <div class="control-group">
