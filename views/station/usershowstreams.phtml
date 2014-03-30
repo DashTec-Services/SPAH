@@ -38,7 +38,7 @@
                             </thead>
                             <tbody>
                             <?php
-                            $results = DB::query("SELECT * FROM sc_rel");
+                            $results = DB::query("SELECT * FROM sc_rel WHERE accounts_id=%s", $_SESSION['account_id']);
                             foreach ($results as $row) {
                                 echo '<form action="/station/showstream" method="post"><tr>';
                                 $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);

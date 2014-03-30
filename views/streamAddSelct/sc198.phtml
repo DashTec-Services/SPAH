@@ -15,7 +15,7 @@
 ?>
 <div id="content">
 <div class="container">
-<form class="form-horizontal" action="/sap/station/list" method="post">
+<form class="form-horizontal" action="/station/add" method="post">
 <div class="row">
 
 <div class="span8">
@@ -38,22 +38,6 @@
                         $results = DB::query("SELECT * FROM accounts WHERE usr_grp=%s", 'user');
                         foreach ($results as $row) {
                             echo ' <option value=' . $row['id'] . '>' . $row['kundennummer'] . ' ' . $row['vorname'] . ' ' . $row['nachname'] . ' ' . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('ShoutCast Version'); ?></label>
-
-                <div class="controls">
-                    <select id="select01" name="sc_serv_version">
-                        <option></option>
-                        <?php
-                        $results = DB::query("SELECT * FROM sc_version WHERE typ=%s", 'serv');
-                        foreach ($results as $row) {
-                            echo ' <option value=' . $row['id'] . '>' . $row['name'] . "</option>";
                         }
                         ?>
                     </select>

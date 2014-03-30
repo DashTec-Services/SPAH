@@ -18,13 +18,6 @@
  */
 
 
-# Streamhinzufügen
-$app->get('/station/add', function() use ($app){
-    $SPMenu = new SP\Menu\MenuInclusion();
-    $SPMenu->MenuInclude($app);
-    $app->render('station/addstream.phtml', compact('license'));
-})->name('license');
-
 $app->get('/station/admedit', function() use ($app){
     $app->render('station/admineditstream.phtml', compact('license'));
 })->name('license');
@@ -190,6 +183,7 @@ $app->post('/station/showstream', function () use ($app) {
                 $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
                 $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
                 $app->render('station/usereditserver.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+
             }
 
 
@@ -201,8 +195,15 @@ $app->post('/station/showstream', function () use ($app) {
             DB::delete('sc_rel', "id=%s", $changer['0']);
             DB::delete('sc_serv_conf', "id=%s", $sc_rel['sc_serv_conf_id']);
             DB::delete('sc_trans_conf', "id=%s", $sc_rel['sc_trans_id']);
-            include_once $DTF->LoadView('list', 'station');
+
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
+            $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
+            $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
             $sp_growl->writeGrowl('success', _('Server delete'), '');
+            $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+
         }
     }
 
@@ -255,114 +256,6 @@ $app->post('/station/showstream', function () use ($app) {
 
 
     # Neuen Server anlegen
-    # Server hinzufügen
-    if (isset($_POST['addsrv'])) {
-
-        $config = DB::queryFirstRow("SELECT doc_root FROM config WHERE id=%s", '1');
-        $DocRoot = $config['doc_root'];
-
-        $serverPort = $_POST['PortBase'];
-
-        $form = new \core\postget\postgetcoll();
-        $formData = $form->collvars('POST');
-
-        $FolderDir = $DocRoot . "/shoutcastconf/" . $serverPort;
-
-        // Ordner anlegen
-        mkdir($FolderDir, 0700);
-
-        DB::insert('sc_serv_conf', array(
-            'MaxUser' => $formData['MaxUser'],
-            'Password' => $formData['Password'],
-            'PortBase' => $formData['PortBase'],
-            'logfile' => $FolderDir . '/sc_serv.log',
-            'RealTime' => '1',
-            'ScreenLog' => '0',
-            'ShowLastSongs' => '0',
-            //'TchLog' => 'NULL',
-            //'WebLog' => 'NULL',
-            'W3CEnable' => 'Yes',
-            'W3CLog' => $FolderDir . '/sc_w3c.log',
-            //'SrcIP' => '',
-            //'DestIP' => '',
-            //'Yport' => '',
-            'NameLookups' => '0',
-            // 'RelayPort' => '',
-            // 'RelayServer' => '',
-            'AdminPassword' => $formData['AdminPassword'],
-            'AutoDumpUsers' => '0',
-            'AutoDumpSourceTime' => '30',
-            //'ContentDir' => '',
-            //'IntroFile' => '',
-            //'BackupFile' => '',
-            //'TitleFormat' => '',
-            //'URLFormat' => '',
-            'PublicServer' => $formData['PublicServer'],
-            'AllowRelay' => 'Yes',
-            'AllowPublicRelay' => 'Yes',
-            'MetaInterval' => '32768',
-            //'ListenerTimer' => '',
-            //'BanFile' => '',
-            // 'RipFile' => '',
-            // 'RIPOnly' => '',
-        ));
-        $sc_serv_id = DB::insertId();
-
-        if ($formData['PublicServer'] == 'public') {
-            $IsPublic = 1;
-        } else {
-            $IsPublic = 0;
-        }
-
-
-        DB::insert('sc_trans_conf', array(
-            'encoder_1' => $formData['encoder_1'],
-            'bitrate_1' => $formData['bitrate_1'],
-            'samplerate_1' => $formData['samplerate_1'],
-            'channels_1' => $formData['channels_1'],
-            'outprotocol_1' => '1',
-            'serverip_1' => '127.0.0.1',
-            'serverport_1' => $serverPort,
-            'password_1' => $formData['Password'],
-            //'streamurl' => '',
-            // 'genre' => '',
-            'public' => $IsPublic,
-            'log' => '1',
-            //'playlistfile' => '',
-            //'shuffle' =>'',
-            'xfade' => '2',
-            'xfadethreshold' => '20',
-            'logfile' => $FolderDir . '/sc_trans.log',
-            'screenlog' => '1',
-            'applyreplaygain' => '0',
-            'calculatereplaygain' => '0',
-            'djport' => $formData['djport'],
-            'djpassword' => $formData['djpassword'],
-            'autodumpsourcetime' => '30',
-            'djcapture' => '0',
-            //'streamtitle' =>'',
-            //'aim' => '',
-            //'icq' => '',
-            //'irc' => '',
-            //'unlockkeyname' =>'',
-            //'unlockkeycode' =>''
-        ));
-        $sc_trans_id = DB::insertId();
-
-
-        DB::insert('sc_rel', array(
-            'accounts_id' => $formData['usr_id'],
-            'sc_serv_conf_id' => $sc_serv_id,
-            'sc_serv_version_id' => $formData['sc_serv_version'],
-            'stream_userName' => 'Dein neuer Stream',
-            'sc_trans_id' => $sc_trans_id,
-            'sc_trans_version_id' => $formData['sc_trans_version']
-        ));
-
-        $SPMenu = new SP\Menu\MenuInclusion();
-        $SPMenu->MenuInclude($app);
-        $app->render('station/adminshowlist.phtml', compact('license'));
-    }
 
 })->name('doLogin');
 

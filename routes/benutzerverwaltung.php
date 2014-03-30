@@ -171,7 +171,7 @@ $app->post('/sap/benutzerverwaltung/list', function () use ($app) {
         $Users = DB::query("SELECT * FROM accounts");
         $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
         $sp_growl = new core\sp_special\growl();
-        $sp_growl->writeGrowl('success', _('User created'), _('The user was successfully created '));
+        $sp_growl->writeGrowl('success', _('User created'), _('The user was successfully created'));
 
     } else {
 

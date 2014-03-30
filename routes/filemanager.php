@@ -97,7 +97,17 @@ $app->post('/filemanager/playlist', function () use ($app) {
     }
 })->name('doLogin');
 
+
+
+
+
 $app->post('/filemanager/upload', function () use ($app) {
+
+
+
+
+
+
 
 /**
  * PHP Real Ajax Uploader 2.7
@@ -257,8 +267,6 @@ function createThumbGD($filepath, $thumb_path, $postfix, $maxwidth, $maxheight, 
         return false;
     }
 }
-
-
 
 /**
  *
@@ -516,16 +524,58 @@ else //Normal html and flash upload
         return  false;
     }
 }
-
 /*
- * if upload ends ok, then exec some function, such as previews, notifications and user functions
- * TODO insert here other user functions that must be run when files uploads
+ *
+ *      ID3TAGCLASS
+ *
  */
+
+
+
+
+    $NewDBFileName = uniqid($_SESSION['account_id']);
+    $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+    rename($upload_path.$file_name,$upload_path.$NewDBFileName.'.'.$ext);
+
+    $path_to_your_file = './core/getid3';
+    require_once $path_to_your_file . '/getid3.php';
+    $getID3 = new getID3;
+    $ThisFileInfo = $getID3->analyze($upload_path.$NewDBFileName.'.'.$ext);
+    getid3_lib::CopyTagsToComments($ThisFileInfo);
+
+
+
+   #    Für DEBUG!!!
+    echo '<pre>'. print_r($ThisFileInfo).'</pre>';
+
+    DB::insert('mp3', array(
+        'org_file_titel' => $file_name,
+        'dir_titel' => $NewDBFileName.'.'.$ext,
+        'hash_titel' => $NewDBFileName,
+        'size' => $full_size,
+        'bitrate' => $ThisFileInfo['audio']['bitrate'],
+        'playtime' => $ThisFileInfo['audio']['bitrate'],
+        'artist' => $ThisFileInfo['comments_html']['artist']
+    ));
+
+    $joe_id = DB::insertId(); // which id did it choose?!? tell me!!
+    DB::insert('mp3_usr_rel', array(
+        'user_id' => $_SESSION['account_id'],
+        'mp3_id' => $joe_id
+    ));
+
+
+
 if($isLast == 'true')
 {
     createThumbGD($full_path, $thumb_path, $thumbPostfix, $thumb_width, $thumb_height, $thumbFormat);
     if($send_email)	send_notification($main_receiver, $cc, $full_path, $from);
     echo json_encode(array('name'=>basename($full_path), 'size'=>$full_size, 'status'=>1, 'info'=>'File uploaded'));
     @success($full_path);
+
 }
+
+
+
+
 })->name('doLogin');
