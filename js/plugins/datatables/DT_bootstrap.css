@@ -38,13 +38,13 @@ table.table thead .sorting_desc_disabled {
 	*cursor: hand;
 }
 
-table.table thead .sorting { background: url('./default/sort_both.png') no-repeat center right !important; }
-table.table thead .sorting_asc { background: url('./default/sort_asc.png') no-repeat center right !important; }
-table.table thead .sorting_desc { background: url('./default/sort_desc.png') no-repeat center right !important; }
+table.table thead .sorting { background: url('default/sort_both.png') no-repeat center right !important; }
+table.table thead .sorting_asc { background: url('default/sort_asc.png') no-repeat center right !important; }
+table.table thead .sorting_desc { background: url('default/sort_desc.png') no-repeat center right !important; }
 
-table.table-highlight thead .sorting { background: url('./highlight/sort_both.png') no-repeat center right !important; }
-table.table-highlight thead .sorting_asc { background: url('./highlight/sort_asc.png') no-repeat center right !important; }
-table.table-highlight thead .sorting_desc { background: url('./highlight/sort_desc.png') no-repeat center right !important; }
+table.table-highlight thead .sorting { background: url('highlight/sort_both.png') no-repeat center right !important; }
+table.table-highlight thead .sorting_asc { background: url('highlight/sort_asc.png') no-repeat center right !important; }
+table.table-highlight thead .sorting_desc { background: url('highlight/sort_desc.png') no-repeat center right !important; }
 
 table.table thead .sorting_asc_disabled { background: url('sort_asc_disabled.png') no-repeat center right; }
 table.table thead .sorting_desc_disabled { background: url('sort_desc_disabled.png') no-repeat center right; }

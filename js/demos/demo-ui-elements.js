@@ -35,7 +35,7 @@ $(function () {
 	$('.growl_type').live ('click', function (e) {
 		$.msgGrowl ({
 			type: $(this).attr ('data-type')
-			, title: 'Headeraaaaaaaaaaaaaaa'
+			, title: 'Header'
 			, text: 'Lorem ipsum dolor sit amet, consectetur ipsum dolor sit amet, consectetur.'
 		});
 	});
@@ -59,8 +59,7 @@ $(function () {
 		
 	/* Increment Slider */
 	$( "#incrementSlider" ).slider({
-		range: "min",
-		value:50,
+		value:100,
 		min: 0,
 		max: 500,
 		step: 50,
@@ -76,7 +75,7 @@ $(function () {
 	/* Min Value Slider */
 	$( "#rangeMinSlider" ).slider({
 		range: "min",
-		value: 100,
+		value: 125,
 		min: 50,
 		max: 700,
 		slide: function( event, ui ) {
@@ -88,7 +87,7 @@ $(function () {
 		
 		
 	/* Default Slider */
-	$( "#defaultSlider" ).slider({ range: 'min' });
+	$( "#defaultSlider" ).slider();
 	
 	
 	
@@ -109,7 +108,7 @@ $(function () {
 		range: true,
 		min: 0,
 		max: 500,
-		values: [ 75, 250 ],
+		values: [ 75, 300 ],
 		slide: function( event, ui ) {
 			$( "#amount" ).text ( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 		}

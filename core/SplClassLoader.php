@@ -130,6 +130,7 @@ class SplClassLoader
      * @param string $className The name of the class to load.
      * @return void
      */
+
     public function loadClass($className)
     {
         if (null === $this->_namespace || $this->_namespace.$this->_namespaceSeparator === substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator))) {
@@ -142,7 +143,7 @@ class SplClassLoader
             }
             $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
 
-            require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            require_once($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '/') . $fileName;
         }
     }
 }

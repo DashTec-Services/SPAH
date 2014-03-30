@@ -319,7 +319,7 @@ $.extend($.validator, {
 			       .validateDelegate("[type='text'], [type='password'], [type='file'], select, textarea, " +
 						"[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
 						"[type='email'], [type='datetime'], [type='date'], [type='month'], " +
-						"[type='week'], [type='time'], [type='datetime-locale'], " +
+						"[type='week'], [type='time'], [type='datetime-local'], " +
 						"[type='range'], [type='color'] ",
 						"focusin focusout keyup", delegate)
 				.validateDelegate("[type='radio'], [type='checkbox'], select, option", "click", delegate);
