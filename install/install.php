@@ -17,7 +17,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Form Wizard | Slate Admin 2.0</title>
+    <title><?= _('S:P Installation') ?></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -44,7 +44,7 @@
 
     <script src="../js/Slate.js"></script>
 
-    <script src="../js/demo.wizard.js"></script>
+    <script src="../js/demos/demo.wizard.js"></script>
 
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -62,7 +62,7 @@
 
     <div class="container">
 
-        <h1><a href="./">Slate Admin 2.0</a></h1>
+        <h1><a href="./"><?= _('S:P Installation') ?></a></h1>
 
         <div id="info">
 
@@ -74,7 +74,7 @@
 
                 <div class="info-details">
 
-                    <h4>S:P Installation</h4>
+                    <h4><?= _('S:P Installation') ?></h4>
 
                 </div> <!-- /.info-details -->
 
@@ -126,28 +126,28 @@
     <li>
         <a href="#step-1" class="">
             <div class="wizard-step-number">1</div>
-            <div class="wizard-step-label">Business Details</div>
+            <div class="wizard-step-label"><?= _('MySql Daten') ?></div>
             <div class="wizard-step-bar"></div>
         </a>
     </li>
     <li>
         <a href="#step-2" class="">
             <div class="wizard-step-number">2</div>
-            <div class="wizard-step-label">Profile Details</div>
+            <div class="wizard-step-label"><?= _('SSH Daten') ?></div>
             <div class="wizard-step-bar"></div>
         </a>
     </li>
     <li>
         <a href="#step-3" class="">
             <div class="wizard-step-number">3</div>
-            <div class="wizard-step-label">Contact Details</div>
+            <div class="wizard-step-label"><?= _('Benutzer Daten') ?></div>
             <div class="wizard-step-bar"></div>
         </a>
     </li>
     <li>
         <a href="#step-4" class="">
             <div class="wizard-step-number">4</div>
-            <div class="wizard-step-label">Finish Wizard</div>
+            <div class="wizard-step-label"><?= _('Konfiguration') ?></div>
             <div class="wizard-step-bar"></div>
         </a>
     </li>
@@ -155,7 +155,7 @@
 
 <div id="step-1">
 
-    <h3>Business Details:</h3>
+    <h3><?= _('MySql Konfiguration') ?></h3>
 
 
     <br />
@@ -166,43 +166,23 @@
         <div class="span6">
 
             <div class="control-group">
-                <label class="control-label" for="bizname">Business Name</label>
+                <label class="control-label" for="bizname"><?= _('DB Name') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-medium" id="bizname">
+                    <input type="text" class="input-medium" id="bizname" name="dbname">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="bizemail">Business Email</label>
+                <label class="control-label" for="bizemail"><?= _('DB User') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="bizemail">
+                    <input type="text" class="input-large" id="bizemail" name="dbuser">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="bizaddress1">Address 1</label>
+                <label class="control-label" for="bizaddress1"><?= _('DB Pass') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="bizaddress1">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="bizaddress2">Ste.</label>
-                <div class="controls">
-                    <input type="text" class="input-small" id="bizaddress2">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="bizindustry">Industry</label>
-                <div class="controls">
-                    <select multiple="multiple" id="bizindustry">
-                        <option>Retail</option>
-                        <option>Technology</option>
-                        <option>Entertainment</option>
-                        <option>Automotive</option>
-                        <option>Transportation</option>
-                    </select>
+                    <input type="text" class="input-large" id="bizaddress1" name="dbpass">
                 </div>
             </div>
 
@@ -211,10 +191,7 @@
         <div class="span5 offset1">
 
             <div class="well">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
+                <p><?= _('Connection to Database') ?></p>
             </div>
 
         </div> <!-- /span6 -->
@@ -240,57 +217,27 @@
 
 
             <div class="control-group">
-                <label class="control-label" for="userfirst">First Name</label>
+                <label class="control-label" for="userfirst"><?= _('Server IP') ?></label>
                 <div class="controls">
                     <input class="input-medium" id="userfirst" >
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="userlast">Last Name</label>
+                <label class="control-label" for="userlast"><?= _('ssh user') ?></label>
                 <div class="controls">
                     <input class="input-large" id="userlast" >
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="useremail">Email Address</label>
+                <label class="control-label" for="useremail"><?= _('ssh pass') ?></label>
                 <div class="controls">
                     <input class="input-large" id="useremail" >
                 </div>
             </div>
 
-            <div class="control-group">
-                <label class="control-label" for="userlanguage">Language</label>
-                <div class="controls">
-                    <select id="userlanguage" name="userlanguage">
-                        <option>Select Language...</option>
-                        <option value="da">Danish - Dansk</option>
-                        <option value="nl">Dutch - Nederlands</option>
-                        <option value="en" selected="">English</option>
-                        <option value="fil">Filipino - Filipino</option>
-                        <option value="fi">Finnish - Suomi</option>
-                        <option value="fr">French - francais</option>
-                        <option value="de">German - Deutsch</option>
-                        <option value="hu">Hungarian - Magyar</option>
-                        <option value="id">Indonesian - Bahasa Indonesia</option>
-                        <option value="it">Italian - Italiano</option>
-                        <option value="msa">Malay - Bahasa Melayu</option>
-                        <option value="no">Norwegian - Norsk</option>
-                        <option value="pl">Polish - Polski</option>
-                        <option value="pt">Portuguese - Portugu�s</option>
-                        <option value="es">Spanish - Espa�ol</option>
-                        <option value="sv">Swedish - Svenska</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="control-group">
-                <label class="control-label" for="userbio">Bio</label>
-                <div class="controls">
-                    <textarea class="input-large" id="userbio" rows="4"></textarea>
-                </div>
-            </div>
 
 
         </div> <!-- /span6 -->
@@ -299,8 +246,7 @@
 
 
             <div class="well">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
+<p><?= _('ssh access data') ?></p>
 
             </div>
 
@@ -314,10 +260,9 @@
 
 </div> <!-- /step -->
 
-
 <div id="step-3">
 
-    <h3>Contact Details:</h3>
+    <h3><?= _('User Data') ?></h3>
 
     <br />
 
@@ -325,33 +270,59 @@
 
         <div class="span6">
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-
             <br />
 
             <div class="control-group">
-                <label class="control-label" for="contactname">Full Name</label>
+                <label class="control-label" for="contactemail"><?= _('Admin Login name') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="contactemail">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="contactname"><?= _('Admin vname') ?></label>
                 <div class="controls">
                     <input type="text" class="input-medium" id="contactname">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactphone">Phone #</label>
+                <label class="control-label" for="contactphone"><?= _('Admin nname') ?></label>
                 <div class="controls">
                     <input type="text" class="input-medium" id="contactphone">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactfax">Fax #</label>
+                <label class="control-label" for="contactfax"><?= _('Admin street') ?></label>
                 <div class="controls">
                     <input type="text" class="input-medium" id="contactfax">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactemail">Contact Email</label>
+                <label class="control-label" for="contactemail"><?= _('Admin zip') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="contactemail">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="contactemail"><?= _('Admin Town') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="contactemail">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="contactemail"><?= _('Admin phone') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="contactemail">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="contactemail"><?= _('Admin mail') ?></label>
                 <div class="controls">
                     <input type="text" class="input-large" id="contactemail">
                 </div>
@@ -361,6 +332,9 @@
 
         <div class="span5 offset1">
 
+
+
+
             <div class="well">
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
@@ -376,11 +350,9 @@
 
 </div> <!-- /step -->
 
-
-
 <div id="step-4">
 
-    <h3>Complete:</h3>
+    <h3><?= _('Complete') ?></h3>
 
     <br />
 
@@ -388,10 +360,18 @@
     <div class="row-fluid">
 
         <div class="span6">
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
+<p><?= _('Admin user') ?>: SELECTED LOGIN NAME
+    <br>
+    <?= _('Admin password') ?>:  eSFEE2423xyx</p>
             <br />
+
+
+            <div class="alert alert-error">
+                <h4 class="alert-heading"><?= _('WARNING') ?></h4>
+                <p><?= _('You have to deleted the install DIR') ?></p>
+            </div> <!-- ./alert -->
+
+
 
             <button class="btn btn-primary btn-large">Finish</button>
 

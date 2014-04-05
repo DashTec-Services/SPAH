@@ -41,7 +41,7 @@
                             <?php
 
                             $TIMEFUNC = new core\time\time();
-
+                            $FILESIZE = new core\file\filesize();
 
                             $Size ='0';
                             $TimeSecond = '0';
@@ -51,14 +51,19 @@
                                 foreach ($mp3titel as $title) {
                                     echo '<form action="/sap/filemanager/list" method="post"><tr>';
                                     echo "<td>".$title['org_file_titel']."</td> \n";
-                                    echo "<td>".$title['size']."</td> \n";
+                                    $MB = $title['size'] / 1048576;
+                                    echo "<td>".round($MB, 2)." MB</td> \n";
                                     echo "<td>".$title['bitrate']."</td> \n";
-                                    echo "<td>".$title['playtime']."</td> \n";
+                                    echo "<td>".$TIMEFUNC->seconds2Time($title['playtime'])."</td> \n";
                                     echo '<td><button class="btn btn-danger" type="submit" value="DelFromDB.'.$row['id'].'" name="DelFromDB" >Löschen</button></td>';
                                     echo '</tr></form>';
 
                                     $Size += $title['size'];
-                                    $TimeSecond += $TIMEFUNC->time2Seconds($title['playtime']);
+                                    $TimeSecond += $title['playtime'];
+
+
+
+
                                 }
                             }
 
@@ -70,7 +75,8 @@
                             <td>
                                 <?php
                                         $FileSize = new core\file\filesize();
-                                        echo $FileSize->format_filesize($Size);
+                                             $Size =$Size / 1073741824 ;
+                                        echo round($Size, 2) . "GB";
                                 ?>
                             </td>
                             <td>
@@ -81,7 +87,7 @@
                             </td>
                             <td>
                                 <?php
-                                        echo $TIMEFUNC->seconds2Time($TimeSecond);
+                                            echo $TIMEFUNC->seconds2TimeDay($TimeSecond);
                                 ?>
                             </td>
                             <td>

@@ -17,38 +17,41 @@ namespace core\time;
 
 class time {
 
-    public function time2Seconds($time) {
-        $aTime = explode(':', $time);
-        return $aTime[2] + ($aTime[1] * 60) + ($aTime[0] * 3600);
+
+    # Alte Zeitformate
+   public function onlineTime($time) {
+        $time=explode(':',$time);
+
+       $sec = '0';
+       $sec = $time[0] * 60;
+       $sec = $sec + $time[1];
+
+        return $sec;
     }
-
-
 
     public function seconds2Time($sekunden)
     {
-        $stunden = floor($sekunden / 3600);
-        $minuten = floor(($sekunden - ($stunden * 3600)) / 60);
-        $sekunden = round($sekunden - ($stunden * 3600) - ($minuten * 60), 0);
+        $zeit['jhr'] = floor($sekunden / 31536000);
+        $zeit['tag'] = floor(($sekunden%31536000) / 86400);
+        $zeit['std'] = floor(($sekunden%86400) / 3600);
+        $zeit['min'] = floor(($sekunden%3600) / 60);
+        $zeit['sek'] = $sekunden%60;
 
-        if ($stunden <= 9) {
-            $strStunden = "0" . $stunden;
-        } else {
-            $strStunden = $stunden;
-        }
+        return "".$zeit['std'].":".$zeit['min'].":".$zeit['sek'];
 
-        if ($minuten <= 9) {
-            $strMinuten = "0" . $minuten;
-        } else {
-            $strMinuten = $minuten;
-        }
+    }
 
-        if ($sekunden <= 9) {
-            $strSekunden = "0" . $sekunden;
-        } else {
-            $strSekunden = $sekunden;
-        }
+    public function seconds2TimeDay($sekunden)
+    {
+        $zeit['jhr'] = floor($sekunden / 31536000);
+        $zeit['tag'] = floor(($sekunden%31536000) / 86400);
+        $zeit['std'] = floor(($sekunden%86400) / 3600);
+        $zeit['min'] = floor(($sekunden%3600) / 60);
+        $zeit['sek'] = $sekunden%60;
 
-        return "$strStunden:$strMinuten:$strSekunden";
+        return "Tage:".$zeit['tag']." Std.:".$zeit['std']."
+               Min:".$zeit['min']." Sek:".$zeit['sek'];
+
     }
 
 

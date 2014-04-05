@@ -59,6 +59,7 @@
                                 <h4><?php echo _('Playtime'); ?></h4>
                     <span class="value">
                         <?php
+
                         $TIMEFUNC = new core\time\time();
                         $Size ='0';
                         $TimeSecond = '0';
@@ -67,11 +68,13 @@
                             $mp3titel = DB::query("SELECT * FROM mp3 WHERE id=%s", $row['mp3_id']);
                             foreach ($mp3titel as $title) {
                                 $Size += $title['size'];
-                                $TimeSecond += $TIMEFUNC->time2Seconds($title['playtime']);
+                                #$TimeSecond += $TIMEFUNC->seconds2Time($title['playtime']);
+                                $TimeSecond += $title['playtime'];
                             }
                         }
 
-                        echo $TIMEFUNC->seconds2Time($TimeSecond);
+                        echo $TIMEFUNC->seconds2TimeDay($TimeSecond);
+
                         ?></span>
                             </div>
                             <!-- .stat -->
@@ -83,7 +86,11 @@
                         <?php
 
                         $FileSize = new core\file\filesize();
-                        echo $FileSize->format_filesize($Size);
+                        $FileSize = new core\file\filesize();
+                        $Size =$Size / 1073741824 ;
+                        echo round($Size, 2) . "GB";
+
+
                         ?></span>
                                 </div>
                                 <!-- .stat -->

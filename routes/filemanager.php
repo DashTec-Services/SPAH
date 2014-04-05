@@ -524,14 +524,14 @@ else //Normal html and flash upload
         return  false;
     }
 }
-/*
- *
- *      ID3TAGCLASS
- *
- */
 
 
-
+if($isLast == 'true')
+{
+    createThumbGD($full_path, $thumb_path, $thumbPostfix, $thumb_width, $thumb_height, $thumbFormat);
+    if($send_email)	send_notification($main_receiver, $cc, $full_path, $from);
+    echo json_encode(array('name'=>basename($full_path), 'size'=>$full_size, 'status'=>1, 'info'=>'File uploaded'));
+    @success($full_path);
 
     $NewDBFileName = uniqid($_SESSION['account_id']);
     $ext = pathinfo($file_name, PATHINFO_EXTENSION);
@@ -543,19 +543,45 @@ else //Normal html and flash upload
     $ThisFileInfo = $getID3->analyze($upload_path.$NewDBFileName.'.'.$ext);
     getid3_lib::CopyTagsToComments($ThisFileInfo);
 
+    # Zeit in Sekunden
+    #$tim = new core\time\time();
+    #$time = $tim->seconds_from_time($ThisFileInfo['playtime_string']);
 
 
-   #    Für DEBUG!!!
-    echo '<pre>'. print_r($ThisFileInfo).'</pre>';
+    #    Für DEBUG!!!
+    #echo '<pre>'. print_r($ThisFileInfo).'</pre>';
+
+        # Überprüfung ob IDV3 läuft
+        if(!empty($ThisFileInfo['audio']['bitrate'])){
+            $bitrate = $ThisFileInfo['audio']['bitrate'];
+        }else{
+            $bitrate = 0;
+        }
+
+        if(!empty($ThisFileInfo['comments_html']['artist'])){
+            $artist = $ThisFileInfo['comments_html']['artist'];
+        }else{
+            $artist = "none";
+        }
+
+        if(!empty($ThisFileInfo['playtime_string'])){
+            $tim = new core\time\time();
+            $playtime = $tim->onlineTime($ThisFileInfo['playtime_string']);
+           # $playtime = $ThisFileInfo['playtime_string'];
+
+        }else{
+            $playtime = "none";
+        }
+
 
     DB::insert('mp3', array(
         'org_file_titel' => $file_name,
         'dir_titel' => $NewDBFileName.'.'.$ext,
         'hash_titel' => $NewDBFileName,
-        'size' => $full_size,
-        'bitrate' => $ThisFileInfo['audio']['bitrate'],
-        'playtime' => $ThisFileInfo['audio']['bitrate'],
-        'artist' => $ThisFileInfo['comments_html']['artist']
+        'size' => $ThisFileInfo['filesize'],
+        'bitrate' => $bitrate,
+        'playtime' => $playtime,
+        'artist' => $artist
     ));
 
     $joe_id = DB::insertId(); // which id did it choose?!? tell me!!
@@ -563,16 +589,6 @@ else //Normal html and flash upload
         'user_id' => $_SESSION['account_id'],
         'mp3_id' => $joe_id
     ));
-
-
-
-if($isLast == 'true')
-{
-    createThumbGD($full_path, $thumb_path, $thumbPostfix, $thumb_width, $thumb_height, $thumbFormat);
-    if($send_email)	send_notification($main_receiver, $cc, $full_path, $from);
-    echo json_encode(array('name'=>basename($full_path), 'size'=>$full_size, 'status'=>1, 'info'=>'File uploaded'));
-    @success($full_path);
-
 }
 
 
