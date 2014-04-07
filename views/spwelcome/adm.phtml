@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -26,7 +26,7 @@
 
                         <div id="big_stats" class="cf">
                             <div class="stat">
-                                <h4><?php echo _('User'); ?></h4>
+                                <h4><?php echo _('Benutzer'); ?></h4>
                     <span class="value">
                         <?php
                         DB::query("SELECT * FROM accounts");
@@ -56,7 +56,7 @@
                             <!-- .stat -->
 
                             <div class="stat">
-                                <h4><?php echo _('New support tickets'); ?></h4>
+                                <h4><?php echo _('Neue Support Tickets'); ?></h4>
                     <span class="value">
                         <?php
                         DB::query("SELECT * FROM support WHERE status='offen'");
@@ -125,7 +125,7 @@
                             <div class="stat-header">
 
                                 <div class="stat-label">
-                                    <?php echo _('Support - Tickets last 30 Days'); ?>
+                                    <?php echo _('Support - Tickets letzten 30 Tage'); ?>
                                 </div>
                                 <!-- /.stat-label -->
 

@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -25,7 +25,7 @@
                             <div class="widget-header">
                                 <h3>
                                     <i class="icon-th-list"></i>
-                                    Datein
+                                    <?= _('Dateien') ?>
                                 </h3>
                             </div>
                             <!-- /widget-header -->
@@ -34,10 +34,10 @@
                                     <table class="table table-striped table-bordered table-highlight" id="example">
                                         <thead>
                                         <tr>
-                                            <th>Playlist</th>
-                                            <th>Titel in Playliste</th>
-                                            <th>Spielzeit</th>
-                                            <th>Aktion</th>
+                                            <th><?= _('Playlist') ?></th>
+                                            <th><?= _('Titel in Playliste') ?></th>
+                                            <th><?= _('Spielzeit') ?></th>
+                                            <th><?= _('Aktion') ?></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -82,11 +82,11 @@
 
                     <div class="widget-content">
 
-                        <h3>Playliste hinzufügen</h3>
+                        <h3>Playliste hinzufügen<?= _('Dateien') ?></h3>
 
                         <form method="post" action="/filemanager/playlist">
                             <input type="text" name="playlist_name" value=""/>
-                            <input type="submit" name="addplaylst" id="submit_id" value="Anlegen"/>
+                            <input type="submit" name="addplaylst" id="submit_id" value="<?= _('Anlegen') ?>"/>
                         </form>
 
                     </div>

@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *   Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 /*** nullify any existing autoloads ***/
@@ -58,9 +58,7 @@ spl_autoload_register('classLoader');
 spl_autoload_register('libClassLoader');
 spl_autoload_register('ColreLib');
 // Späteres automatisiertes Laden der datein
-include_once 'db.php';
 include_once 'config.php';
-include_once 'modulreg.php';
 
 /*
  *      Multiple CSS Import

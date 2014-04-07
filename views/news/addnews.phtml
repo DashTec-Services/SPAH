@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -26,7 +26,7 @@
                     <div class="widget-header">
                         <h3>
                             <i class="icon-pencil"></i>
-                            <?php echo _('User Message'); ?>
+                            <?php echo _('Benutzer-News'); ?>
                         </h3>
                     </div>
                     <!-- /widget-header -->
@@ -36,17 +36,17 @@
                         <form class="form-horizontal" action="/news/addnews" method="post">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?php echo _('Headline'); ?></label>
+                                    <label class="control-label" for="input01"><?php echo _('Überschrift'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="headline" id="input01">
 
-                                        <p class="help-block"><?php echo _('Headline of the message'); ?></p>
+                                        <p class="help-block"><?php echo _('Überschrift für die Nachricht'); ?></p>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="control-label" for="textarea"><?php echo _('Message'); ?></label>
+                                    <label class="control-label" for="textarea"><?php echo _('Nachricht'); ?></label>
 
                                     <div class="controls">
                                         <textarea class="input-large" id="textarea" name="message" rows="3"></textarea>
@@ -55,34 +55,34 @@
 
 
                                 <div class="control-group">
-                                    <label class="control-label"><?php echo _('Show message at Login?'); ?></label>
+                                    <label class="control-label"><?php echo _('Nachricht auf der Login-Seite anzeigen'); ?></label>
 
                                     <div class="controls">
                                         <label class="radio">
                                             <input type="radio" id="optionsRadios1" name="login_news" value="1"
                                                    checked="">
-                                            <?php echo _('Yes'); ?>
+                                            <?php echo _('Ja'); ?>
                                         </label>
                                         <label class="radio">
                                             <input type="radio" id="optionsRadios1" name="login_news" value="0">
-                                            <?php echo _('No'); ?>
+                                            <?php echo _('Nein'); ?>
                                         </label>
                                     </div>
                                 </div>
 
 
                                 <div class="control-group">
-                                    <label class="control-label"><?php echo _('Message aktiv?'); ?></label>
+                                    <label class="control-label"><?php echo _('Nachricht aktiv?'); ?></label>
 
                                     <div class="controls">
                                         <label class="radio">
                                             <input type="radio" id="optionsRadios4" name="is_aktiv" value="1"
                                                    checked="">
-                                            <?php echo _('Show essage at the use login'); ?>
+                                            <?php echo _('Nachricht anzeigen'); ?>
                                         </label>
                                         <label class="radio">
                                             <input type="radio" id="optionsRadios4" name="is_aktiv" value="0">
-                                            <?php echo _('Hide the message'); ?>
+                                            <?php echo _('Nachricht verstecken'); ?>
                                         </label>
                                     </div>
                                 </div>
@@ -91,17 +91,16 @@
 
                                     <div class="controls">
                                         <select id="select01">
-                                            <option><?php echo _('Information (green)'); ?></option>
-                                            <option><?php echo _('Warning (yellow)'); ?></option>
-                                            <option><?php echo _('reference (green)'); ?></option>
-                                            <option><?php echo _('Error (red)'); ?></option>
+                                            <option><?php echo _('Information (Grün)'); ?></option>
+                                            <option><?php echo _('Warnung (Gelb)'); ?></option>
+                                            <option><?php echo _('Fehler (Rot)'); ?></option>
                                         </select>
                                     </div>
                                     <?php echo _('comming soon'); ?>
                                 </div>
                                 <div class="form-actions">
                                     <button type="submit" name="eintragen" class="btn btn-primary btn-large">
-                                        <?php echo _('Save changes'); ?>
+                                        <?php echo _('Speichere Nachricht'); ?>
                                     </button>
                                 </div>
                             </fieldset>
@@ -118,13 +117,13 @@
                 <div id="formToc" class="widget highlight">
 
                     <div class="widget-header">
-                        <h3><?php echo _('Messages for User or Login'); ?></h3>
+                        <h3><?php echo _('Nachricht beim Login anzeigen'); ?></h3>
                     </div>
                     <!-- /widget-header -->
 
                     <div class="widget-content">
                         <p>
-                            <?php echo _('Description for News'); ?>
+                            <?php echo _('Beschreibung'); ?>
                         </p>
 
                     </div>

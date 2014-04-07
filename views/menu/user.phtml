@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <?php require_once __DIR__ . '/../header.phtml' ?>
@@ -31,10 +31,10 @@
 
                 <div class="info-details">
 
-                    <h4><?php echo _('Welcome back, '); ?><?php echo $_SESSION['USERNAME']; ?></h4>
+                    <h4><?php echo _('Willkommen zurück, '); ?><?php echo $_SESSION['USERNAME']; ?></h4>
 
                     <p>
-                        <a href="/logout">Logout</a>                    </p>
+                        <a href="/logout"><?= _('Abmelden') ?></a>                    </p>
                     <br>
                 </div>
                 <!-- /.info-details -->
@@ -85,7 +85,7 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a href="/news/messages"><?php echo _('Messages'); ?></a></li>
+                        <li><a href="/news/messages"><?php echo _('News'); ?></a></li>
 
                     </ul>
                 </li>
@@ -98,7 +98,7 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a href="/station/showstream"><?php echo _('View Streams'); ?></a></li>
+                        <li><a href="/station/showstream"><?php echo _('Streams anzeigen'); ?></a></li>
                         <li><a href="/station/autodj"><?php echo _('AutoDj - Setup'); ?></a></li>
                         <!-- <li><a href="/sap/station/">Statistik</a></li> -->
                     </ul>
@@ -112,7 +112,7 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a href="/filemanager/list"><?php echo _('View Files'); ?></a></li>
+                        <li><a href="/filemanager/list"><?php echo _('MP3 '); ?>Übersicht</a></li>
                         <li><a href="/filemanager/playlist"><?php echo _('Playlist'); ?></a></li>
                         <li><a href="/filemanager/upload"><?php echo _('Upload'); ?></a></li>
                     </ul>
@@ -125,8 +125,8 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a href="/dj/list"><?php echo _('View User'); ?></a></li>
-                        <li><a href="/dj/add"><?php echo _('Add DJ'); ?></a></li>
+                        <li><a href="/dj/list"><?php echo _('Benutzer anzeigen'); ?></a></li>
+                        <li><a href="/dj/add"><?php echo _('DJ hinzufügen'); ?></a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -138,8 +138,8 @@
 
                     <ul class="dropdown-menu">
                         <!-- <li><a href="#">Radioserver-Konfiguration</a></li>     Templates für Streamconfigs-->
-                        <li><a href="/support/list"><?php echo _('View Tickets'); ?></a></li>
-                        <li><a href="/support/addticket"><?php echo _('Write a Question'); ?></a></li>
+                        <li><a href="/support/list"><?php echo _('Tickets anzeigen'); ?></a></li>
+                        <li><a href="/support/addticket"><?php echo _('Ticket eröffnen'); ?></a></li>
 
                     </ul>
                 </li>

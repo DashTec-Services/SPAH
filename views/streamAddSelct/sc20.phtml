@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -23,14 +23,14 @@
     <div class="widget-header">
         <h3>
             <i class="icon-pencil"></i>
-            <?php echo _('New Stream Server'); ?>
+            <?php echo _('Neuen Streamserver v2.0'); ?>
         </h3>
     </div>
     <!-- /widget-header -->
     <div class="widget-content">
         <fieldset>
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Add Stream to User'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Stream zum Benutzer hinzufügen'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="usr_id">
@@ -61,7 +61,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Used Ports'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Benutzte Ports'); ?></label>
 
                 <div class="controls">
                     <?php
@@ -95,7 +95,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Max listener'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Max Hörer'); ?></label>
 
                 <div class="controls"><?php  // TODO:DA fehlt noch was!!!  ?>
                     <select id="select01" name="MaxUser">
@@ -128,7 +128,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Show last X songs'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Zeige die letzten X Songs'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="ShowLasSongs">
@@ -145,16 +145,16 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label"><?php echo _('Server is public'); ?></label>
+                <label class="control-label"><?php echo _('Server ist öffentlich'); ?></label>
 
                 <div class="controls">
                     <label class="radio">
                         <input type="radio" name="PublicServer" id="validateRadio1" value="public">
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="PublicServer" id="validateRadio2" value="never">
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -169,7 +169,7 @@
     <div class="widget-header">
         <h3>
             <i class="icon-pencil"></i>
-            <?php echo _('Transcoder Setup'); ?>
+            <?php echo _('Transcoder Einstellungen'); ?>
         </h3>
     </div>
     <!-- /widget-header -->
@@ -177,7 +177,7 @@
     <div class="widget-content">
         <fieldset>
             <div class="control-group">
-                <label class="control-label"><?php echo _('Streaming as'); ?></label>
+                <label class="control-label"><?php echo _('Streamt als'); ?></label>
 
                 <div class="controls">
                     <label class="radio">
@@ -203,7 +203,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Yes'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Samplerate'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="samplerate_1">
@@ -215,7 +215,7 @@
 
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Channels'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Kanäle'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="channels_1">
@@ -238,7 +238,7 @@
 
             <div class="form-actions">
                 <button type="submit" name="addsrv" class="btn btn-danger btn-large"><i class="icon-star"></i>
-                    <?php echo _('Save'); ?>
+                    <?php echo _('Speichern'); ?>
                 </button>
             </div>
         </fieldset>
@@ -251,13 +251,13 @@
 <div class="span4">
     <div id="formToc" class="widget highlight">
         <div class="widget-header">
-            <h3><b> <?php echo _('Please note'); ?></b><?php echo _(' "Add User"'); ?></h3>
+            <h3><b> <?php echo _('Please note'); ?></b></h3>
         </div>
         <!-- /widget-header -->
 
         <div class="widget-content">
             <p>
-                <?php echo _('Here your Text for Information about Add Streamserver'); ?>
+                <?php echo _('Anlegen eines ShoutCast v2.0 Servers'); ?>
             </p>
         </div>
         <!-- /widget-content -->

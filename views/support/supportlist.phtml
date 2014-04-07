@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -28,11 +28,11 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th> <?= _('User'); ?></th>
-                                    <th> <?= _('Date'); ?></th>
-                                    <th> <?= _('Title'); ?></th>
-                                    <th> <?= _('Message'); ?></th>
-                                    <th> <?= _('Option'); ?></th>
+                                    <th> <?= _('Benutzer'); ?></th>
+                                    <th> <?= _('Datum'); ?></th>
+                                    <th> <?= _('Titel'); ?></th>
+                                    <th> <?= _('Nachricht'); ?></th>
+                                    <th> <?= _('Optionen'); ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,7 +53,7 @@
                                             if ($repshow['is_adm_answ'] == '') {
                                                 echo '<p><b>' . _('Administrator') . '<br></b></p>';
                                             } else {
-                                                echo '<p><b>' . _('Reply:') . '</b><br></p>';
+                                                echo '<p><b>' . _('Antwort:') . '</b><br></p>';
                                             }
                                             echo $repshow['text'];
                                         }
@@ -61,26 +61,26 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <button name="submit_button" value="edit.<?= $row['id'] ?>"><?= _('Answer') ?>
+                                        <button name="submit_button" value="edit.<?= $row['id'] ?>"><?= _('Antworten') ?>
                                         </button>
                                         <br>
 
                                         <select name="status" size="1" onchange="this.form.submit()">
                                             <option <?php if ($row['status'] == 'Offen') {
                                                 echo 'selected';
-                                            } ?> value="<?= $row['id'] . '.Offen' ?>"><?= _('Open'); ?>
+                                            } ?> value="<?= $row['id'] . '.Offen' ?>"><?= _('Offen'); ?>
                                             </option>
                                             <option <?php if ($row['status'] == 'in Bearbeitung') {
                                                 echo 'selected';
-                                            } ?> value="<?= $row['id'] . '.in Bearbeitung' ?>"><?= _('busy'); ?>
+                                            } ?> value="<?= $row['id'] . '.in Bearbeitung' ?>"><?= _('in bearbeitung'); ?>
                                             </option>
                                             <option <?php if ($row['status'] == 'erledigt') {
                                                 echo 'selected';
-                                            } ?> value="<?= $row['id'] . '.erledigt' ?>"><?= _('Done'); ?>
+                                            } ?> value="<?= $row['id'] . '.erledigt' ?>"><?= _('Erledigt'); ?>
                                             </option>
                                         </select><br>
                                         <button name="delentry"
-                                                value="del.<?= $row['id'] ?>"><?= _('Delete') ?></button>
+                                                value="del.<?= $row['id'] ?>"><?= _('Löschen') ?></button>
                                     </td>
                                     </tr>
                                     </form>

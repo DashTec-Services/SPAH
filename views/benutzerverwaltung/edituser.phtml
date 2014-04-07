@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -21,9 +21,9 @@
                     <a href="/">Home</a> <span class="divider">/</span>
                 </li>
                 <li>
-                    <a href="/user/list">Benutzerverwaltung</a> <span class="divider">/</span>
+                    <a href="/user/list"><?= _('Benutzerverwaltung') ?></a> <span class="divider">/</span>
                 </li>
-                <li class="active">Benutzer bearbeiten</li>
+                <li class="active">Benutzer bearbeiten<?= _('Benutzerverwaltung') ?></li>
             </ul>
         </div>
         <!-- /.page-title -->
@@ -35,14 +35,14 @@
                         <div class="widget-header">
                             <h3>
                                 <i class="icon-pencil"></i>
-                                Neuen Stream
+                                Neuen Stream<?= _('Benutzerverwaltung') ?>
                             </h3>
                         </div>
                         <!-- /widget-header -->
                         <div class="widget-content">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Kundennummer</label>
+                                    <label class="control-label" for="input01"><?= _('Kundennummer') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="kundennummer"
@@ -50,15 +50,15 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Passwort</label>
+                                    <label class="control-label" for="input01"><?= _('Passwort') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-xxlarge" name="password"
-                                               placeholder="Wenn gewünscht bitte neues Passwort eingeben" id="input01">
+                                               placeholder="<?= _('Wenn gewünscht bitte neues Passwort eingeben') ?>" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Vorname</label>
+                                    <label class="control-label" for="input01"><?= _('Vorname') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="vorname"
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Nachname</label>
+                                    <label class="control-label" for="input01"><?= _('Nachname') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="nachname"
@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Straße</label>
+                                    <label class="control-label" for="input01"><?= _('Straße') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="street"
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Hausnummer</label>
+                                    <label class="control-label" for="input01"><?= _('Hausnummer') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="hausnummer"
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Ort</label>
+                                    <label class="control-label" for="input01"><?= _('Ort') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="ort"
@@ -98,7 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">PLZ</label>
+                                    <label class="control-label" for="input01"><?= _('PLZ') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="plz"
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Telefon</label>
+                                    <label class="control-label" for="input01"><?= _('Telefon') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="telefon"
@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">Handy</label>
+                                    <label class="control-label" for="input01"><?= _('Handy') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="handy"
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01">E-Mail</label>
+                                    <label class="control-label" for="input01"><?= _('E-Mail') ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="mail"
@@ -130,7 +130,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Benutzerrechte</label>
+                                    <label class="control-label"><?= _('Benutzerrechte') ?></label>
 
                                     <div class="controls">
                                         <label class="radio">
@@ -138,19 +138,19 @@
                                                    value="adm" <?php if ($Users['usr_grp'] == 'adm') {
                                                 echo 'checked=""';
                                             } ?>>
-                                            Administrator
+                                            <?= _('Administrator') ?>
                                         </label>
                                         <label class="radio">
                                             <input type="radio" name="usr_grp" id="validateRadio2"
                                                    value="user" <?php if ($Users['usr_grp'] == 'user') {
                                                 echo 'checked=""';
                                             } ?>>
-                                            Stream-Kunde
+                                            <?= _('Stream-Kunde') ?>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Benutzer - Aktiv?</label>
+                                    <label class="control-label">Benutzer - Aktiv?<?= _('Benutzerverwaltung') ?></label>
 
                                     <div class="controls">
                                         <label class="radio">
@@ -158,20 +158,20 @@
                                                    value="1" <?php if ($Users['is_aktiv'] == '1') {
                                                 echo 'checked=""';
                                             } ?>>
-                                            Ja
+                                           <?= _('Ja') ?>
                                         </label>
                                         <label class="radio">
                                             <input type="radio" name="is_aktiv" id="validateRadio2"
                                                    value="0" <?php if ($Users['is_aktiv'] == '0') {
                                                 echo 'checked=""';
                                             } ?>>
-                                            Nein
+                                            <?= _('Nein') ?>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-actions">
                                     <button type="submit" name="update" class="btn btn-danger btn-large"><i
-                                            class="icon-star"></i> Speichern
+                                            class="icon-star"></i><?= _('Speichern') ?>
                                     </button>
                                 </div>
                             </fieldset>
@@ -184,20 +184,20 @@
                 <div class="span4">
                     <div id="formToc" class="widget highlight">
                         <div class="widget-header">
-                            <h3><b>-Hinweise- </b>"Benutzer hinzufügen"</h3>
+                            <h3><?= _('<b>-Hinweise- </b>"Benutzer hinzufügen"') ?></h3>
                         </div>
                         <!-- /widget-header -->
 
                         <div class="widget-content">
-                            <p>Kundennummern zur Identifikation von verschiedenen Accounts. Diese kann je nach
+                            <p><?= _('Kundennummern zur Identifikation von verschiedenen Accounts. Diese kann je nach
                                 Einstellungen als Login
-                                verwendet werden. </p>
+                                verwendet werden.') ?></p>
                             <br>
 
-                            <p>Benutzer mit Administrator rechten erhalten vollen Zugriff auf das Panel</p>
+                            <p><?= _('Benutzer mit Administrator rechten erhalten vollen Zugriff auf das Panel') ?></p>
                             <br>
 
-                            <p>Automatisch erstellte Passwörter werden den Benutzer per Mail zugeschickt.</p>
+                            <p><?= _('Automatisch erstellte Passwörter werden den Benutzer per Mail zugeschickt.') ?></p>
                         </div>
                         <!-- /widget-content -->
                     </div>

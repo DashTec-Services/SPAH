@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -30,12 +30,12 @@
                                 <thead>
                                 <tr>
                                     <th><?php echo _('DJ - Name'); ?></th>
-                                    <th><?php echo _('User information'); ?></th>
-                                    <th><?php echo _('Address'); ?></th>
-                                    <th><?php echo _('Phone'); ?></th>
-                                    <th><?php echo _('Contact'); ?></th>
-                                    <th><?php echo _('DJ of Stream'); ?></th>
-                                    <th><?php echo _('Setup'); ?></th>
+                                    <th><?php echo _('Benutzerinformation'); ?></th>
+                                    <th><?php echo _('Addresse'); ?></th>
+                                    <th><?php echo _('Telefon'); ?></th>
+                                    <th><?php echo _('Kontakt'); ?></th>
+                                    <th><?php echo _('DJ vom Stream'); ?></th>
+                                    <th><?php echo _('Einstellungen'); ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -54,9 +54,9 @@
                                         <form action="/dj/list" method="post">
                                             <select name="editDjList" size="1" onchange="this.form.submit()">
                                                 <option value=""></option>
-                                                <option value="<?php echo 'djtoStation.'.$row['id'] ?>"><?php echo _('Add Stream to User'); ?></option>
-                                               <!-- SOON  <option value="<?php echo 'editDj.'.$row['id'] ?>"><?php echo _('Edit User'); ?></option> -->
-                                                <option value="<?php echo 'delDj.'.$row['id'] ?>"><?php echo _('Delete User'); ?></option>
+                                                <option value="<?php echo 'djtoStation.'.$row['id'] ?>"><?php echo _('Stream zum Benutzer hinzufügen'); ?></option>
+                                               <!-- SOON  <option value="<?php echo 'editDj.'.$row['id'] ?>"><?php echo _('Benutzer bearbeiten'); ?></option> -->
+                                                <option value="<?php echo 'delDj.'.$row['id'] ?>"><?php echo _('Benutzer löschen'); ?></option>
                                             </select>
                                         </form>
                                     </td>

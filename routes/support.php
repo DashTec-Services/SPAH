@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 /*
@@ -54,7 +54,7 @@ $app->post('/support/addticket', function() use ($app){
         unset($formData['0']['eintragen']);
         \DB::insert('support', $formData);
         $sp_growl = new core\sp_special\growl();
-        $sp_growl->writeGrowl('success', _('Send Reply'), '');
+        $sp_growl->writeGrowl('success', _('Antwort gesendet'), '');
     }
     $supportTickets = DB::query("SELECT * FROM support WHERE user_id != 0");
     $app->render('support/supportuserlist.phtml', compact('supportTickets'));})->name('support');

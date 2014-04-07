@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 /*
@@ -143,10 +143,10 @@ $app->post('/station/showstream', function () use ($app) {
         $changer = explode(".", $_POST['onoffselc']);
         if ($changer['1'] == '1') {
             $serv->startSc_Serv($changer['0']);
-            $sp_growl->writeGrowl('success',  _('Server started'), '');
+            $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
         } elseif ($changer['1'] == '0') {
             $serv->killSc_Serv($changer['0']);
-            $sp_growl->writeGrowl('info',  _('Server stopped'), '');
+            $sp_growl->writeGrowl('info',  _('Server gestoppt'), '');
         }
         # Laden der Übersicht nach Änderungen
         if($_SESSION['group'] == 'adm'){
@@ -201,7 +201,7 @@ $app->post('/station/showstream', function () use ($app) {
             $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
             $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
             $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
-            $sp_growl->writeGrowl('success', _('Server delete'), '');
+            $sp_growl->writeGrowl('success', _('Server gelöscht'), '');
             $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
 
         }

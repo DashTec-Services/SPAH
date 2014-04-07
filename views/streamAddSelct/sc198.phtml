@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -23,14 +23,14 @@
     <div class="widget-header">
         <h3>
             <i class="icon-pencil"></i>
-            <?php echo _('New Stream Server'); ?>
+            <?php echo _('Neuen ShoutCast 1.9 Server'); ?>
         </h3>
     </div>
     <!-- /widget-header -->
     <div class="widget-content">
         <fieldset>
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Add Stream to User'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Stream zum benutzer hinzufügen'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="usr_id">
@@ -61,7 +61,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Used Ports'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Benutzte Ports'); ?></label>
 
                 <div class="controls">
                     <?php
@@ -95,7 +95,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Max listener'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Maximale Hörer'); ?></label>
 
                 <div class="controls"><?php  // TODO:DA fehlt noch was!!!  ?>
                     <select id="select01" name="MaxUser">
@@ -112,7 +112,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Password'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Passwort'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="Password" id="input01">
@@ -120,7 +120,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Admin Password'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Admin Passwort'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="AdminPassword" id="input01">
@@ -128,7 +128,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Show last X songs'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Zeige letzten X Songs'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="ShowLasSongs">
@@ -145,16 +145,16 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label"><?php echo _('Server is public'); ?></label>
+                <label class="control-label"><?php echo _('Server ist öffentlich'); ?></label>
 
                 <div class="controls">
                     <label class="radio">
                         <input type="radio" name="PublicServer" id="validateRadio1" value="public">
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="PublicServer" id="validateRadio2" value="never">
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -177,12 +177,12 @@
     <div class="widget-content">
         <fieldset>
             <div class="control-group">
-                <label class="control-label"><?php echo _('Streaming as'); ?></label>
+                <label class="control-label"><?php echo _('Streaming als'); ?></label>
 
                 <div class="controls">
                     <label class="radio">
                         <input type="radio" name="encoder_1" id="validateRadio1" value="mp3">
-                        <?php echo _('MP3'); ?> <?php echo _('License from Shoutcast (required license)'); ?>
+                        <?php echo _('MP3'); ?> <?php echo _('Lizenz von ShoutCast wird benötigt'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="encoder_1" id="validateRadio2" value="aac">
@@ -203,7 +203,7 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Yes'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Samplerate'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="samplerate_1">
@@ -215,7 +215,7 @@
 
 
             <div class="control-group">
-                <label class="control-label" for="select01"><?php echo _('Channels'); ?></label>
+                <label class="control-label" for="select01"><?php echo _('Kanäle'); ?></label>
 
                 <div class="controls">
                     <select id="select01" name="channels_1">
@@ -251,13 +251,13 @@
 <div class="span4">
     <div id="formToc" class="widget highlight">
         <div class="widget-header">
-            <h3><b> <?php echo _('Please note'); ?></b><?php echo _(' "Add User"'); ?></h3>
+            <h3><b> <?php echo _('Bitte beachten'); ?></b></h3>
         </div>
         <!-- /widget-header -->
 
         <div class="widget-content">
             <p>
-                <?php echo _('Here your Text for Information about Add Streamserver'); ?>
+                <?php echo _('Anlegen eines ShoutCast v1.x Servers'); ?>
             </p>
         </div>
         <!-- /widget-content -->

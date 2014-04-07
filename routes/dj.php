@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 $app->get('/dj/list', function () use ($app) {
@@ -60,7 +60,7 @@ $app->post('/dj/list', function () use ($app) {
         $SPMenu = new SP\Menu\MenuInclusion();
         $SPMenu->MenuInclude($app);
         $growl = new core\sp_special\growl();
-        $growl->writeGrowl('info',_('Add DJ to Station'),_('Server reboot requierd'));
+        $growl->writeGrowl('info',_('DJ zum Stream hinzugefügt'),_('Stream benötigt einen Neustart!'));
         $app->render('dj/listdj.phtml');
     }
 
@@ -75,7 +75,7 @@ $app->post('/dj/list', function () use ($app) {
         $SPMenu = new SP\Menu\MenuInclusion();
         $SPMenu->MenuInclude($app);
         $growl = new core\sp_special\growl();
-        $growl->writeGrowl('info',_('DJ add'),_('DJ add to Account'));
+        $growl->writeGrowl('info',_('DJ zum Account hinzugefügt '),'');
         $app->render('dj/listdj.phtml');
     }
 

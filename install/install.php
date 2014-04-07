@@ -6,12 +6,130 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
+session_start();
+include_once '../core/password/password.php';
+include_once '../core/DB.php';
+
+
+
+if($_SESSION['Setup_Done'] == true){
+    session_unset();
+    session_destroy();
+    die('Please DEL install DIR!');
+
+}
+
+
+
+
+if(!isset($_SESSION['cryptpass'])){
+    $passw = new \core\password\password();
+    $pass = $passw->generatePassword();
+    $cryptpass = $passw->createPassword($pass);
+    $_SESSION['pass'] = $pass;
+   $_SESSION['cryptpass'] = $cryptpass;
+}
+
+
+if (isset($_POST['finsih'])){
+
+
+    $_SESSION['dbname'] = $_POST['dbname'];
+    $_SESSION['dbuser'] = $_POST['dbuser'];
+    $_SESSION['dbpass'] = $_POST['dbpass'];
+
+    $_SESSION['serverip'] = $_POST['serverip'];
+    $_SESSION['sshuser'] = $_POST['sshuser'];
+    $_SESSION['sshpass'] = $_POST['sshpass'];
+    $_SESSION['ssh_port'] = $_POST['ssh_port'];
+    $_SESSION['serverdocroot'] = $_POST['serverdocroot'];
+
+    $_SESSION['adminvname'] = $_POST['adminvname'];
+    $_SESSION['adminnname'] = $_POST['adminnname'];
+
+    $_SESSION['adminstreet'] = $_POST['adminstreet'];
+    $_SESSION['hnum'] = $_POST['hnum'];
+    $_SESSION['adminzip'] = $_POST['adminzip'];
+    $_SESSION['admintown'] = $_POST['admintown'];
+    $_SESSION['adminphone'] = $_POST['adminphone'];
+    $_SESSION['adminmail'] = $_POST['adminmail'];
+
+
+
+    DB::$user = $_SESSION['dbuser'];
+    DB::$password = $_SESSION['dbpass'];
+    DB::$dbName = $_SESSION['dbname'];
+    DB::$host = 'localhost';
+    DB::$port = '3306';
+    DB::$encoding = 'utf8';
+
+
+$sql_filename = 'mysql.sql';
+$mysqli = new mysqli('localhost', $_SESSION['dbuser'], $_SESSION['dbpass'], $_SESSION['dbname']);
+
+if (mysqli_connect_error()) {
+    die('Connect Error (' . mysqli_connect_errno() . ') '
+        . mysqli_connect_error());
+}
+
+
+$sql = file_get_contents($sql_filename);
+if (!$sql){
+    die ('Error opening file');
+}
+
+mysqli_multi_query($mysqli,$sql);
+
+    DB::insert('config', array(
+        'server_ip' => $_SESSION['serverip'],
+        'adminMail' => $_SESSION['adminmail'],
+        'root_user' => $_SESSION['sshuser'],
+        'root_password' => $_SESSION['sshpass'],
+        'ssh_port' => $_SESSION['ssh_port'],
+        'doc_root' => $_SESSION['serverdocroot'],
+        'sp_titel' => 'S:P fresh install'
+    ));
+
+    DB::insert('accounts', array(
+        'kundennummer' => 'spadmin',
+        'mail' => $_SESSION['adminmail'],
+        'vorname' => $_SESSION['adminvname'],
+        'nachname' => $_SESSION['adminnname'],
+        'street' => $_SESSION['adminstreet'],
+        'hausnummer' => $_SESSION['hnum'],
+        'plz' => $_SESSION['adminzip'],
+        'telefon' => $_SESSION['adminphone'],
+        'ort' => $_SESSION['admintown'],
+        'password' => $_SESSION['cryptpass'],
+        'is_aktiv' => '1',
+        'usr_grp' => 'adm'
+    ));
+
+$mysqli->close();
+
+    $file = "../index.php";
+    $content = file_get_contents($file);
+    $content = str_replace('@DBUSER@', $_SESSION['dbuser'], $content);
+    $content = str_replace('@DBPASS@', $_POST['dbpass'], $content);
+    $content = str_replace('@DBNAME@', $_SESSION['dbname'], $content);
+    file_put_contents($file, $content);
+
+
+
+$_SESSION['Setup_Done'] = true;
+
+
+
+
+
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +180,7 @@
 
     <div class="container">
 
-        <h1><a href="./"><?= _('S:P Installation') ?></a></h1>
+        <h1><a href="./install.php"><?= _('S:P Installation') ?></a></h1>
 
         <div id="info">
 
@@ -118,7 +236,7 @@
 
 
 
-<form action="#" method="POST" class="form-horizontal">
+<form action="./install.php" method="POST" class="form-horizontal">
 
 <div id="wizard" class="swMain">
 
@@ -166,23 +284,23 @@
         <div class="span6">
 
             <div class="control-group">
-                <label class="control-label" for="bizname"><?= _('DB Name') ?></label>
+                <label class="control-label" for="dbname"><?= _('DB Name') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-medium" id="bizname" name="dbname">
+                    <input type="text" class="input-medium" id="bizname" name="dbname" value="<?php if(isset($_SESSION['dbname'])){ echo $_SESSION['dbname'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="bizemail"><?= _('DB User') ?></label>
+                <label class="control-label" for="dbuser"><?= _('DB Benutzer') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="bizemail" name="dbuser">
+                    <input type="text" class="input-large" id="bizemail" name="dbuser" value="<?php if(isset($_SESSION['dbuser'])){ echo $_SESSION['dbuser'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="bizaddress1"><?= _('DB Pass') ?></label>
+                <label class="control-label" for="dbpass"><?= _('DB Passwort') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="bizaddress1" name="dbpass">
+                    <input type="text" class="input-large" id="bizaddress1" name="dbpass" value="<?php if(isset($_SESSION['dbpass'])){ echo $_SESSION['dbpass'];} ?>">
                 </div>
             </div>
 
@@ -191,7 +309,52 @@
         <div class="span5 offset1">
 
             <div class="well">
-                <p><?= _('Connection to Database') ?></p>
+                <?php
+
+                echo _('Systemanforderungen') .'<br>';
+                $rights = substr(sprintf('%o', fileperms('../shoutcast')), -3);
+
+                if (version_compare(phpversion(), '5.5', '<')) {
+                    echo 'Sie benutzen PHP: ' . phpversion() .'<b> ein UPDATE IST erforderlich!</b>';
+                }else{
+                    echo 'Sie benutzen PHP: ' . phpversion() .'<b>!</b>';
+                }
+
+
+                if ($rights == '777') {
+                    echo '<p class="message success">'._('Ordner <b>"shoutcast"</b> besitzt die erforderlichen Rechte').'</p>';
+                } else {
+                    echo '<p class="message error">'._('Ordner <b>"shoutcast"</b> besitzt <b>NICHT</b> die erforderlichen Rechte').'</p>';
+                }
+
+                if (extension_loaded('ssh2')) {
+                    echo '<p class="message success">'._('Erweiterung: <b>"ssh2"</b> gefunden').'</p>';
+                } else {
+                    echo '<p class="message error">'._('Erweiterung: <b>"ssh2" - NICHT</b> gefunden').'</p>';
+                }
+
+                if (extension_loaded('mysql')) {
+                    echo '<p class="message success">'._('Erweiterung: <b>"MySql"</b> gefunden ').'</p>';
+                } else {
+                    echo '<p class="message error">'._('Erweiterung: <b>"MySql" - NICHT</b> gefunden ').'</p>';
+                }
+
+                if (extension_loaded('safe_mode')) {
+                    echo '<p class="message error">'._('Erweiterung: <b>"safe_mode" - NICHT</b> ist ON').'</p>';
+                } else {
+                    echo '<p class="message success">'._('Erweiterung: <b>"safe_mode"</b> is OFF! ').'</p>';
+                }
+
+
+
+                if ($rights == '777' AND !extension_loaded('safe_mode') AND extension_loaded('mysql') && extension_loaded('ssh2') && $rights == '777' ){
+                    echo '<a href="st2.php"><button type="button" name="step2">'._('Schritt 2').'</button></a>';
+                    $_SESSION['step1'] = 'true';
+                }else{
+                    echo '<p class="message error">'._('Es müssen alle Überprüfungen bestanden werden!!').'</p>';
+                }
+
+                ?>
             </div>
 
         </div> <!-- /span6 -->
@@ -205,7 +368,7 @@
 
 <div id="step-2">
 
-    <h3>Profile Details:</h3>
+    <h3><?= _('Profil - Einstellungen')?></h3>
 
     <br />
 
@@ -217,23 +380,37 @@
 
 
             <div class="control-group">
-                <label class="control-label" for="userfirst"><?= _('Server IP') ?></label>
+                <label class="control-label" for="serverip"><?= _('Server IP') ?></label>
                 <div class="controls">
-                    <input class="input-medium" id="userfirst" >
+                    <input class="input-medium" id="serverip" name="serverip" value="<?php if(isset($_SESSION['serverip'])){ echo $_SESSION['serverip'];}else{ echo  $_SERVER['SERVER_ADDR'];} ?>" >
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="userlast"><?= _('ssh user') ?></label>
+                <label class="control-label" for="sshuser"><?= _('ssh Benutzer') ?></label>
                 <div class="controls">
-                    <input class="input-large" id="userlast" >
+                    <input class="input-large" id="sshuser"  name="sshuser" value="<?php if(isset($_SESSION['sshuser'])){ echo $_SESSION['sshuser'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="useremail"><?= _('ssh pass') ?></label>
+                <label class="control-label" for="sshpass"><?= _('ssh Passwort') ?></label>
                 <div class="controls">
-                    <input class="input-large" id="useremail" >
+                    <input class="input-large" id="sshpass" name="sshpass" value="<?php if(isset($_SESSION['sshpass'])){ echo $_SESSION['sshpass'];} ?>" >
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="ssh_port"><?= _('ssh_port') ?></label>
+                <div class="controls">
+                    <input class="input-large" id="ssh_port" name="ssh_port" value="<?php if(isset($_SESSION['ssh_port'])){ echo $_SESSION['ssh_port'];} else{ echo '22';}?>" >
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="ssh_port"><?= _('Server_doc_root') ?></label>
+                <div class="controls">
+                    <input class="input-large" id="ssh_port" name="serverdocroot" value="<?php if(isset($_SESSION['serverdocroot'])){ echo $_SESSION['serverdocroot'];} else{ echo $_SERVER['DOCUMENT_ROOT'];}?>" >
                 </div>
             </div>
 
@@ -246,7 +423,7 @@
 
 
             <div class="well">
-<p><?= _('ssh access data') ?></p>
+<p><?= _('ssh Daten') ?></p>
 
             </div>
 
@@ -262,7 +439,7 @@
 
 <div id="step-3">
 
-    <h3><?= _('User Data') ?></h3>
+    <h3><?= _('Benutzer Daten') ?></h3>
 
     <br />
 
@@ -273,58 +450,57 @@
             <br />
 
             <div class="control-group">
-                <label class="control-label" for="contactemail"><?= _('Admin Login name') ?></label>
+                <label class="control-label" for="adminvname"><?= _('Vorname') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="contactemail">
+                    <input type="text" class="input-medium" id="adminvname" name="adminvname" value="<?php if(isset($_SESSION['adminvname'])){ echo $_SESSION['adminvname'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactname"><?= _('Admin vname') ?></label>
+                <label class="control-label" for="adminnname"><?= _('Nachname') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-medium" id="contactname">
+                    <input type="text" class="input-medium" id="adminnname" name="adminnname" value="<?php if(isset($_SESSION['adminnname'])){ echo $_SESSION['adminnname'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactphone"><?= _('Admin nname') ?></label>
+                <label class="control-label" for="adminstreet"><?= _('Straße') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-medium" id="contactphone">
+                    <input type="text" class="input-medium" id="adminstreet" name="adminstreet" value="<?php if(isset($_SESSION['adminstreet'])){ echo $_SESSION['adminstreet'];} ?>">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="hnum"><?= _('Hausnummer') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-medium" id="hnum" name="hnum" value="<?php if(isset($_SESSION['hnum'])){ echo $_SESSION['hnum'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactfax"><?= _('Admin street') ?></label>
+                <label class="control-label" for="adminzip"><?= _('PLZ') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-medium" id="contactfax">
+                    <input type="text" class="input-large" id="adminzip" name="adminzip" value="<?php if(isset($_SESSION['adminzip'])){ echo $_SESSION['adminzip'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactemail"><?= _('Admin zip') ?></label>
+                <label class="control-label" for="admintown"><?= _('Ort') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="contactemail">
+                    <input type="text" class="input-large" id="admintown" name="admintown" value="<?php if(isset($_SESSION['admintown'])){ echo $_SESSION['admintown'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactemail"><?= _('Admin Town') ?></label>
+                <label class="control-label" for="adminphone"><?= _('Tel') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="contactemail">
+                    <input type="text" class="input-large" id="adminphone" name="adminphone" value="<?php if(isset($_SESSION['adminphone'])){ echo $_SESSION['adminphone'];} ?>">
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="contactemail"><?= _('Admin phone') ?></label>
+                <label class="control-label" for="adminmail"><?= _('Mail') ?></label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="contactemail">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="contactemail"><?= _('Admin mail') ?></label>
-                <div class="controls">
-                    <input type="text" class="input-large" id="contactemail">
+                    <input type="text" class="input-large" id="adminmail" name="adminmail" value="<?php if(isset($_SESSION['adminmail'])){ echo $_SESSION['adminmail'];} ?>">
                 </div>
             </div>
 
@@ -336,11 +512,9 @@
 
 
             <div class="well">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-            </div>
+                </div>
 
         </div> <!-- /span6 -->
 
@@ -352,7 +526,7 @@
 
 <div id="step-4">
 
-    <h3><?= _('Complete') ?></h3>
+    <h3><?= _('Komplett') ?></h3>
 
     <br />
 
@@ -360,20 +534,20 @@
     <div class="row-fluid">
 
         <div class="span6">
-<p><?= _('Admin user') ?>: SELECTED LOGIN NAME
+<p><?= _('Admin - Benutzer') ?>: spadmin
     <br>
-    <?= _('Admin password') ?>:  eSFEE2423xyx</p>
+    <?= _('Admin - Passwort') ?>:  <?= $_SESSION['pass']; ?></p>
             <br />
 
 
             <div class="alert alert-error">
-                <h4 class="alert-heading"><?= _('WARNING') ?></h4>
-                <p><?= _('You have to deleted the install DIR') ?></p>
+                <h4 class="alert-heading"><?= _('Warnung') ?></h4>
+                <p><?= _('Der Ordner install ist noch vorhanden!') ?></p>
             </div> <!-- ./alert -->
 
 
 
-            <button class="btn btn-primary btn-large">Finish</button>
+            <button class="btn btn-primary btn-large" name="finsih" ><?= _('fertig') ?></button>
 
 
 

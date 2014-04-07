@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -30,7 +30,7 @@
                             <thead>
                             <tr>
                                 <th><?php echo _('Streamname'); ?></th>
-                                <th><?php echo _('Listener'); ?></th>
+                                <th><?php echo _('Hörer'); ?></th>
                                 <th><?php echo _('Port'); ?></th>
                                 <th><?php echo _('Status'); ?></th>
                                 <th><?php echo _('Playlist'); ?></th>
@@ -48,9 +48,9 @@
                                 echo "<td>" . $account['PortBase'] . "</td> \n";
                                 ?>
                                 <td><?php if ($row['sc_serv_pid'] == '0') {
-                                        echo '<img src="/image/fuge/status-busy.png" alt="Tanzmaus">';
+                                        echo '<img src="/image/fuge/status-busy.png" alt="">';
                                     } else {
-                                        echo '<img src="/image/fuge/status.png" alt="Tanzmaus">';
+                                        echo '<img src="/image/fuge/status.png" alt="">';
                                     } ?></td>
 
                                 <td>

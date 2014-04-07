@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 
@@ -43,8 +43,8 @@ $app->post('/news/addnews', function () use ($app) {
                  <script>
                  $.msgGrowl ({
                         type: 'info'
-                        , title: '"._('Added message')."'
-                        , text: '"._('Added message successfully!')."'
+                        , title: '"._('Nachricht hinzugefügt')."'
+                        , text: ''
                         , position: $(this).attr ('rel')
                     });
 
@@ -75,8 +75,8 @@ $app->post('/news/list', function () use ($app) {
  <script>
  $.msgGrowl ({
         type: 'info'
-        , title: '"._('Delete message')."'
-        , text: '"._('Message successfully deleted')."'
+        , title: '"._('Nachricht wurde gelöscht')."'
+        , text: ''
         , position: $(this).attr ('rel')
     });
 </script> ";

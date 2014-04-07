@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?><div id="content">
 
@@ -25,7 +25,7 @@
                     <div class="widget-header">
                         <h3>
                             <i class="icon-pencil"></i>
-                            <?= _('S:P Server - Setup'); ?>
+                            <?= _('S:P Server - Einstellungen'); ?>
                         </h3>
                     </div>
                     <!-- /widget-header -->
@@ -35,7 +35,7 @@
                         <form class="form-horizontal" method="post" action="/server/conf">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?=  _('S:P Title'); ?></label>
+                                    <label class="control-label" for="input01"><?=  _('S:P Titel'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large"
@@ -50,7 +50,7 @@
                                                value="<?= $_SERVER['SERVER_NAME']; ?>" name="SERVER_NAME"
                                                id="input01">
 
-                                        <p class="help-block"><?=  _('without http://www.'); ?></p>
+                                        <p class="help-block"><?=  _('ohne http://www.'); ?></p>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -95,14 +95,14 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?=  _('Admin Mail'); ?></label>
+                                    <label class="control-label" for="input01"><?=  _('Server-Mail-Adresse'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large"
                                                value="<?=  $server['adminMail']; ?>" name="adminMail"
                                                id="input01">
 
-                                        <p class="help-block"><?=  _('Information about new Tickets'); ?></p>
+                                        <p class="help-block"><?=  _('Informationen über neue Tickets'); ?></p>
                                     </div>
                                 </div>
 
@@ -177,7 +177,7 @@
                                 <div class="accordion-heading">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#sample-accordion"
                                        href="#collapseTwo">
-                                        <?=  _('Supported Moduls'); ?>
+                                        <?=  _('Unterstützte Module'); ?>
                                     </a>
 
                                     <i class="icon-plus toggle-icon"></i>

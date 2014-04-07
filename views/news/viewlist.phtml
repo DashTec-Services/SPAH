@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -29,11 +29,11 @@
                         <table class="table table-striped table-bordered table-highlight" id="example">
                             <thead>
                             <tr>
-                                <th><?php echo _('Title'); ?></th>
-                                <th><?php echo _('Message'); ?></th>
+                                <th><?php echo _('Titel'); ?></th>
+                                <th><?php echo _('Nachricht'); ?></th>
                                 <th><?php echo _('Login-News?'); ?></th>
-                                <th><?php echo _('User can view this message'); ?></th>
-                                <th><?php echo _('Delete'); ?></th>
+                                <th><?php echo _('Benutzern die Nachricht zeigen'); ?></th>
+                                <th><?php echo _('Löschen'); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,11 +48,11 @@
                                     <select name="login_news" size="1" onchange="this.form.submit()">
                                         <option <?php if ($row['login_news'] == '1') {
                                             echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('Yes'); ?>
+                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('Ja'); ?>
                                         </option>
                                         <option <?php if ($row['login_news'] == '0') {
                                             echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('No'); ?>
+                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('Nein'); ?>
                                         </option>
                                     </select>
                                 </td>
@@ -60,16 +60,16 @@
                                     <select name="is_aktiv" size="1" onchange="this.form.submit()">
                                         <option <?php if ($row['is_aktiv'] == '1') {
                                             echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('Yes'); ?>
+                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('Ja'); ?>
                                         </option>
                                         <option <?php if ($row['is_aktiv'] == '0') {
                                             echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('No'); ?>
+                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('Nein'); ?>
                                         </option>
                                     </select>
                                 </td>
                                 <?php
-                                echo '<td><button class="btn btn-danger" name="delmes" value="' . $row['id'] . '">'._('Delete').'</button></td>';
+                                echo '<td><button class="btn btn-danger" name="delmes" value="' . $row['id'] . '">'._('Löschen').'</button></td>';
                                 echo '</tr></form>';
                             }
                             ?>

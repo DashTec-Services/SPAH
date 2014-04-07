@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -23,7 +23,7 @@
         <li>
             <a href="/station/showstream"><?php echo _('View'); ?></a> <span class="divider">/</span>
         </li>
-        <li class="active"><?php echo _('Edit Server'); ?></li>
+        <li class="active"><?php echo _('Server bearbeiten'); ?></li>
     </ul>
 </div>
 <!-- /.page-title -->
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Stream Title'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Stream Titel'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="streamtitle"
@@ -137,14 +137,14 @@
                                value="1"  <?php if ($sc_trans['shuffle'] == '1') {
                             echo 'checked=""';
                         } ?>  >
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="shuffle" id="validateRadio23"
                                value="0" <?php if ($sc_trans['shuffle'] == '0') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -157,14 +157,14 @@
                                value="public" <?php if ($sc_serv['PublicServer'] == 'public') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="PublicServer" id="validateRadio233"
                                value="never" <?php if ($sc_serv['PublicServer'] == 'never') {
                             echo 'checked=""';
                         } ?> >
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -177,14 +177,14 @@
                                value="1" <?php if ($sc_trans['public'] == '1') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="public" id="validateRadio2333"
                                value="0" <?php if ($sc_trans['public'] == '0') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -197,7 +197,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('URL format'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('URL Format'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="URLFormat"
@@ -205,7 +205,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Title format'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Titel-Format'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="TitleFormat"
@@ -239,18 +239,18 @@
 <div class="span4">
     <div id="formToc" class="widget highlight">
         <div class="widget-header">
-            <h3><?php echo _('Edit Stream'); ?></h3>
+            <h3><?php echo _('Stream bearbeiten'); ?></h3>
         </div>
         <!-- /widget-header -->
         <div class="widget-content">
             <p>
-                <b><?php echo _('Save and restart'); ?></b> <br>
-                <?php echo _('Save and restart the Server'); ?>
+                <b><?php echo _('Einstellungen sichern und Neustart'); ?></b> <br>
+
             </p>
 
             <p>
-                <b><?php echo _('Save without restart'); ?></b><br>
-                <?php echo _('Save the configuration without restart!'); ?>
+                <b><?php echo _('Speichern ohne Neustart'); ?></b><br>
+
             </p>
             <br>
 

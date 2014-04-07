@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
  
  
@@ -53,7 +53,7 @@ foreach ($loaded_extensions as $loaded_extension) {
 
 # PHP Module und Extensions Prüfen
 $allMods = get_loaded_extensions();
-$impoMods = array('date','json', 'ssh2', 'curl', 'mcrypt','json', 'SourceGuardian');
+$impoMods = array('date','json', 'ssh2', 'curl', 'mcrypt','json');
 $result = array_diff($impoMods, $allMods);
 foreach($result as $wert => $key){
     echo 'PHP-Modul "' .$key . '" <b>NICHT vorhanden!</b><br>';

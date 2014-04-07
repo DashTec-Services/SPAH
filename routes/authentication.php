@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 use core\password\password;
 
@@ -39,13 +39,13 @@ $app->post('/login', function () use ($app) {
 
     $account = DB::queryFirstRow("SELECT * FROM accounts WHERE kundennummer=%s", $username);
     if (!$account) {
-        $app->flash('error', _('DB Invalid account credentials'));
+        $app->flash('error', _('Keinen Account gefunden'));
         $app->redirect('/', 303);
     }
 
     $passwordIsCorrect = password::verifyPassword($password, $account['password']);
     if (!$passwordIsCorrect || !$account['is_aktiv']) {
-        $app->flash('error', _('PW Invalid account credentials'));
+        $app->flash('error', _('Benutzer nicht gefunden!'));
         $app->redirect('/login', 303);
     }
 
@@ -54,7 +54,7 @@ $app->post('/login', function () use ($app) {
     $_SESSION['group'] = $account['usr_grp'];
     $_SESSION['USERNAME'] = $account['vorname'].' '. $account['nachname'];
 
-    $app->flash('success', _('Login successful'));
+    $app->flash('success', _('Login erfolgreich'));
     $app->redirect('/');
 })->name('doLogin');
 
@@ -63,7 +63,7 @@ $app->get('/logout', function () use ($app) {
     $_SESSION = array();
     session_destroy();
 
-    $app->flash('success', _('Logout successful'));
+    $app->flash('success', _('Abmelden erfolgreich'));
     $app->redirect('/login');
 })->name('doLogout');
 

@@ -6,16 +6,16 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 class dfwconf {
 
-   public static $DTFregName = 'David Schomburg';
-   public static $DTFlickey = 'FCKGW-RHQQ2-YXRKT-8TG6W-2B7Q8';
+   public static $DTFregName = '@KDNUM@';
+   public static $DTFlickey = '@RECHNR@';
 
 
    var $URLcrypt = "SALT-KEY";          # Key zum Verschlüsseln

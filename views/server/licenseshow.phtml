@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -21,7 +21,7 @@
                     <div class="widget-header">
                         <h3>
                             <i class="icon-pencil"></i>
-                            <?= _('License Information'); ?>
+                            <?= _('Lizenzinformation'); ?>
                         </h3>
                     </div>
                     <!-- /widget-header -->
@@ -29,7 +29,7 @@
                         <form class="form-horizontal">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label" for="disabledInput"><?= _('Owner'); ?></label>
+                                    <label class="control-label" for="disabledInput"><?= _('Lizenzinhaber'); ?></label>
 
                                     <div class="controls">
                                         <input class="input-large disabled" id="disabledInput" type="text"
@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="disabledInput"><?= _('License Key'); ?></label>
+                                    <label class="control-label" for="disabledInput"><?= _('Lizenz-ID'); ?></label>
 
                                     <div class="controls">
                                         <input class="input-xxlarge disabled" id="disabledInput" type="text"
@@ -63,12 +63,13 @@
             <div class="span4">
                 <div id="formToc" class="widget highlight">
                     <div class="widget-header">
-                        <h3><?= _('S:P License Information'); ?></h3>
+                        <h3><?= _('S:P Lizenz Informationen'); ?></h3>
                     </div>
                     <!-- /widget-header -->
                     <div class="widget-content">
                         <p>
-                            <?= _('Information about License'); ?>
+                            <?= _('Informationen zur'); ?>
+                            <a href="http://login.streamerspanel.de/user/terms" target="_blank"><?= _('LIZENZ') ?></a>
                         </p>
                         <br>
 

@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -26,7 +26,7 @@
                     <div class="widget-header">
                         <h3>
                             <i class="icon-pencil"></i>
-                            <?= _('Add New User'); ?>
+                            <?= _('Neuen Benutzer hinzufügen'); ?>
                         </h3>
                     </div>
                     <!-- /widget-header -->
@@ -36,7 +36,7 @@
                         <form class="form-horizontal" method="post" action="/sap/benutzerverwaltung/list">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Consumer ID'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Kundennummer'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="kundennummer" id="input01">
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Password'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Passwort'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="password" id="input01">
@@ -52,56 +52,56 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('First Name'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Vorname'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="vorname" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Name'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Nachname'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="nachname" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Street'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Straße'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="street" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Number'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Hausnummer'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="hausnummer" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('ZIP'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('PLZ'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="plz" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Town'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Ort'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="ort" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Phone'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Tel'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="telefon" id="input01">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="input01"><?= _('Mobile'); ?></label>
+                                    <label class="control-label" for="input01"><?= _('Handy'); ?></label>
 
                                     <div class="controls">
                                         <input type="text" class="input-large" name="handy" id="input01">
@@ -113,28 +113,28 @@
                                     <div class="controls">
                                         <input type="text" class="input-large" name="mail" id="input01">
 
-                                        <p class="help-block">Wird benötigt bei der Automatischen erstellung des
-                                            Passwortes!</p>
+                                        <p class="help-block"><?= _('Wird benötigt bei der Automatischen erstellung des
+                                            Passwortes!'); ?></p>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Benutzerrechte</label>
+                                    <label class="control-label"><?= _('Benutzerrechte'); ?></label>
 
                                     <div class="controls">
                                         <label class="radio">
                                             <input type="radio" name="usr_grp" id="validateRadio1" value="user">
-                                            Benutzer (Starten und Stoppen der Streams, Playlisten bearbeiten, DJ
-                                            anlegen, löschen)
+                                            <?= _('Benutzer (Starten und Stoppen der Streams, Playlisten bearbeiten, DJ
+                                            anlegen, löschen)') ?>
                                         </label>
                                         <label class="radio">
                                             <input type="radio" name="usr_grp" id="validateRadio2" value="adm">
-                                            Administrator (Streams, Benutzer anlegen und Löschen, Paneleinstellungen
-                                            bearbeiten)
+                                            <?= _('Benutzer (Starten und Stoppen der Streams, Playlisten bearbeiten, DJ
+                                            anlegen, löschen)') ?>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary btn-large" name="registeruser"><?= _('Add New User'); ?>
+                                    <button type="submit" class="btn btn-primary btn-large" name="registeruser"><?= _('Benutzer hinzufügen'); ?>
                                     </button>
                                 </div>
                             </fieldset>
@@ -155,22 +155,22 @@
                 <div id="formToc" class="widget highlight">
 
                     <div class="widget-header">
-                        <h3><b>-Hinweise- </b>"Benutzer hinzufügen"</h3>
+                        <h3><?= _('<b>-Hinweise- </b>"Benutzer hinzufügen"') ?></h3>
                     </div>
                     <!-- /widget-header -->
 
                     <div class="widget-content">
 
-                        <p>Kundennummern zur Identifikation von verschiedenen Accounts. Diese kann je nach Einstellungen
-                            als Login verwendet werden. </p>
+                        <p><?= _('Kundennummern zur Identifikation von verschiedenen Accounts. Diese kann je nach Einstellungen
+                            als Login verwendet werden.')?></p>
 
                         <br>
 
-                        <p>Benutzer mit Administrator rechten erhalten vollen Zugriff auf das Panel</p>
+                        <p><?= _('Benutzer mit Administrator rechten erhalten vollen Zugriff auf das Panel') ?>/p>
 
                         <br>
 
-                        <p>Automatisch erstellte Passwörter werden den Benutzer per Mail zugeschickt.</p>
+                        <p><?= _('Automatisch erstellte Passwörter werden den Benutzer per Mail zugeschickt.')?></p>
                     </div>
                     <!-- /widget-content -->
                 </div>

@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
     <div id="content">
@@ -28,9 +28,9 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th><?= _('Date') ?></th>
-                                    <th><?= _('Message') ?></th>
-                                    <th><?= _('Setting') ?></th>
+                                    <th><?= _('Datum') ?></th>
+                                    <th><?= _('Nachricht') ?></th>
+                                    <th><?= _('Einstellungen') ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -47,7 +47,7 @@
                                                     if ($repshow['is_adm_answ'] == '') {
                                                         echo '<p><b>' . _('Admin:') . '<br></b>';
                                                     } else {
-                                                        echo '<p><b>' . _('Reply:') . '<br></b>';
+                                                        echo '<p><b>' . _('Antwort:') . '<br></b>';
                                                     }
                                                     echo $repshow['text'];
                                                     echo '</p>';
@@ -55,10 +55,10 @@
                                             </td>
                                             <td>
                                                 <button name="sendreply"
-                                                        value="edit.<?= $row['id'] ?>"><?= _('Submit') ?></button>
+                                                        value="edit.<?= $row['id'] ?>"><?= _('Senden') ?></button>
                                                 <br>
                                                 <button name="delentry"
-                                                        value="del.<?= $row['id'] ?>"><?= _('Delete') ?></button>
+                                                        value="del.<?= $row['id'] ?>"><?= _('Löschen') ?></button>
                                             </td>
                                         </tr>
                                     </form>

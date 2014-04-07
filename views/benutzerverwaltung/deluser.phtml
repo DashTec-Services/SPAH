@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <?php require __DIR__ . '/../header.phtml' ?>
@@ -22,101 +22,101 @@
         <ul class="wmfg_questions">
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Kundennummer</label>
+                <label class="wmfg_label" for="text_id"><?= _('Kundennummer') ?></label>
                 <input type="text" class="wmfg_text" name="kundennummer" id="text_id"
                        value="<?php echo $account['kundennummer'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Passwort</label>
+                <label class="wmfg_label" for="text_id"><?= _('Passwort') ?></label>
                 <input type="text" class="wmfg_text" name="password" id="text_id"
                        value="<?php echo $account['password'] ?>"/>
             </li>
 
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Vorname<br></label>
+                <label class="wmfg_label" for="text_id"><?= _('Vorname') ?><br></label>
                 <input type="text" class="wmfg_text" name="vorname" id="text_id"
                        value="<?php echo $account['vorname'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Nachname<br></label>
+                <label class="wmfg_label" for="text_id"><?= _('Nachname') ?><br></label>
                 <input type="text" class="wmfg_text" name="nachname" id="text_id"
                        value="<?php echo $account['nachname'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Straße</label>
+                <label class="wmfg_label" for="text_id"><?= _('Straße') ?></label>
                 <input type="text" class="wmfg_text" name="straße" id="text_id"
                        value="<?php echo $account['straße'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Hausnummer</label>
+                <label class="wmfg_label" for="text_id"><?= _('Hausnummer') ?></label>
                 <input type="text" class="wmfg_text" name="hausnummer" id="text_id"
                        value="<?php echo $account['hausnummer'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Ort</label>
+                <label class="wmfg_label" for="text_id"><?= _('Ort') ?></label>
                 <input type="text" class="wmfg_text" name="ort" id="text_id" value="<?php echo $account['ort'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">PLZ</label>
+                <label class="wmfg_label" for="text_id"><?= _('PLZ') ?></label>
                 <input type="text" class="wmfg_text" name="plz" id="text_id" value="<?php echo $account['plz'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Tel.</label>
+                <label class="wmfg_label" for="text_id"><?= _('Tel.') ?></label>
                 <input type="text" class="wmfg_text" name="telefon" id="text_id"
                        value="<?php echo $account['telefon'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">Handy</label>
+                <label class="wmfg_label" for="text_id"><?= _('Handy') ?></label>
                 <input type="text" class="wmfg_text" name="handy" id="text_id" value="<?php echo $account['handy'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label" for="text_id">E-Mail</label>
+                <label class="wmfg_label" for="text_id"><?= _('E-Mail') ?></label>
                 <input type="text" class="wmfg_text" name="mail" id="text_id" value="<?php echo $account['mail'] ?>"/>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label">Benutzerrechte</label>
+                <label class="wmfg_label"><?= _('Benutzerrechte') ?></label>
                 <table class="wmfg_answers">
                     <tr class="wmfg_a">
                         <td class="wmfg_a_td"><input type="radio" class="wmfg_checkbox" name="usr_grp" id="checkbox_1"
                                                      value="adm"/></td>
-                        <td><label class="wmfg_label_a" for="checkbox_1">SuperAdmin</label></td>
+                        <td><label class="wmfg_label_a" for="checkbox_1"><?= _('SuperAdmin') ?></label></td>
                     </tr>
                     <tr class="wmfg_a">
                         <td class="wmfg_a_td"><input type="radio" class="wmfg_checkbox" name="usr_grp" id="checkbox_2"
                                                      value="user" checked="checked"/></td>
-                        <td><label class="wmfg_label_a" for="checkbox_2">StreamInhaber</label></td>
+                        <td><label class="wmfg_label_a" for="checkbox_2"><?= _('Stream-Inhaber') ?></label></td>
                     </tr>
                 </table>
             </li>
 
             <li class="wmfg_q">
-                <label class="wmfg_label">Benutzer wirklich LÖSCHEN?</label>
+                <label class="wmfg_label"><?= _('Benutzer wirklich LÖSCHEN?') ?></label>
                 <table class="wmfg_answers">
                     <tr class="wmfg_a">
                         <td class="wmfg_a_td"><input type="radio" class="wmfg_checkbox" name="delUser" id="checkbox_1"
                                                      value="1"</td>
-                        <td><label class="wmfg_label_a" for="checkbox_1">JA BENUTZER LÖSCHEN</label></td>
+                        <td><label class="wmfg_label_a" for="checkbox_1"><?= _('JA BENUTZER LÖSCHEN') ?></label></td>
                     </tr>
                     <tr class="wmfg_a">
                         <td class="wmfg_a_td"><input type="radio" class="wmfg_checkbox" name="delUser" id="checkbox_2"
                                                      value="0" checked="checked"/></td>
-                        <td><label class="wmfg_label_a" for="checkbox_2">nein</label></td>
+                        <td><label class="wmfg_label_a" for="checkbox_2"><?= _('nein') ?></label></td>
                     </tr>
                 </table>
             </li>
 
-            <input type="submit" class="wmfg_btn" name="del" id="submit_id" value="LÖSCHEN"/>
+            <input type="submit" class="wmfg_btn" name="del" id="submit_id" value="<?= _('LÖSCHEN') ?>"/>
 
         </ul>
 

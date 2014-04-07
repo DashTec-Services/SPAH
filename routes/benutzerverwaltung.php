@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 
@@ -64,7 +64,7 @@ $app->post('/user/list', function () use ($app) {
             $Users = DB::query("SELECT * FROM accounts");
             $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
             $sp_growl = new core\sp_special\growl();
-            $sp_growl->writeGrowl('success', _('User del'), _('The user was successfully del '));
+            $sp_growl->writeGrowl('success', _('Benutzer gelöscht'), _('Der Benutzer wurde erfolgreich gelöscht!'));
         }
 
         if($changer['1'] == 'edituser'){
@@ -75,7 +75,7 @@ $app->post('/user/list', function () use ($app) {
             $_SESSION['merker'] = $changer[0];
             $app->render('benutzerverwaltung/edituser.phtml', compact('Users'));
             $sp_growl = new core\sp_special\growl();
-            $sp_growl->writeGrowl('success', _('User id'), _('The user was successfully edit '));
+            $sp_growl->writeGrowl('success', _('Benutzer bearbeitet'), '');
 
         }
 
@@ -93,7 +93,7 @@ $app->post('/user/list', function () use ($app) {
         $Users = DB::query("SELECT * FROM accounts");
         $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
         $sp_growl = new core\sp_special\growl();
-        $sp_growl->writeGrowl('success', _('User Activ'), _('The user was successfully activted '));
+        $sp_growl->writeGrowl('success', _('Benutzer wurde aktiviert'), '');
     }
 
 
@@ -139,7 +139,7 @@ $app->post('/user/edituser', function () use ($app) {
         $sp_growl->writeGrowl('success', 'Änderungen wurden übernommen', '');
     } elseif (isset($_POST['update'])) {
         $sp_growl = new core\sp_special\growl();
-        $sp_growl->writeGrowl('error', _('Incorrect details ') ,  _('Name, Surname and Mail are needed to process') );
+        $sp_growl->writeGrowl('error', _('Angaben nicht vollständig') ,  _('Name, Nachname und Mail werden benötigt') );
     }
 
 })->name('doLogin');
@@ -171,7 +171,7 @@ $app->post('/sap/benutzerverwaltung/list', function () use ($app) {
         $Users = DB::query("SELECT * FROM accounts");
         $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
         $sp_growl = new core\sp_special\growl();
-        $sp_growl->writeGrowl('success', _('User created'), _('The user was successfully created'));
+        $sp_growl->writeGrowl('success', _('Benutzer wurde angelegt'), '');
 
     } else {
 

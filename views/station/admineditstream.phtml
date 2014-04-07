@@ -1,4 +1,4 @@
-<?php
+d<?php
 /**
  * Created by David Schomburg (DashTec - Services)
  *      www.dashtec.de
@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <div id="content">
@@ -21,9 +21,9 @@
             <a href="/">Home</a> <span class="divider">/</span>
         </li>
         <li>
-            <a href="/station/showstream"><?php echo _('Overview'); ?></a> <span class="divider">/</span>
+            <a href="/station/showstream"><?php echo _('Streams-Übersicht'); ?></a> <span class="divider">/</span>
         </li>
-        <li class="active"><?php echo _('Edit - Stream - Server '); ?></li>
+        <li class="active"><?php echo _('Stream-Server bearbeiten'); ?></li>
     </ul>
 </div>
 <!-- /.page-title -->
@@ -41,7 +41,7 @@
     <form class="form-horizontal" method="post" action="/station/showstream">
         <fieldset>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Stream name'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Stream-Name'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="stream_userName"
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Shoutcast MP3 license'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Shoutcast MP3 Lizenz'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="unlockkeyname" id="input01"
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Stream title'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Stream Titel'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="streamtitle"
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('DJ Password'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('DJ Passwort'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="djpassword"
@@ -130,7 +130,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Shuffle</label>
+                <label class="control-label"><?php echo _('Shuffle'); ?></label>
 
                 <div class="controls">
                     <label class="radio">
@@ -138,19 +138,19 @@
                                value="1"  <?php if ($sc_trans['shuffle'] == '1') {
                             echo 'checked=""';
                         } ?>  >
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="shuffle" id="validateRadio23"
                                value="0" <?php if ($sc_trans['shuffle'] == '0') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label"><?php echo _('Public server?'); ?></label>
+                <label class="control-label"><?php echo _('Öffentlicher Server'); ?></label>
 
                 <div class="controls">
                     <label class="radio">
@@ -158,14 +158,14 @@
                                value="public" <?php if ($sc_serv['PublicServer'] == 'public') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="PublicServer" id="validateRadio233"
                                value="never" <?php if ($sc_serv['PublicServer'] == 'never') {
                             echo 'checked=""';
                         } ?> >
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -178,14 +178,14 @@
                                value="1" <?php if ($sc_trans['public'] == '1') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('Yes'); ?>
+                        <?php echo _('Ja'); ?>
                     </label>
                     <label class="radio">
                         <input type="radio" name="public" id="validateRadio2333"
                                value="0" <?php if ($sc_trans['public'] == '0') {
                             echo 'checked=""';
                         } ?>>
-                        <?php echo _('No'); ?>
+                        <?php echo _('Nein'); ?>
                     </label>
                 </div>
             </div>
@@ -198,7 +198,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('URL format'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('URL Format'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="URLFormat"
@@ -206,7 +206,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('Title format'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('Titel-Format'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="TitleFormat"
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input01"><?php echo _('DJ Password'); ?></label>
+                <label class="control-label" for="input01"><?php echo _('DJ Passwort'); ?></label>
 
                 <div class="controls">
                     <input type="text" class="input-large" name="djpassword"
@@ -222,9 +222,9 @@
                 </div>
             </div>
             <div class="form-actions">
-                <button type="submit" name="servconfandreboot" class="btn btn-danger btn-large"><i class="icon-star"></i>Speichern und Neustart</button>
+                <button type="submit" name="servconfandreboot" class="btn btn-danger btn-large"><i class="icon-star"></i><?php echo _('Speichern und Neustart'); ?> </button>
                 <button type="submit" name="servconfsave" class="btn btn-primary btn-large">
-                    <?php echo _('Save'); ?>
+                    <?php echo _('Speichern'); ?>
                 </button>
 
             </div>

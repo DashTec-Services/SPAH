@@ -1,5 +1,21 @@
 <?php
 /**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.25
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ *  Lizenz: http://login.streamerspanel.de/user/terms
+ */
+
+
+
+/**
  * PHP Real Ajax Uploader 2.7
  * Copyright @Alban Xhaferllari
  * albanx@gmail.com

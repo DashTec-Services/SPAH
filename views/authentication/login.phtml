@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 ?>
 <?php require __DIR__ . '/../header.phtml' ?>
@@ -33,7 +33,7 @@
 
             <p class="infoText">
                 <br>
-                <?= _('Enter your user-name and password'); ?><br>
+                <?= _('Bitte Benutzernamen und Passwort angeben'); ?><br>
                 <b>
                     <?php foreach ($flash as $severity => $flashMessage): ?>
                         <?= $severity ?>: <?= $flashMessage ?><br/>
@@ -44,23 +44,23 @@
 
             <form action="/login" method="post">
 
-                <h1><?= _('Registration'); ?></h1>
+                <h1><?= _('Anmeldung'); ?></h1>
 
                 <div class="login-fields">
 
-                    <p><?= _('Your registration is required!'); ?></p>
+                    <p><?= _('Anmeldung ist erforderlich!'); ?></p>
 
                     <div class="field">
-                        <label for="username"><?= _('Username'); ?>:</label>
-                        <input type="text" id="username" name="username" value="" placeholder="<?= _('Username'); ?>"
+                        <label for="username"><?= _('Benutzername'); ?>:</label>
+                        <input type="text" id="username" name="username" value="" placeholder="<?= _('Benutzername'); ?>"
                                class="login username-field"/>
                     </div>
                     <!-- /field -->
 
                     <div class="field">
-                        <label for="password"><?= _('Password'); ?>:</label>
+                        <label for="password"><?= _('Passwort'); ?>:</label>
                         <input type="password" id="password" name="password" value=""
-                               placeholder="<?= _('Password'); ?>"
+                               placeholder="<?= _('Passwort'); ?>"
                                class="login password-field"/>
                     </div>
                     <!-- /password -->
@@ -71,7 +71,7 @@
                 <div class="login-actions">
 
                     <button type="submit" name="submit"
-                            class="button btn btn-secondary btn-large"><?= _('Login'); ?></button>
+                            class="button btn btn-secondary btn-large"><?= _('Anmelden'); ?></button>
 
                 </div>
                 <!-- .actions -->

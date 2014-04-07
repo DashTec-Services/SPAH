@@ -6,11 +6,11 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.21
+ *  v 0.25
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
- * Lizenz: http://login.streamerspanel.de/user/terms
+ *  Lizenz: http://login.streamerspanel.de/user/terms
  */
 
 namespace SP\Menu;
@@ -24,7 +24,7 @@ class MenuInclusion
     public function MenuInclude ($app){
 
         if(isset($_SESSION['group'])){
-            $app->flash('success', _('Login successful'));
+            $app->flash('success', _('Login erfolgreich'));
             $Users = \DB::query("SELECT * FROM accounts");
 
             if($_SESSION['group'] == 'adm'){
