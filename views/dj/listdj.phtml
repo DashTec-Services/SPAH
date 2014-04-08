@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.25
+ *  v 0.30
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -55,7 +55,7 @@
                                             <select name="editDjList" size="1" onchange="this.form.submit()">
                                                 <option value=""></option>
                                                 <option value="<?php echo 'djtoStation.'.$row['id'] ?>"><?php echo _('Stream zum Benutzer hinzufügen'); ?></option>
-                                               <!-- SOON  <option value="<?php echo 'editDj.'.$row['id'] ?>"><?php echo _('Benutzer bearbeiten'); ?></option> -->
+                                                <option value="<?php echo 'editDj.'.$row['id'] ?>"><?php echo _('Benutzer bearbeiten'); ?></option>
                                                 <option value="<?php echo 'delDj.'.$row['id'] ?>"><?php echo _('Benutzer löschen'); ?></option>
                                             </select>
                                         </form>

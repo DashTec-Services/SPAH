@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.25
+ *  v 0.30
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -103,6 +103,16 @@
                                                id="input01">
 
                                         <p class="help-block"><?=  _('Informationen über neue Tickets'); ?></p>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="loacal"><?= _('Bitte wählen Sie Ihre Sprache') ?></label>
+                                    <div class="controls">
+                                        <select name="local" size="1">
+                                            <option  value="de_DE"><?= _('Bitte wählen Sie Ihre Sprache') ?></option>
+                                            <option value="de_DE"  <?php if($server['default_local'] == 'de_DE'){echo 'selected';} ?>><?= _('Deutsch'); ?></option>
+                                            <option value="en_US" <?php if($server['default_local'] == 'en_US'){echo 'selected';} ?>><?= _('Englisch'); ?></option>
+                                        </select>
                                     </div>
                                 </div>
 

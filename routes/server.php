@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.25
+ *  v 0.30
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -47,6 +47,7 @@ $app->post('/server/conf', function () use ($app) {
             'ssh_port' => $mywork[0]['ssh_port'],
             'sp_titel' => $mywork[0]['sp_titel'],
             'doc_root' => $mywork[0]['doc_root'],
+            'default_local' => $mywork[0]['local'],
             'adminMail' => $mywork[0]['adminMail']
         ), "id=%s", '1');
 

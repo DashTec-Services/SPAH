@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.25
+ *  v 0.30
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -50,6 +50,12 @@ $app->post('/login', function () use ($app) {
     }
 
     # Session setzen
+    if(empty($account['local'])){
+        $local = DB::queryFirstRow("SELECT default_local FROM config WHERE id=%s",'1');
+        $_SESSION['local'] = $local['default_local'];
+    }else{
+        $_SESSION['local'] = $account['local'];
+    }
     $_SESSION['account_id'] = (int)$account['id'];
     $_SESSION['group'] = $account['usr_grp'];
     $_SESSION['USERNAME'] = $account['vorname'].' '. $account['nachname'];

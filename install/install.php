@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.25
+ *  v 0.30
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -60,7 +60,7 @@ if (isset($_POST['finsih'])){
     $_SESSION['adminphone'] = $_POST['adminphone'];
     $_SESSION['adminmail'] = $_POST['adminmail'];
 
-
+    $_SESSION['local'] = $_POST['local'];
 
     DB::$user = $_SESSION['dbuser'];
     DB::$password = $_SESSION['dbpass'];
@@ -93,6 +93,7 @@ mysqli_multi_query($mysqli,$sql);
         'root_password' => $_SESSION['sshpass'],
         'ssh_port' => $_SESSION['ssh_port'],
         'doc_root' => $_SESSION['serverdocroot'],
+        'default_local' => $_SESSION['local'],
         'sp_titel' => 'S:P fresh install'
     ));
 
@@ -107,6 +108,7 @@ mysqli_multi_query($mysqli,$sql);
         'telefon' => $_SESSION['adminphone'],
         'ort' => $_SESSION['admintown'],
         'password' => $_SESSION['cryptpass'],
+        'local' => $_SESSION['local'],
         'is_aktiv' => '1',
         'usr_grp' => 'adm'
     ));
@@ -121,12 +123,7 @@ $mysqli->close();
     file_put_contents($file, $content);
 
 
-
 $_SESSION['Setup_Done'] = true;
-
-
-
-
 
 
 }
@@ -539,6 +536,16 @@ $_SESSION['Setup_Done'] = true;
     <?= _('Admin - Passwort') ?>:  <?= $_SESSION['pass']; ?></p>
             <br />
 
+            <div class="control-group">
+                <label class="control-label" for="loacal"><?= _('Bitte wählen Sie Ihre Sprache') ?></label>
+                <div class="controls">
+                    <select name="local" size="1">
+                        <option selected value="de_DE"><?= _('Bitte wählen Sie Ihre Sprache') ?></option>
+                        <option value="de_DE"><?= _('Deutsch'); ?></option>
+                        <option value="en_US"><?= _('Englisch'); ?></option>
+                    </select>
+                </div>
+            </div>
 
             <div class="alert alert-error">
                 <h4 class="alert-heading"><?= _('Warnung') ?></h4>
@@ -547,7 +554,7 @@ $_SESSION['Setup_Done'] = true;
 
 
 
-            <button class="btn btn-primary btn-large" name="finsih" ><?= _('fertig') ?></button>
+            <button class="btn btn-primary btn-large" name="finsih" ><?= _('Fertig') ?></button>
 
 
 

@@ -12,10 +12,12 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `telefon` varchar(45) NOT NULL,
   `handy` varchar(45) NOT NULL,
   `mail` varchar(60) NOT NULL,
+  `local` varchar(15) NOT NULL,
   `usr_grp` enum('adm','user','dj') NOT NULL,
   `is_aktiv` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `server_ip` varchar(15) NOT NULL,
@@ -24,10 +26,10 @@ CREATE TABLE IF NOT EXISTS `config` (
   `ssh_port` int(11) NOT NULL,
   `sp_titel` varchar(150) NOT NULL,
   `doc_root` varchar(250) NOT NULL,
+  `default_local` varchar(5) NOT NULL,
   `adminMail` varchar(55) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `dj_accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `dj_accounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `mp3` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `org_file_titel` varchar(45) NOT NULL,
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `mp3` (
   `year` varchar(5) DEFAULT NULL,
   `artist` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `mp3_usr_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -68,7 +69,6 @@ CREATE TABLE IF NOT EXISTS `mp3_usr_rel` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `news_to_read` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -89,7 +88,6 @@ CREATE TABLE IF NOT EXISTS `news_to_read` (
   `user_read_it` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `playlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -99,15 +97,12 @@ CREATE TABLE IF NOT EXISTS `playlist` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `playlist_mp3_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `playlist_id` int(11) NOT NULL,
   `mp3_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
 
 CREATE TABLE IF NOT EXISTS `sc_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -124,7 +119,6 @@ CREATE TABLE IF NOT EXISTS `sc_rel` (
   UNIQUE KEY `id_2` (`id`),
   KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `sc_serv_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -164,7 +158,6 @@ CREATE TABLE IF NOT EXISTS `sc_serv_conf` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `encoder_1` varchar(10) NOT NULL DEFAULT 'aacp',
@@ -200,7 +193,6 @@ CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `sc_version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
@@ -217,7 +209,6 @@ INSERT INTO `sc_version` (`id`, `name`, `file_name`, `version`, `typ`) VALUES
 (4, 'Trans-x64', 'sc_trans64.bin', '2', 'trans'),
 (5, 'ShoutCast 1.9.9', '1.9.9_sc_serv.bin', '1.9.9', 'serv');
 
-
 CREATE TABLE IF NOT EXISTS `support` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `replyid` int(11) NOT NULL,
@@ -228,4 +219,4 @@ CREATE TABLE IF NOT EXISTS `support` (
   `titel` varchar(190) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

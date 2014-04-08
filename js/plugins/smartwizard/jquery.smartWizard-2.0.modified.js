@@ -62,7 +62,7 @@
                   elmStepContainer = $('<div></div>').addClass("stepContainer");
                   btNext = $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext btn btn-tertiary");
                   btPrevious = $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious btn");
-                  btFinish = $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish btn btn-primary");
+                  //btFinish = $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish btn btn-primary");
                   
                   // highlight steps with errors
                   if(options.errorSteps && options.errorSteps.length>0){
