@@ -55,13 +55,12 @@
 
                                 <td>
                                     <select name="playlstswitch" size="1" onchange="this.form.submit()">
-                                        <option value=""></option>
                                         <?php
                                         $results = DB::query("SELECT * FROM playlist WHERE user_id=%s", $_SESSION['account_id']);
                                         foreach ($results as $pllst) {
                                             ?>
                                             <option <?php if ($pllst['id'] == $row['play_list_id']) {
-                                                echo 'selected';
+
                                             } ?>
                                                 value=" <?php echo $row['id'] . '.' . $pllst['id'] . '.' . $pllst['playlist_name']; ?>">
                                                 <?php echo $pllst['playlist_name']; ?>
@@ -71,6 +70,7 @@
                                         }
                                         ?>
                                     </select>
+
                                 </td>
                                 <td><?php if ($row['sc_trans_pid'] == '0') {
                                         echo '<img src="/image/fuge/status-busy.png">';

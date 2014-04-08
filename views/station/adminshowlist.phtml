@@ -30,14 +30,13 @@
                             <thead>
                             <tr>
                                 <th><?php echo _('Benutzer'); ?></th>
-                                <th><?php echo _('Streamname'); ?></th>
-                                <th><?php echo _('Hörer'); ?></th>
-                                <th><?php echo _('Port'); ?></th>
+                                <th><?php echo _('Konfiguration'); ?></th>
                                 <th><?php echo _('Server (Start/Stop)'); ?></th>
                                 <th><?php echo _('Setup'); ?></th>
                             </tr>
                             </thead>
                             <tbody>
+
                             <?php
                             $results = DB::query("SELECT * FROM sc_rel");
                             foreach ($results as $row) {
@@ -45,9 +44,18 @@
                                 $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);
                                 $account = DB::queryFirstRow("SELECT * FROM accounts WHERE id=%s", $row['accounts_id']);
                                 echo "<td>" . $account['vorname'] . " " . $account['nachname'] . "</td>";
-                                echo "<td>" . $row['stream_userName'] . "</td> \n";
-                                echo "<td>" . $sc_serv['MaxUser'] . "</td> \n";
-                                echo '<td><a href="http://' . $_SERVER["HTTP_HOST"] . ':' . $sc_serv['PortBase'] . '">' . $sc_serv['PortBase'] . "</td> \n";
+
+                                echo "<td>";
+                                            echo _('Stream-Bezeichnung: ') .'<b>'. $row['stream_userName'] .'</b>'."<br>";
+                                            echo _('Max-Hörer: ') .'<b>'. $sc_serv['MaxUser'] .'</b>'. "<br>";
+                                            echo _('Port: ') .'<a href="http://' . $_SERVER["HTTP_HOST"] . ':' . $sc_serv['PortBase'] . '">'.'<b>'. $sc_serv['PortBase'] .'</b>'. "</a><br>";
+
+                                    $sc_serv_version = DB::queryFirstRow("SELECT * FROM sc_version WHERE id=%s", $row['sc_serv_version_id']);
+                                    $sc_Trans_version = DB::queryFirstRow("SELECT * FROM sc_version WHERE id=%s", $row['sc_trans_version_id'] );
+                                            echo _('Server-Version: ').'<b>'. $sc_serv_version['name'].'</b>'.'<br>';
+                                            echo _('Transcoder: ').'<b>'. $sc_Trans_version['name'] .'</b>';
+                                echo "</td>";
+
                                 ?> </form>
                                 <td>
                                     <form action="/station/showstream" method="post">
@@ -73,8 +81,10 @@
                                     <form action="/station/showstream" method="post">
                                         <select name="changeConfServ" size="1" onchange="this.form.submit()">
                                             <option value=""></option>
-                                            <option value="<?php echo $row['id'] . '.edit' ?>"><?php echo _('edit'); ?></option>
-                                            <option value="<?php echo $row['id'] . '.clear' ?>"><?php echo _('delete'); ?></option>
+                                            <option value="<?php echo $row['id'] . '.edit' ?>"><?php echo _('bearbeiten'); ?></option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                            <option value="<?php echo $row['id'] . '.clear' ?>"><?php echo _('LÖSCHEN!!!'); ?></option>
                                         </select>
                                     </form>
                                 </td>
@@ -88,13 +98,7 @@
                                     <td>
 
                                     </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
+                                                <td>
                                         <button type="submit" value="rebooton" name="switch"><?php echo _('Server Neustart'); ?></button>
                                         <button type="submit" value="on" name="switch"><?php echo _('Alle Server Ein'); ?></button>
                                         <button type="submit" value="off" name="switch"><?php echo _('Alle Server Aus'); ?></button>

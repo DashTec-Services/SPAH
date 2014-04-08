@@ -23,7 +23,11 @@ $app->get('/', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     if($_SESSION['group'] == 'adm'){
+
+
+        $growl = new \core\sp_special\growl();
         $app->render('spwelcome/adm.phtml', compact('Users'));
+
     }elseif($_SESSION['group']== 'user'){
         $app->render('spwelcome/user.phtml', compact('Users'));
            // TODO: USER MAIN ANSICHT

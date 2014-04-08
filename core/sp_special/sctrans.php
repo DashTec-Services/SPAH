@@ -45,7 +45,7 @@ class sctrans
         $Sc_Serv['trans'] = ''; # Array für die Spalte
 
 # Datei öffnen
-        $datei = fopen("shoutcastconf/" . $Sc_Serv_conf['serverport_1'] . "/sc_trans.conf", "w+");
+        $datei = fopen($_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $Sc_Serv_conf['serverport_1'] . '/sc_trans.conf', 'w');
         foreach ($columns as $column) {
             $Sc_Serv['trans'][$column] = $Sc_Serv_conf[$column]; # Speichert alles in einem Array für Fehlerauswerung
         }
@@ -71,6 +71,8 @@ class sctrans
 
         // SSH CONFIG ANLEGEN
         $this->writeSc_TransConf($sc_serv_rel['sc_serv_conf_id']);
+
+        $this->writeNewPlaylist($sc_rel_id, $sc_serv_id['PortBase']);
 
         // SC_SERV Version
         $sc_trans = $this->getScTrans($sc_serv_rel['sc_trans_version_id']);
@@ -114,5 +116,31 @@ class sctrans
         return $scservname['file_name'];
     }
 
+    public function writeNewPlaylist($sc_rel_id, $Port){
+
+        # ID der Playliste aus der sc_rel
+        $playlistid = \DB::queryFirstRow("SELECT play_list_id FROM sc_rel WHERE id=%s", $sc_rel_id);
+
+        # Name der Plaliyste
+        $playlistname = \DB::queryFirstRow("SELECT playlist_name FROM playlist WHERE id=%s", $playlistid['play_list_id']);
+        $datei = fopen( $_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/'.$Port.'/'.$playlistname['playlist_name'].'.lst', "w");
+
+        # Abfrage der MP3 ID
+        $results = \DB::query("SELECT mp3_id FROM playlist_mp3_rel WHERE playlist_id=%s", $playlistid['play_list_id'] );
+        $MP3TitelSpeicher = '';
+        foreach ($results as $row) {
+            #MP3 Dateiname auslesen
+            $mp3DirTitel = \DB::queryFirstRow("SELECT dir_titel FROM mp3 WHERE id=%s",$row['mp3_id']);
+                $MP3TitelSpeicher[] = $_SERVER['DOCUMENT_ROOT'] . '/mp3collection/'.$mp3DirTitel['dir_titel'];
+        }
+
+        foreach($MP3TitelSpeicher as $key => $value){
+            fwrite($datei,$value."\n");
+        }
+             fclose($datei);
+
+
+
+    }
 
 }

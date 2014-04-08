@@ -20,13 +20,13 @@
 
 $app->get('/station/admedit', function() use ($app){
     $app->render('station/admineditstream.phtml', compact('license'));
-})->name('license');
+})->name('restricted');
 
 $app->get('/station/list', function() use ($app){
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('station/adminshowlist.phtml', compact('license'));
-})->name('license');
+})->name('restricted');
 
 
 /*
@@ -133,21 +133,47 @@ $app->post('/station/showstream', function () use ($app) {
             $SPMenu->MenuInclude($app);
             $app->render('station/usershowstreams.phtml', compact('license'));
         }
+
+
     }
 
+    # Server + Transc conf sichern nach bearbeitung und Neu-Starten
+    if (isset($_POST['editsrvandreboot'])) {
 
+        $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
 
+        DB::update('sc_trans_conf', array(
+            'unlockkeyname' => $_POST['unlockkeyname'],
+            'unlockkeycode' => $_POST['unlockkeycode'],
+            'irc' => $_POST['irc'],
+            'icq' => $_POST['icq'],
+            'aim' => $_POST['aim'],
+            'streamtitle' => $_POST['streamtitle'],
+            'streamurl' => $_POST['streamurl'],
+            'encoder_1' => $_POST['encoder_1'],
+            'genre' => $_POST['genre'],
+            'public' => $_POST['public'],
+            'shuffle' => $_POST['shuffle'],
+            'djpassword' => $_POST['djpassword']
+        ), "id=%s", $serv_id['sc_trans_id']);
 
-    # Start - Stop Server           # USER Befehl
-    if (isset($_POST['onoffselc'])) {
-        $changer = explode(".", $_POST['onoffselc']);
-        if ($changer['1'] == '1') {
-            $serv->startSc_Serv($changer['0']);
-            $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
-        } elseif ($changer['1'] == '0') {
-            $serv->killSc_Serv($changer['0']);
-            $sp_growl->writeGrowl('info',  _('Server gestoppt'), '');
-        }
+        DB::update('sc_serv_conf', array(
+            'PublicServer' => $_POST['PublicServer'],
+            'URLFormat' => $_POST['URLFormat'],
+            'TitleFormat' => $_POST['TitleFormat']
+        ), "id=%s", $serv_id['sc_serv_conf_id']);
+
+        DB::update('sc_rel', array(
+            'stream_userName' => $_POST['stream_userName']
+        ), "id=%s", $_SESSION['sec_rel_id']);
+
+        // And Now Reboot SRV + Transcoder
+
+        $serv->killSc_Serv($_SESSION['sec_rel_id']);
+        $trans->killSc_Trans($_SESSION['sec_rel_id']);
+        $trans->startSc_Trans($_SESSION['sec_rel_id']);
+        $serv->startSc_Serv($_SESSION['sec_rel_id']);
+
         # Laden der Übersicht nach Änderungen
         if($_SESSION['group'] == 'adm'){
             $SPMenu = new SP\Menu\MenuInclusion();
@@ -158,6 +184,54 @@ $app->post('/station/showstream', function () use ($app) {
             $SPMenu->MenuInclude($app);
             $app->render('station/usershowstreams.phtml', compact('license'));
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # Start - Stop Server           # USER Befehl
+    if (isset($_POST['onoffselc'])) {
+        $changer = explode(".", $_POST['onoffselc']);
+        if ($changer['1'] == '1') {
+            $serv->startSc_Serv($changer['0']);
+            # Laden der Übersicht nach Änderungen
+            if($_SESSION['group'] == 'adm'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
+                $app->render('station/adminshowlist.phtml', compact('license'));
+
+            }elseif($_SESSION['group'] == 'user'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
+                $app->render('station/usershowstreams.phtml', compact('license'));
+
+            }
+        } elseif ($changer['1'] == '0') {
+            $serv->killSc_Serv($changer['0']);
+            # Laden der Übersicht nach Änderungen
+            if($_SESSION['group'] == 'adm'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $app->render('station/adminshowlist.phtml', compact('license'));
+            }elseif($_SESSION['group'] == 'user'){
+                $SPMenu = new SP\Menu\MenuInclusion();
+                $SPMenu->MenuInclude($app);
+                $app->render('station/usershowstreams.phtml', compact('license'));
+            }
+            $sp_growl->writeGrowl('info',  _('Server gestoppt'), '');
+        }
+
     }
 
     # Laden der Konfiguration für die Ausgabe der Servereinstellungen
@@ -202,60 +276,11 @@ $app->post('/station/showstream', function () use ($app) {
             $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
             $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
             $sp_growl->writeGrowl('success', _('Server gelöscht'), '');
-            $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+            $app->render('station/adminshowlist.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
 
         }
     }
 
-    # Server bearbeiten und Neu-Starten
-    if (isset($_POST['editsrvandreboot'])) {
-
-        $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
-
-        DB::update('sc_trans_conf', array(
-            'unlockkeyname' => $_POST['unlockkeyname'],
-            'unlockkeycode' => $_POST['unlockkeycode'],
-            'irc' => $_POST['irc'],
-            'icq' => $_POST['icq'],
-            'aim' => $_POST['aim'],
-            'streamtitle' => $_POST['streamtitle'],
-            'streamurl' => $_POST['streamurl'],
-            'encoder_1' => $_POST['encoder_1'],
-            'genre' => $_POST['genre'],
-            'public' => $_POST['public'],
-            'shuffle' => $_POST['shuffle'],
-            'djpassword' => $_POST['djpassword']
-        ), "id=%s", $serv_id['sc_trans_id']);
-
-        DB::update('sc_serv_conf', array(
-            'PublicServer' => $_POST['PublicServer'],
-            'URLFormat' => $_POST['URLFormat'],
-            'TitleFormat' => $_POST['TitleFormat']
-        ), "id=%s", $serv_id['sc_serv_conf_id']);
-
-        DB::update('sc_rel', array(
-            'stream_userName' => $_POST['stream_userName']
-        ), "id=%s", $_SESSION['sec_rel_id']);
-
-        // And Now Reboot SRV + Transcoder
-
-        $serv->killSc_Serv($_SESSION['sec_rel_id']);
-        $trans->killSc_Trans($_SESSION['sec_rel_id']);
-        $trans->startSc_Trans($_SESSION['sec_rel_id']);
-        $serv->startSc_Serv($_SESSION['sec_rel_id']);
-            $SPMenu = new SP\Menu\MenuInclusion();
-            $SPMenu->MenuInclude($app);
-            $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
-            $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
-            $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
-            $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
-    }
-
-
-
-
-
-    # Neuen Server anlegen
 
 })->name('doLogin');
 
@@ -300,8 +325,10 @@ $app->post('/station/autodj', function () use ($app) {
     if (isset($_POST['djSwitch'])) {
         $changer = explode(".", $_POST['djSwitch']);
         if ($changer['1'] == '1') {
+            $trans = new \core\sp_special\sctrans();
             $trans->startSc_Trans($changer['0']);
         } elseif ($changer['1'] == '0') {
+            $trans = new \core\sp_special\sctrans();
             $trans->killSc_Trans($changer['0']);
         }
     }

@@ -62,10 +62,10 @@
                                                 ?>
                                                 <input type="hidden" value="<?php echo $title['id']; ?>" name="delTitel[id]">
                                                 <?php
-                                                echo "<td><input type='submit' value='Del' name='ddd' /></td> \n";
+                                                echo "<td><input type='submit' value='"._('Löschen')."' name='ddd' /></td> \n";
                                                 echo '</tr></form>';
                                                 $Size += $mp3tit['size'];
-                                                $TimeSecond += $TIMEFUNC->time2Seconds($mp3tit['playtime']);
+                                                $TimeSecond += $TIMEFUNC->seconds2TimeDay($mp3tit['playtime']);
                                             }
                                         }
                                         echo '<form action="/filemanager/playlist" method="post"><tr>';
@@ -140,7 +140,7 @@
                                                 <input type="hidden" value="<?php echo $title['org_file_titel']; ?>" name="addTitel[org_file_titel]; ?>]">
                                                 <input type="hidden" value="my hidden value" name="addTitel[size]; ?>]">
                                                 <?php
-                                                echo "<td><input type='button' value='Add' name='addTitel' onclick='this.form.submit()'/></td> \n";
+                                                echo "<td><input type='button' value='"._('Hinzufügen')."' name='addTitel' onclick='this.form.submit()'/></td> \n";
                                                 echo '</tr></form>';
                                             }
                                         }
