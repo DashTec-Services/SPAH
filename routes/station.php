@@ -289,12 +289,17 @@ $app->post('/station/autodj', function () use ($app) {
 
 
 # Neue Playliste übernehmen
-    if (isset($_POST['playlstswitch'])) {
+
+    if (isset($_POST['playlstswitch']) AND $_POST['playlstswitch'] != '' ) {
         # Trennen der übergebenen Par.
         $changer = explode(".", $_POST['playlstswitch']);
 
-        # Ausleden der conf ID
-        $servTrans = DB::queryFirstRow("SELECT sc_serv_conf_id FROM sc_rel WHERE id=%s", $changer['0']);
+        #changer 0 = sc_rel ID
+        #changer 1 = playlist ID
+        #changer 3 = Playlistname
+
+        # Auslesen der conf ID
+        $servTrans = DB::queryFirstRow("SELECT sc_serv_conf_id, sc_trans_id FROM sc_rel WHERE id=%s", $changer['0']);
 
         # Setzen der neuen ID
         \DB::update('sc_rel', array(
@@ -302,23 +307,18 @@ $app->post('/station/autodj', function () use ($app) {
         ), "id=%s", $changer['0']);
 
         # Port abfragen
-        $PortBase = DB::queryFirstRow("SELECT PortBase FROM sc_serv_conf WHERE id=%s", $servTrans['sc_serv_conf_id']);
+        $PortBase = DB::queryFirstRow("SELECT PortBase FROM sc_serv_conf WHERE id=%s", $servTrans['sc_trans_id']);
 
         # Eintragen der Playliste in die DB
         \DB::update('sc_trans_conf', array(
             'playlistfile' => $_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $PortBase['PortBase'] . '/' . $changer['2'] . '.lst'
-        ), "id=%s", $changer['1']);
+        ), "id=%s", $servTrans['sc_trans_id']);
 
-        #Ausgabe zum Testen der Pfade
-      #  echo $_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $PortBase['PortBase'] . '/' . $changer['2'] . '.lst';
-
-        $playlist = new core\sp_special\station();
         $trans = new core\sp_special\sctrans();
-        # Neue Playliste Schreiben
-        $playlist->createPlaylst($changer['0']);
 
         # Neue Konfiguration schreiben
         $trans->writeSc_TransConf($servTrans['sc_serv_conf_id']);
+
     }
 
     # Start - Stop Transcoder

@@ -51,28 +51,22 @@
                                     <form action="/station/showstream" method="post">
                                         <?php if ($row['sc_serv_pid'] == '0') {
                                             echo '<img src="/image/fuge/status-busy.png" >';
-                                        } else {
+                                     ?>
+                                    <button name="onoffselc" value="<?php echo $row['id'] . '.1' ?>" class="btn btn-success">Starten</button>
+                                     <?php
+                                    } else {
                                             echo '<img src="/image/fuge/status.png">';
+                                            ?>
+                                            <button name="onoffselc" value="<?php echo $row['id'] . '.0' ?>" class="btn btn-danger">Stoppen</button>
+
+                                        <?php
                                         } ?>
-                                        <select name="onoffselc" size="1" onchange="this.form.submit()">
-                                            <option <?php if (isset($row['sc_serv_pid'])) {
-                                                echo 'selected';
-                                            } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('ON'); ?>
-                                            </option>
-                                            <option <?php if ($row['sc_serv_pid'] == '0') {
-                                                echo 'selected';
-                                            } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('OFF'); ?>
-                                            </option>
-                                        </select>
                                     </form>
                                 </td>
 
                                 <td>
                                     <form action="/station/showstream" method="post">
-                                        <select name="changeConfServ" size="1" onchange="this.form.submit()">
-                                            <option value=""></option>
-                                            <option value="<?php echo $row['id'] . '.edit' ?>"><?php echo _('bearbeiten'); ?></option>
-                                        </select>
+                                        <button class="btn btn-warning" name="changeConfServ" value="<?php echo $row['id'] . '.edit' ?>" ><img src="/image/fuge/pencil.png" ></button>
                                     </form>
                                 </td>
                                 <?php
