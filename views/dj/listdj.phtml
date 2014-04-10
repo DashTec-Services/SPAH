@@ -41,39 +41,50 @@
                                 </thead>
                                 <tbody>
                                 <?php
-                                $results = DB::query("SELECT * FROM dj_accounts WHERE dj_of_user_id=%s ", $_SESSION['account_id']);
+                                $results = DB::query("SELECT * FROM accounts WHERE dj_of_user_id=%s AND usr_grp='dj' ", $_SESSION['account_id']);
                                 foreach ($results as $row) {
 
+                                        echo "<td>" . $row['dj_name'] .'<br>('. $row['kundennummer'].")</td>";
+                                        echo "<td>" . $row['vorname'] . " " . $row['nachname'] . "</td>";
+                                        echo "<td>" . $row['street'] .' '.$row['hausnummer'].'<br>'.$row['plz'].' '.$row['ort']."</td> \n";
+                                        echo "<td>"._('Phone')." <b>" . $row['telefon'] . "</b><br>"._('Mobile').": <b> " . $row['handy'] . "</b></td>";
+                                        echo "<td>"._('Mail').": <b>".$row['mail']."</b><br> "._('Skype:')." <b>".$row['skype']."</td> \n";
 
-                                    $dj_data = DB::queryFirstRow("SELECT * FROM accounts WHERE id=%s AND usr_grp='dj' ", $row['dj_accounts_id']);
+                                        echo '<td>';
 
-                                        echo "<td>" . $row['dj_name'] .'<br>('. $dj_data['kundennummer'].")</td>";
-                                        echo "<td>" . $dj_data['vorname'] . " " . $dj_data['nachname'] . "</td>";
-                                        echo "<td>" . $dj_data['street'] .' '.$dj_data['hausnummer'].'<br>'.$dj_data['plz'].' '.$dj_data['ort']."</td> \n";
-                                        echo "<td>"._('Phone')." <b>" . $dj_data['telefon'] . "</b><br>"._('Mobile').": <b> " . $dj_data['handy'] . "</b></td>";
-                                        echo "<td>"._('Phone').": <b>".$dj_data['mail']."</b><br> "._('Phone')." <b>".$dj_data['skype']."</td> \n";
-                                        $StreamName = DB::queryFirstRow("SELECT stream_userName FROM sc_rel WHERE id=%s", $row['dj_of_sc_rel_id']);
-                                        echo '<td>'.$StreamName['stream_userName'].'</td>';
+                                        $eachSC_rel_id = DB::query("SELECT * FROM dj_accounts WHERE dj_accounts_id=%s", $row['id']);
+                                        foreach($eachSC_rel_id as $screlrow){
+                                            $StreamName = DB::queryFirstRow("SELECT stream_userName FROM sc_rel WHERE id=%s", $screlrow['dj_of_sc_rel_id']);
+                                            echo $StreamName['stream_userName']. '<br>';
+                                        }
+
+
+
+
+                                        echo '</td>';
+
+
+
+
                                         ?><form action="/dj/list" method="post">
                                         <td>
-                                            <?php if ($dj_data['is_aktiv'] == '1' ) {?>
-                                                <button class="btn btn-danger" value="<?php echo 'is_aktiv.'.$row['dj_accounts_id'].'.0' ?>" name="editDjList" ><?= _('Sperren') ?></button>
+                                            <?php if ($row['is_aktiv'] == '1' ) {?>
+                                                <button class="btn btn-danger" value="<?php echo 'is_aktiv.'.$row['id'].'.0' ?>" name="editDjList" ><?= _('Sperren') ?></button>
                                             <?php
                                             }
-                                            if ($dj_data['is_aktiv'] == '0') {
+                                            if ($row['is_aktiv'] == '0') {
                                                 ?>
-                                                <button class="btn btn-success" value="<?php echo 'is_aktiv.'.$row['dj_accounts_id'].'.1' ?>" name="editDjList" ><?= _('Freischalten') ?></button>
+                                                <button class="btn btn-success" value="<?php echo 'is_aktiv.'.$row['id'].'.1' ?>" name="editDjList" ><?= _('Freischalten') ?></button>
                                             <?php
                                             }
 
                                             ?>
                                         </td>
                                         <td>
-
                                                 <button class="btn btn-success" value="<?php echo 'djtoStation.'.$row['id'] ?>" name="editDjList" ><img src="/image/fuge/plus-circle.png"></button>
                                                 <button class="btn btn-warning" value="<?php echo 'editDj.'.$row['id'] ?>" name="editDjList" ><img src="/image/fuge/pencil.png"></button>
-                                                <button class="btn btn-warning" value="<?php echo 'newPass.'.$row['dj_accounts_id'] ?>" name="editDjList" ><img src="/image/fuge/key.png"></button>
-                                                <button class="btn btn-danger" value="<?php echo 'delDj.'.$row['dj_accounts_id'] ?>" name="editDjList" ><img src="/image/fuge/cross-circle.png"></button>
+                                                <button class="btn btn-warning" value="<?php echo 'newPass.'.$row['id'] ?>" name="editDjList" ><img src="/image/fuge/key.png"></button>
+                                                <button class="btn btn-danger" value="<?php echo 'delDj.'.$row['id'] ?>" name="editDjList" ><img src="/image/fuge/cross-circle.png"></button>
 
                                         </td> </form>
                                         <?php

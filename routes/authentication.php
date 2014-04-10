@@ -18,6 +18,7 @@ use core\password\password;
 // zeigt die loginseite an
 $app->get('/login', function () use ($app) {
     $newsListing = DB::query("SELECT * FROM news WHERE is_aktiv=%s  AND login_news=%s", '1', '1');
+
     $app->render('authentication/login.phtml', compact('newsListing'));
 })->name('login');
 
@@ -41,6 +42,15 @@ $app->post('/login', function () use ($app) {
         $app->flash('error', _('Benutzer nicht gefunden!'));
         $app->redirect('/login', 303);
     }
+
+    $config = DB::queryFirstRow("SELECT wartungsmodus FROM config WHERE id=%s", '1');
+    if ($config['wartungsmodus'] == 1 AND  $account['usr_grp'] != 'adm'){
+        $growl = new \core\sp_special\growl();
+        $app->flash('error', _('Keinen Account gefunden'));
+        $app->redirect('/', 303);
+    }
+
+
 
     # Session setzen
     if(empty($account['local'])){

@@ -52,6 +52,7 @@ $app->post('/server/conf', function () use ($app) {
             'sp_titel' => $mywork[0]['sp_titel'],
             'doc_root' => $mywork[0]['doc_root'],
             'default_local' => $mywork[0]['local'],
+            'wartungsmodus' => $mywork[0]['wartungsmodus'],
             'adminMail' => $mywork[0]['adminMail']
         ), "id=%s", '1');
 

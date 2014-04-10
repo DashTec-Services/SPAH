@@ -90,7 +90,6 @@ $app->post('/user/list', function () use ($app) {
             $Users = DB::query("SELECT * FROM accounts");
             $app->render('benutzerverwaltung/djlimitsel.phtml');
             $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
-
         }
 
 
@@ -153,7 +152,18 @@ $app->post('/user/edituser', function () use ($app) {
 
 
 
+$app->post('/benutzerverwaltung/setdjlimit', function () use ($app) {
 
+        DB::update('accounts', array(
+            'dj_limit_count' => $_POST['djlimituser']
+        ), "id=%s", $_SESSION['user_dj_limit_id']);
+
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $Users = DB::query("SELECT * FROM accounts");
+    $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
+
+})->name('restricted');
 
 
 

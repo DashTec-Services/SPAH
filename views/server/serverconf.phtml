@@ -116,6 +116,21 @@
                                     </div>
                                 </div>
 
+
+                                <div class="control-group">
+                                    <label class="control-label" for="loacal"><?= _('Wartungsmodus aktiv?') ?></label>
+                                    <div class="controls">
+                                        <label class="radio">
+                                            <input type="radio" name="wartungsmodus" id="validateRadio1" value="1" <?php if($server['wartungsmodus'] == '1'){echo 'checked=""';} ?>>
+                                            <?php echo _('Ein'); ?>
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" name="wartungsmodus" id="validateRadio2" value="0" <?php if($server['wartungsmodus'] == '0'){echo 'checked=""';} ?>>
+                                            <?php echo _('Aus'); ?>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div class="form-actions">
                                     <button type="submit" class="btn btn-primary btn-large" name="saveserverconf">
                                         <?=  _('Speichern'); ?>
