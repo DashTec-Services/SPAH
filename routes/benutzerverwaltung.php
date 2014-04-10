@@ -82,6 +82,18 @@ $app->post('/user/list', function () use ($app) {
         $growl->writeGrowl('success','DJ - Passwort geändert!','Neuer Passwort: '. $password);
         }
 
+
+        if($changer['1'] == 'djuserlimit'){
+            $_SESSION['user_dj_limit_id'] = $changer['0'];
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $Users = DB::query("SELECT * FROM accounts");
+            $app->render('benutzerverwaltung/djlimitsel.phtml');
+            $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
+
+        }
+
+
     }else{
         $changer = explode(".", $_POST['is_aktiv']);
         DB::update('accounts', array(

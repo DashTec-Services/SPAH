@@ -32,9 +32,9 @@
                             <tr>
                                 <th><?= _('Kundennummer'); ?></th>
                                 <th><?= _('Name'); ?></th>
-                                <th><?= _('Adresse'); ?></th>
-                                <th><?= _('Tel'); ?></th>
-                                <th><?= _('Mail'); ?></th>
+                                <th><?= _('Adresse, Tel, Mail'); ?></th>
+
+                                <th><?= _('DJ Benutzer (angelegt / max.'); ?></th>
                                 <th><?= _('Benutzergruppe'); ?></th>
                                 <th><?= _('Is Aktiv?'); ?></th>
                                 <th><?= _('Einstellungen'); ?></th>
@@ -46,9 +46,22 @@
                                 echo '<form action="/user/list" method="post"><tr>';
                                 echo "<td>" . $row['kundennummer'] . "</td> \n";
                                 echo "<td>" . $row['vorname'] . ' ' . $row['nachname'] . "</td> \n";
-                                echo "<td>" . $row['street'] . ' ' . $row['hausnummer'] . ', ' . $row['plz'] . ' ' . $row['ort'] . "</td> \n";
-                                echo "<td>" . $row['handy'] . "</td> \n";
-                                echo "<td>" . $row['mail'] . "</td> \n";
+                                echo "<td>" . $row['street'] . ' ' . $row['hausnummer'] . ', <br> ' . $row['plz'] . ' ' . $row['ort'] . "<br>".$row['handy'] .'|'. $row['mail']."</td> \n";
+
+                                DB::query("SELECT * FROM dj_accounts WHERE dj_of_user_id=%s", $row['id']);
+                                $counter = DB::count();
+                                if($row['dj_limit_count'] == NULL){
+                                    $maxusers = _('unlim.');
+                                }else{
+                                    $maxusers = $row['dj_limit_count'];
+                                }
+
+                            if ($row['usr_grp'] == 'user') {
+                                echo "<td>" . $counter . ' / '. $maxusers ."</td> \n";
+                            }else{
+                                echo "<td></td> \n";
+                            }
+
                                 if ($row['usr_grp'] == 'adm') {
                                     echo "<td>"._('Admininstrator')."</td> \n";
                                 } elseif ($row['usr_grp'] == 'user') {
@@ -76,7 +89,10 @@
                                    <button class="btn btn-secondary" value="<?php echo $row['id'] . '.edituser' ?>" name="useredit" ><img src="/image/fuge/pencil.png"></button>
                                    <button class="btn btn-warning" value="<?php echo $row['id'] . '.changePass' ?>" name="useredit" ><img src="/image/fuge/key.png"></button>
 
-                                    <?php if ($row['usr_grp'] != 'adm' ) {?>
+                                    <?php if ($row['usr_grp'] == 'user') {?>
+                                    <button class="btn btn-group" value="<?php echo $row['id'] . '.djuserlimit' ?>" name="useredit" ><img src="/image/fuge/users.png"></button>
+
+                                    <?php }if ($row['usr_grp'] != 'adm' ) {?>
                                         <button class="btn btn-danger" value="<?php echo $row['id'] . '.deluser' ?>" name="useredit" ><img src="/image/fuge/cross-circle.png" ></button>
 
                                     <?php
