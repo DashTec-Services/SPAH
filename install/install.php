@@ -16,18 +16,6 @@ session_start();
 include_once '../core/password/password.php';
 include_once '../core/DB.php';
 
-
-
-if($_SESSION['Setup_Done'] == true){
-    session_unset();
-    session_destroy();
-    die('Please DEL install DIR!');
-
-}
-
-
-
-
 if(!isset($_SESSION['cryptpass'])){
     $passw = new \core\password\password();
     $pass = $passw->generatePassword();
@@ -120,6 +108,7 @@ $mysqli->close();
     $content = str_replace('@DBUSER@', $_SESSION['dbuser'], $content);
     $content = str_replace('@DBPASS@', $_POST['dbpass'], $content);
     $content = str_replace('@DBNAME@', $_SESSION['dbname'], $content);
+    $content = str_replace('@DEMOMOD@', $_POST['demoMod'], $content);
     file_put_contents($file, $content);
 
 
@@ -127,6 +116,24 @@ $_SESSION['Setup_Done'] = true;
 
 
 }
+
+if($_SESSION['Setup_Done'] == true){
+    session_unset();
+    session_destroy();
+	
+	    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/");
+    exit;
+}
+
+
+
+
+
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -546,6 +553,17 @@ $_SESSION['Setup_Done'] = true;
                     </select>
                 </div>
             </div>
+
+            <div class="control-group">
+                <label class="control-label" for="loacal"><?= _('Demo-Modus') ?></label>
+                <div class="controls">
+                    <select name="demoMod" size="1">
+                        <option value="false"><?= _('Nein'); ?></option>
+                        <option value="true"><?= _('Ja'); ?></option>
+                    </select>
+                </div>
+            </div>
+
 
             <div class="alert alert-error">
                 <h4 class="alert-heading"><?= _('Warnung') ?></h4>

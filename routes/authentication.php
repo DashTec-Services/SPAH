@@ -14,13 +14,6 @@
  */
 use core\password\password;
 
-$app->get('/not-restricted', function () use ($app) {
-    echo 'aloha';
-})->name('not-restricted');
-
-$app->get('/restricted', function () use ($app) {
-    echo 'ich bin garnicht da';
-})->name('restricted');
 
 // zeigt die loginseite an
 $app->get('/login', function () use ($app) {
@@ -60,8 +53,11 @@ $app->post('/login', function () use ($app) {
     $_SESSION['group'] = $account['usr_grp'];
     $_SESSION['USERNAME'] = $account['vorname'].' '. $account['nachname'];
 
+
     $app->flash('success', _('Login erfolgreich'));
     $app->redirect('/');
+
+
 })->name('doLogin');
 
 // fuehrt den logout des benutzers durch

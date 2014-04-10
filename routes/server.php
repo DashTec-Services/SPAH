@@ -20,6 +20,10 @@ $app->get('/server/conf', function () use ($app) {
     $server = DB::queryFirstRow("SELECT * FROM config");
 
     $app->render('server/serverconf.phtml', compact('server'));
+
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
 })->name('not-restricted');
 
 $app->get('/server/license', function () use ($app) {
@@ -33,7 +37,7 @@ $app->get('/server/license', function () use ($app) {
 $app->post('/server/conf', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
-    if (isset($_POST['saveserverconf'])) {
+    if (isset($_POST['saveserverconf']) AND $_SESSION['demo_mod'] == false) {
 
         $fromwork = new core\postget\postgetcoll();
         $mywork[] = $fromwork->collvars('POST');
@@ -57,22 +61,7 @@ $app->post('/server/conf', function () use ($app) {
                 'root_password' => $mywork[0]['root_password']
             ), "id=%s", '1');
         }
-
-        echo "
- <script>
-
- $.msgGrowl ({
-        type: 'success'
-        , title: '".('Settings saved')."'
-        , position: $(this).attr ('rel')
-    });
-
-</script> ";
     }
-
-
-
-
 
 
     $server = DB::queryFirstRow("SELECT * FROM config");

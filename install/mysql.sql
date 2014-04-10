@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `telefon` varchar(45) NOT NULL,
   `handy` varchar(45) NOT NULL,
   `mail` varchar(60) NOT NULL,
+  `skype` varchar(45) NOT NULL,
   `local` varchar(15) NOT NULL,
   `usr_grp` enum('adm','user','dj') NOT NULL,
   `is_aktiv` tinyint(1) NOT NULL,
@@ -34,20 +35,12 @@ CREATE TABLE IF NOT EXISTS `config` (
 CREATE TABLE IF NOT EXISTS `dj_accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dj_name` varchar(150) DEFAULT NULL,
-  `vorname` varchar(80) DEFAULT NULL,
-  `nachname` varchar(150) DEFAULT NULL,
-  `street` varchar(150) DEFAULT NULL,
-  `hausnummer` varchar(3) DEFAULT NULL,
-  `ort` varchar(50) DEFAULT NULL,
-  `plz` varchar(5) DEFAULT NULL,
-  `telefon` varchar(75) DEFAULT NULL,
-  `handy` varchar(75) DEFAULT NULL,
-  `mail` varchar(75) DEFAULT NULL,
-  `skype` varchar(50) DEFAULT NULL,
   `dj_of_user_id` int(11) DEFAULT NULL,
   `dj_of_sc_rel_id` int(11) NOT NULL,
+  `dj_accounts_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 CREATE TABLE IF NOT EXISTS `mp3` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -78,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `headline` varchar(189) NOT NULL,
   `message` text NOT NULL,
   `type` enum('block','success','info','error') DEFAULT NULL,
+  `have_to_read` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -89,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `news_to_read` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+
 CREATE TABLE IF NOT EXISTS `playlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `playlist_name` varchar(150) NOT NULL,
@@ -96,6 +91,8 @@ CREATE TABLE IF NOT EXISTS `playlist` (
   `add_date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
 
 CREATE TABLE IF NOT EXISTS `playlist_mp3_rel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -120,6 +117,8 @@ CREATE TABLE IF NOT EXISTS `sc_rel` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+
+
 CREATE TABLE IF NOT EXISTS `sc_serv_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `MaxUser` varchar(3) DEFAULT NULL,
@@ -127,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `sc_serv_conf` (
   `PortBase` varchar(6) DEFAULT NULL,
   `LogFile` varchar(255) DEFAULT NULL,
   `RealTime` varchar(1) DEFAULT NULL,
-  `ScreenLog` varchar(1) DEFAULT NULL,
+  `ScreenLog` varchar(1) DEFAULT '1',
   `ShowLastSongs` varchar(6) DEFAULT NULL,
   `TchLog` varchar(3) DEFAULT NULL,
   `WebLog` varchar(3) DEFAULT NULL,
@@ -157,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `sc_serv_conf` (
   `RIPOnly` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -192,6 +192,7 @@ CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   `unlockkeycode` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 CREATE TABLE IF NOT EXISTS `sc_version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

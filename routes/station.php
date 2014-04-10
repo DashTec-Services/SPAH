@@ -18,14 +18,22 @@
  */
 
 
+
 $app->get('/station/admedit', function() use ($app){
     $app->render('station/admineditstream.phtml', compact('license'));
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
 })->name('restricted');
 
 $app->get('/station/list', function() use ($app){
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('station/adminshowlist.phtml', compact('license'));
+
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
 })->name('restricted');
 
 
@@ -37,16 +45,27 @@ $app->get('/station/showstream', function() use ($app){
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('station/usershowstreams.phtml', compact('license'));
+
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
 })->name('license');
 
 $app->get('/station/autodj', function() use ($app){
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('station/userautodj.phtml', compact('license'));
+
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
 })->name('license');
 
 $app->get('/station/editserv', function() use ($app){
     $app->render('station/usereditserver.phtml', compact('license'));
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
 })->name('license');
 
 # USER - POST Action SC_Serv
@@ -58,7 +77,7 @@ $app->post('/station/showstream', function () use ($app) {
 
 
     # Starten der Server + Transcoder nach ReBoot
-    if (isset($_POST['rebooton'])) {
+    if (isset($_POST['rebooton']) AND $_SESSION['demo_mod'] == false) {
         $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid!='0' ");
 
         foreach ($pid as $row) {
@@ -72,7 +91,7 @@ $app->post('/station/showstream', function () use ($app) {
 
 
     # Alle starten + Stoppen
-    if (isset($_POST['switch'])) {
+    if (isset($_POST['switch']) AND $_SESSION['demo_mod'] == false) {
         if ($_POST['switch'] == 'off') {
             $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid!='0' ");
             foreach ($pid as $row) {
@@ -92,7 +111,7 @@ $app->post('/station/showstream', function () use ($app) {
     }
 
     # Server + Transc conf sichern nach bearbeitung
-    if (isset($_POST['servconfsave'])) {
+    if (isset($_POST['servconfsave']) AND $_SESSION['demo_mod'] == false) {
 
         $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
 
@@ -138,7 +157,7 @@ $app->post('/station/showstream', function () use ($app) {
     }
 
     # Server + Transc conf sichern nach bearbeitung und Neu-Starten
-    if (isset($_POST['editsrvandreboot'])) {
+    if (isset($_POST['editsrvandreboot']) AND $_SESSION['demo_mod'] == false) {
 
         $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
 
@@ -186,20 +205,8 @@ $app->post('/station/showstream', function () use ($app) {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     # Start - Stop Server           # USER Befehl
-    if (isset($_POST['onoffselc'])) {
+    if (isset($_POST['onoffselc']) AND $_SESSION['demo_mod'] == false ) {
         $changer = explode(".", $_POST['onoffselc']);
         if ($changer['1'] == '1') {
             $serv->startSc_Serv($changer['0']);
@@ -207,14 +214,14 @@ $app->post('/station/showstream', function () use ($app) {
             if($_SESSION['group'] == 'adm'){
                 $SPMenu = new SP\Menu\MenuInclusion();
                 $SPMenu->MenuInclude($app);
-                $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
                 $app->render('station/adminshowlist.phtml', compact('license'));
+                $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
 
             }elseif($_SESSION['group'] == 'user'){
                 $SPMenu = new SP\Menu\MenuInclusion();
                 $SPMenu->MenuInclude($app);
-                $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
                 $app->render('station/usershowstreams.phtml', compact('license'));
+                $sp_growl->writeGrowl('success',  _('Server gestartet'), '');
 
             }
         } elseif ($changer['1'] == '0') {
@@ -250,6 +257,10 @@ $app->post('/station/showstream', function () use ($app) {
                 $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
                 $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
                 $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+                # Demoeinstellungen
+                $demo = new \core\demo\demomod();
+                $demo->CheckDemo($_SESSION['demo_mod']);
+
             }elseif($_SESSION['group'] == 'user'){
                 $SPMenu = new SP\Menu\MenuInclusion();
                 $SPMenu->MenuInclude($app);
@@ -257,11 +268,13 @@ $app->post('/station/showstream', function () use ($app) {
                 $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
                 $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
                 $app->render('station/usereditserver.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
-
+                # Demoeinstellungen
+                $demo = new \core\demo\demomod();
+                $demo->CheckDemo($_SESSION['demo_mod']);
             }
 
 
-        } elseif ($changer[1] == 'clear') {
+        } elseif ($changer[1] == 'clear' AND $_SESSION['demo_mod'] == false  ) {
             $changer = explode(".", $_POST['changeConfServ']);
             // TODO: Sichern prüfen ob Server den User gehört!
             $_SESSION['sec_rel_id'] = $_POST['changeConfServ'];
@@ -275,8 +288,8 @@ $app->post('/station/showstream', function () use ($app) {
             $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
             $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
             $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
-            $sp_growl->writeGrowl('success', _('Server gelöscht'), '');
             $app->render('station/adminshowlist.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+            $sp_growl->writeGrowl('success', _('Server gelöscht'), '');
 
         }
     }
@@ -290,7 +303,7 @@ $app->post('/station/autodj', function () use ($app) {
 
 # Neue Playliste übernehmen
 
-    if (isset($_POST['playlstswitch']) AND $_POST['playlstswitch'] != '' ) {
+    if (isset($_POST['playlstswitch']) AND $_POST['playlstswitch'] != '' AND $_SESSION['demo_mod'] == false) {
         # Trennen der übergebenen Par.
         $changer = explode(".", $_POST['playlstswitch']);
 
@@ -322,7 +335,7 @@ $app->post('/station/autodj', function () use ($app) {
     }
 
     # Start - Stop Transcoder
-    if (isset($_POST['djSwitch'])) {
+    if (isset($_POST['djSwitch']) AND $_SESSION['demo_mod'] == false) {
         $changer = explode(".", $_POST['djSwitch']);
         if ($changer['1'] == '1') {
             $trans = new \core\sp_special\sctrans();
@@ -338,3 +351,22 @@ $app->post('/station/autodj', function () use ($app) {
     $SPMenu->MenuInclude($app);
     $app->render('station/userautodj.phtml', compact('license'));
 })->name('doLogin');
+
+
+# Funktionen für DJ - Benutzer
+$app->post('/station/djfunction', function () use ($app) {
+    # Start - Stop Transcoder
+    if (isset($_POST['djSwitch']) AND $_SESSION['demo_mod'] == false) {
+        $changer = explode(".", $_POST['djSwitch']);
+        if ($changer['1'] == '1') {
+            $trans = new \core\sp_special\sctrans();
+            $trans->startSc_Trans($changer['0']);
+        } elseif ($changer['1'] == '0') {
+            $trans = new \core\sp_special\sctrans();
+            $trans->killSc_Trans($changer['0']);
+        }
+    }
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('spwelcome/dj.phtml', compact('license'));
+})->name('dj');

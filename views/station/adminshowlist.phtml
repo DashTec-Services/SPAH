@@ -61,31 +61,22 @@
                                     <form action="/station/showstream" method="post">
                                         <?php if ($row['sc_serv_pid'] == '0') {
                                             echo '<img src="/image/fuge/status-busy.png" >';
+                                            ?>
+                                            <button name="onoffselc" value="<?php echo $row['id'] . '.1' ?>" class="btn btn-success" value="<?php echo $row['id'] . '.0' ?>"><?= _('Starten') ?></button>
+                                            <?php
                                         } else {
                                             echo '<img src="/image/fuge/status.png">';
+                                            ?>
+                                            <button name="onoffselc" value="<?php echo $row['id'] . '.0' ?>" class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>"><?= _('Stoppen') ?></button>
+                                            <?php
                                         } ?>
-                                        <select name="onoffselc" size="1" onchange="this.form.submit()">
-                                            <option <?php if (isset($row['sc_serv_pid'])) {
-                                                echo 'selected';
-                                            } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('An'); ?>
-                                            </option>
-                                            <option <?php if ($row['sc_serv_pid'] == '0') {
-                                                echo 'selected';
-                                            } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('Aus'); ?>
-                                            </option>
-                                        </select>
                                     </form>
                                 </td>
 
                                 <td>
                                     <form action="/station/showstream" method="post">
-                                        <select name="changeConfServ" size="1" onchange="this.form.submit()">
-                                            <option value=""></option>
-                                            <option value="<?php echo $row['id'] . '.edit' ?>"><?php echo _('bearbeiten'); ?></option>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                            <option value="<?php echo $row['id'] . '.clear' ?>"><?php echo _('LÖSCHEN!!!'); ?></option>
-                                        </select>
+                                    <button name="changeConfServ" value="<?php echo $row['id'] . '.edit' ?>" class="btn btn-secondary" ><img src="/image/fuge/pencil.png"></button>
+                                    <button name="changeConfServ" value="<?php echo $row['id'] . '.clear' ?>" class="btn btn-danger" ><img src="/image/fuge/cross-circle.png" alt="Löschen"></button>
                                     </form>
                                 </td>
                                 <?php
@@ -98,10 +89,11 @@
                                     <td>
 
                                     </td>
-                                                <td>
-                                        <button type="submit" value="rebooton" name="switch"><?php echo _('Server Neustart'); ?></button>
-                                        <button type="submit" value="on" name="switch"><?php echo _('Alle Server Ein'); ?></button>
-                                        <button type="submit" value="off" name="switch"><?php echo _('Alle Server Aus'); ?></button>
+                                    <td>
+                                        <button type="submit" value="on" name="switch" class="btn btn-success"><?php echo _('Alle Server Ein'); ?></button>
+
+                                        <button type="submit" value="rebooton" name="switch" class="btn btn-info"><?php echo _('Server Neustart'); ?></button>
+                                        <button type="submit" value="off" name="switch" class="btn btn-danger"><?php echo _('Alle Server Aus'); ?></button>
                                     </td>
                                     <td>
 

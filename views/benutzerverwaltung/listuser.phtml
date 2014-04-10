@@ -58,24 +58,30 @@
                                 }
                                 ?>
                                 <td>
-                                    <select name="is_aktiv" size="1" onchange="this.form.submit()">
-                                        <option <?php if ($row['is_aktiv'] == '1') {
-                                            echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?= _('aktiv'); ?>
-                                        </option>
-                                        <option <?php if ($row['is_aktiv'] == '0') {
-                                            echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?= _('inaktiv'); ?>
-                                        </option>
-                                    </select>
+
+                                    <?php if ($row['is_aktiv'] == '1' AND $row['usr_grp'] != 'adm' ) {?>
+                                    <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="is_aktiv" ><?= _('Sperren') ?></button>
+                                    <?php
+                                    }
+                                    if ($row['is_aktiv'] == '0') {
+                                        ?>
+                                    <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="is_aktiv" ><?= _('Freischalten') ?></button>
+                                    <?php
+                                    }
+
+                                    ?>
                                 </td>
 
                                 <td>
-                                    <select name="useredit" size="1" onchange="this.form.submit()">
-                                        <option selected></option>
-                                        <option value="<?php echo $row['id'] . '.edituser' ?>"><?= _('bearbeiten'); ?></option>
-                                        <option value="<?php echo $row['id'] . '.deluser' ?>"><?= _('löschen'); ?></option>
-                                    </select>
+                                   <button class="btn btn-secondary" value="<?php echo $row['id'] . '.edituser' ?>" name="useredit" ><img src="/image/fuge/pencil.png"></button>
+                                   <button class="btn btn-warning" value="<?php echo $row['id'] . '.changePass' ?>" name="useredit" ><img src="/image/fuge/key.png"></button>
+
+                                    <?php if ($row['usr_grp'] != 'adm' ) {?>
+                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.deluser' ?>" name="useredit" ><img src="/image/fuge/cross-circle.png" ></button>
+
+                                    <?php
+                                    }
+?>
                                 </td>
                                 <?php
                                 echo '</tr></form>';

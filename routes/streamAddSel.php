@@ -18,6 +18,10 @@ $app->get('/station/add', function() use ($app){
     $SPMenu->MenuInclude($app);
     $app->render('streamAddSelct/streamswitch.phtml', compact('license'));
 
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($_SESSION['demo_mod']);
+
 })->name('license');
 
 $app->post('/station/add', function() use ($app){
@@ -35,11 +39,19 @@ if(isset($_POST['addstreamswitch'])){
        $SPMenu->MenuInclude($app);
        $app->render('streamAddSelct/sc20.phtml', compact('license'));
        $_SESSION['sc_serv_version'] =  $_POST['addstreamswitch'];
+
+       # Demoeinstellungen
+       $demo = new \core\demo\demomod();
+       $demo->CheckDemo($_SESSION['demo_mod']);
+
    }elseif($_POST['addstreamswitch'] == '2' OR $_POST['addstreamswitch'] == '5'){
        $SPMenu = new SP\Menu\MenuInclusion();
        $SPMenu->MenuInclude($app);
        $app->render('streamAddSelct/sc198.phtml', compact('license'));
        $_SESSION['sc_serv_version'] =  $_POST['addstreamswitch'];
+       # Demoeinstellungen
+       $demo = new \core\demo\demomod();
+       $demo->CheckDemo($_SESSION['demo_mod']);
    }else{
        $SPMenu = new SP\Menu\MenuInclusion();
        $SPMenu->MenuInclude($app);
@@ -48,7 +60,7 @@ if(isset($_POST['addstreamswitch'])){
 }
 
 # Server hinzufügen
-if (isset($_POST['addsrv'])) {
+if (isset($_POST['addsrv']) AND $_SESSION['demo_mod'] == false) {
 
     $config = DB::queryFirstRow("SELECT doc_root FROM config WHERE id=%s", '1');
     $DocRoot = $config['doc_root'];

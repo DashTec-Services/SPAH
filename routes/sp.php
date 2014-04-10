@@ -20,20 +20,20 @@
 
 $app->get('/', function () use ($app) {
 
-    $SPMenu = new SP\Menu\MenuInclusion();
-    $SPMenu->MenuInclude($app);
     if($_SESSION['group'] == 'adm'){
-
-
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
         $growl = new \core\sp_special\growl();
         $app->render('spwelcome/adm.phtml', compact('Users'));
-
     }elseif($_SESSION['group']== 'user'){
-        $app->render('spwelcome/user.phtml', compact('Users'));
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $app->render('spwelcome/user.phtml', compact('Users'));
            // TODO: USER MAIN ANSICHT
     }elseif($_SESSION['group'] == 'dj'){
-        // TODO : DJ MAIN Ansicht
-    }
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $app->render('spwelcome/dj.phtml', compact('Users'));    }
 })->name('not-restricted');
 
 

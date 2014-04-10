@@ -29,11 +29,12 @@
                         <table class="table table-striped table-bordered table-highlight" id="example">
                             <thead>
                             <tr>
-                                <th><?php echo _('Titel'); ?></th>
-                                <th><?php echo _('Nachricht'); ?></th>
-                                <th><?php echo _('Login-News?'); ?></th>
-                                <th><?php echo _('Benutzern die Nachricht zeigen'); ?></th>
-                                <th><?php echo _('Löschen'); ?></th>
+                                <th><?=  _('Titel'); ?></th>
+                                <th><?=  _('Nachricht'); ?></th>
+                                <th><?=  _('Login-News?'); ?></th>
+                                <th><?=  _('Benutzern die Nachricht zeigen'); ?></th>
+                                <th><?=  _('Benutzer soll Nachricht lesen') ?></th>
+                                <th><?=  _('Löschen'); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -45,28 +46,44 @@
                                 echo "<td>" . $row['message'] . "</td> \n";
                                 ?>
                                 <td>
-                                    <select name="login_news" size="1" onchange="this.form.submit()">
-                                        <option <?php if ($row['login_news'] == '1') {
-                                            echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('Ja'); ?>
-                                        </option>
-                                        <option <?php if ($row['login_news'] == '0') {
-                                            echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('Nein'); ?>
-                                        </option>
-                                    </select>
+                                <?php
+                                 if ($row['login_news'] == '1') {?>
+                                     <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="login_news" ><?= _('Nein') ?></button>
+                                 <?php
+                                 }
+                                 if ($row['login_news'] == '0') {
+                                     ?>
+                                <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="login_news" ><?= _('Ja') ?></button>
+                                     <?php
+                                 }
+                                    ?>
+
                                 </td>
                                 <td>
-                                    <select name="is_aktiv" size="1" onchange="this.form.submit()">
-                                        <option <?php if ($row['is_aktiv'] == '1') {
-                                            echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.1' ?>"><?php echo _('Ja'); ?>
-                                        </option>
-                                        <option <?php if ($row['is_aktiv'] == '0') {
-                                            echo 'selected';
-                                        } ?> value="<?php echo $row['id'] . '.0' ?>"><?php echo _('Nein'); ?>
-                                        </option>
-                                    </select>
+                                    <?php
+                                    if ($row['is_aktiv'] == '1') {?>
+                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="is_aktiv" ><?= _('Nein') ?></button>
+                                    <?php
+                                    }
+                                    if ($row['is_aktiv'] == '0') {
+                                        ?>
+                                        <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="is_aktiv" ><?= _('Ja') ?></button>
+                                    <?php
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if ($row['have_to_read'] == '1') {?>
+                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="have_to_read" ><?= _('Nein') ?></button>
+                                    <?php
+                                    }
+                                    if ($row['have_to_read'] == '0') {
+                                        ?>
+                                        <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="have_to_read" ><?= _('Ja') ?></button>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                                 <?php
                                 echo '<td><button class="btn btn-danger" name="delmes" value="' . $row['id'] . '">'._('Löschen').'</button></td>';

@@ -54,10 +54,9 @@
                                                 }?>
                                             </td>
                                             <td>
-                                                <button name="sendreply"
-                                                        value="edit.<?= $row['id'] ?>"><?= _('Senden') ?></button>
-                                                <br>
-                                                <button name="delentry"
+                                                <button class="btn btn-info" name="sendreply"
+                                                        value="edit.<?= $row['id'] ?>"><?= _('Anwtort senden') ?></button>
+                                                <button class="btn btn-danger" name="delentry"
                                                         value="del.<?= $row['id'] ?>"><?= _('Löschen') ?></button>
                                             </td>
                                         </tr>

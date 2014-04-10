@@ -83,6 +83,13 @@ $app->post('/news/list', function () use ($app) {
 
     }
 
+    if (isset($_POST['have_to_read'])) {
+        $changer = explode(".", $_POST['have_to_read']);
+        DB::update('news', array(
+            'have_to_read' => $changer['1']
+        ), "id=%s", $changer['0']);
+    }
+
     if (isset($_POST['is_aktiv'])) {
         $changer = explode(".", $_POST['is_aktiv']);
         DB::update('news', array(
@@ -118,7 +125,6 @@ $app->get('/news/messages', function () use ($app) {
 $app->post('/news/messages', function () use ($app) {
 
 
-
     DB::insert('news_to_read', array(
         'user_id' => $_SESSION['account_id'],
         'news_id' => $_POST['close'],
@@ -129,5 +135,20 @@ $app->post('/news/messages', function () use ($app) {
     $SPMenu->MenuInclude($app);
     $app->render('news/usernews.phtml', compact('Users'));
 
+
+})->name('list');
+
+$app->post('/news/spwelcome', function () use ($app) {
+
+
+    DB::insert('news_to_read', array(
+        'user_id' => $_SESSION['account_id'],
+        'news_id' => $_POST['close'],
+        'user_read_it' => '1'
+    ));
+
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('spwelcome/user.phtml', compact('Users'));
 
 })->name('list');

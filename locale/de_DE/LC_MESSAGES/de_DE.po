@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: S:P\n"
 "POT-Creation-Date: 2014-04-08 11:24+0100\n"
-"PO-Revision-Date: 2014-04-08 13:29+0100\n"
-"Last-Translator: David  <info@dashtec.de>\n"
+"PO-Revision-Date: 2014-04-10 12:37+0100\n"
+"Last-Translator: David Schomburg <info@dashtec.de>\n"
 "Language-Team: Dave <info@dashtec.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -315,7 +315,7 @@ msgstr ""
 
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/authentication/login.phtml:47
 msgid "Anmeldung"
-msgstr "Anmeldunga"
+msgstr ""
 
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/authentication/login.phtml:51
 msgid "Anmeldung ist erforderlich!"
@@ -763,14 +763,14 @@ msgstr ""
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/menu/user.phtml:76
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/station/usereditserver.phtml:21
 msgid "Home"
-msgstr "Startseite"
+msgstr ""
 
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/menu/admin.phtml:86
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/menu/user.phtml:83
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/menu/user.phtml:88
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/news/usernews.phtml:28
 msgid "News"
-msgstr "Nachrichten"
+msgstr ""
 
 #: C:\Users\David_2\Dropbox\Programmierung\SPAH/views/menu/admin.phtml:91
 msgid "News übersicht"

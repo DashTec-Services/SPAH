@@ -33,7 +33,7 @@
 
                     <div class="widget-content">
 
-                        <form class="form-horizontal" method="post" action="/sap/benutzerverwaltung/list">
+                        <form class="form-horizontal" method="post" action="/benutzerverwaltung/adduser">
                             <fieldset>
                                 <div class="control-group">
                                     <label class="control-label" for="input01"><?= _('Kundennummer'); ?></label>
@@ -128,8 +128,7 @@
                                         </label>
                                         <label class="radio">
                                             <input type="radio" name="usr_grp" id="validateRadio2" value="adm">
-                                            <?= _('Benutzer (Starten und Stoppen der Streams, Playlisten bearbeiten, DJ
-                                            anlegen, löschen)') ?>
+                                            <?= _('Admin (Volle Adminrechte)') ?>
                                         </label>
                                     </div>
                                 </div>

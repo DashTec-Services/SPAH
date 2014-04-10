@@ -26,7 +26,7 @@ $app->get('/user/list', function () use ($app) {
     $Users = DB::query("SELECT * FROM accounts");
     $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
 
-})->name('not-restricted');
+})->name('nn');
 
 $app->get('/user/register', function () use ($app) {
 
@@ -34,26 +34,13 @@ $app->get('/user/register', function () use ($app) {
     $SPMenu->MenuInclude($app);
     $app->render('benutzerverwaltung/adduser.phtml');
 
-})->name('not-restricted');
+})->name('restricted');
 
-
-/*
- *
- *      User Routes
- *
- */
-
-
-/*
- *
- *      POST Verarbeitung
- *
- */
 
 $app->post('/user/list', function () use ($app) {
 # Benutzer Aktiv/inaktiv
 
-    if(!empty($_POST['useredit'])){
+    if(isset($_POST['useredit'])){
         $changer = explode(".", $_POST['useredit']);
 
         if($changer['1'] == 'deluser'){
@@ -79,8 +66,21 @@ $app->post('/user/list', function () use ($app) {
 
         }
 
+        if($changer['1'] == 'changePass'){
+        $pass = new core\password\password();
+        $password = $pass->generatePassword();
+        $passwordcrypt = $pass->createPassword($password);
+        DB::update('accounts', array(
+            'password' => $passwordcrypt
+        ), "id=%s", $changer['0']);
 
-
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+            $Users = DB::query("SELECT * FROM accounts");
+            $app->render('benutzerverwaltung/listuser.phtml', compact('Users'));
+        $growl = new core\sp_special\growl();
+        $growl->writeGrowl('success','DJ - Passwort geändert!','Neuer Passwort: '. $password);
+        }
 
     }else{
         $changer = explode(".", $_POST['is_aktiv']);
@@ -96,12 +96,7 @@ $app->post('/user/list', function () use ($app) {
         $sp_growl->writeGrowl('success', _('Benutzer wurde aktiviert'), '');
     }
 
-
-
-
-
-
-})->name('doLogin');
+})->name('restricted');
 
 $app->post('/user/list', function () use ($app) {
 
@@ -114,7 +109,7 @@ $app->post('/user/list', function () use ($app) {
     }
 
 
-})->name('doLogin');
+})->name('restricted');
 
 $app->post('/user/edituser', function () use ($app) {
 
@@ -142,14 +137,35 @@ $app->post('/user/edituser', function () use ($app) {
         $sp_growl->writeGrowl('error', _('Angaben nicht vollständig') ,  _('Name, Nachname und Mail werden benötigt') );
     }
 
-})->name('doLogin');
+})->name('restricted');
+
+
+
+
+
+
+
+
+/*
+ *
+ *      User Routes
+ *
+ */
+
+
+/*
+ *
+ *      POST Verarbeitung
+ *
+ */
+
 
 /*
  *
  *      Add User
  *
  */
-$app->post('/sap/benutzerverwaltung/list', function () use ($app) {
+$app->post('/benutzerverwaltung/adduser', function () use ($app) {
 
     $addUser = new core\usercontrol\user();
     $formwork = new core\postget\postgetcoll();
@@ -175,19 +191,20 @@ $app->post('/sap/benutzerverwaltung/list', function () use ($app) {
 
     } else {
 
-        if (isset($_POST['registeruser']) AND
+        if (isset($_POST['registeruser']) and
             empty($_POST['vorname'])
-            AND
+            or
             empty($_POST['nachname'])
-            AND
+            or
             empty($_POST['password'])
-            AND
+            or
             empty($_POST['mail'])
         ) {
             $SPMenu = new SP\Menu\MenuInclusion();
             $SPMenu->MenuInclude($app);
             $app->render('benutzerverwaltung/adduser.phtml');
         }
+
     }
 
 
