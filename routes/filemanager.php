@@ -543,19 +543,36 @@ if($isLast == 'true')
     $ThisFileInfo = $getID3->analyze($upload_path.$NewDBFileName.'.'.$ext);
     getid3_lib::CopyTagsToComments($ThisFileInfo);
 
-    # Zeit in Sekunden
-    #$tim = new core\time\time();
-    #$time = $tim->seconds_from_time($ThisFileInfo['playtime_string']);
+
 
 
     #    Für DEBUG!!!
-    #echo '<pre>'. print_r($ThisFileInfo).'</pre>';
+   # echo '<pre>'. print_r($ThisFileInfo).'</pre>';
 
         # Überprüfung ob IDV3 läuft
+
         if(!empty($ThisFileInfo['audio']['bitrate'])){
-            $bitrate = $ThisFileInfo['audio']['bitrate'];
+
+            if (strpos($ThisFileInfo['audio']['bitrate'], ',') == true){
+
+                $tim = new core\time\time();
+                $parts = explode(':', $tim->onlineTime($ThisFileInfo['playtime_string']));
+                $seconds = 0;
+                foreach ($parts as $i => $val) {
+                    $seconds += $val * pow(60, 2 - $i);
+                }
+
+                $filesize_to = $ThisFileInfo['filesize'] * 8;
+                echo $filesize_to;
+                #$bitrate= $filesize_to / $seconds;
+// TODO Bitrate lesen
+                $bitrate = '0';
+            }else{
+                $bitrate = "'".$ThisFileInfo['audio']['bitrate'] . "'";
+            }
+
         }else{
-            $bitrate = 0;
+            $bitrate = '0';
         }
 
         if(!empty($ThisFileInfo['comments_html']['artist'])){
@@ -579,7 +596,7 @@ if($isLast == 'true')
         'dir_titel' => $NewDBFileName.'.'.$ext,
         'hash_titel' => $NewDBFileName,
         'size' => $ThisFileInfo['filesize'],
-        'bitrate' => $bitrate,
+        'bitrate' => '0',
         'playtime' => $playtime,
         'artist' => $artist
     ));
@@ -589,6 +606,8 @@ if($isLast == 'true')
         'user_id' => $_SESSION['account_id'],
         'mp3_id' => $joe_id
     ));
+
+
 }
 
 
