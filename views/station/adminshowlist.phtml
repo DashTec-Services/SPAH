@@ -48,7 +48,11 @@
                                 echo "<td>";
                                             echo _('Stream-Bezeichnung: ') .'<b>'. $row['stream_userName'] .'</b>'."<br>";
                                             echo _('Max-Hörer: ') .'<b>'. $sc_serv['MaxUser'] .'</b>'. "<br>";
-                                            echo _('Port: ') .'<a href="http://' . $_SERVER["HTTP_HOST"] . ':' . $sc_serv['PortBase'] . '">'.'<b>'. $sc_serv['PortBase'] .'</b>'. "</a><br>";
+                                            if($row['sc_serv_pid'] != '0'){
+                                                echo _('Port: ') .'<a href="http://' . $_SERVER["HTTP_HOST"] . ':' . $sc_serv['PortBase'] . '" target="_blank" >'.'<b>'. $sc_serv['PortBase'] .'</b>'. "</a><br>";
+                                            }else{
+                                                echo _('Port: ') .$sc_serv['PortBase']. "</a><br>";
+                                            }
 
                                     $sc_serv_version = DB::queryFirstRow("SELECT * FROM sc_version WHERE id=%s", $row['sc_serv_version_id']);
                                     $sc_Trans_version = DB::queryFirstRow("SELECT * FROM sc_version WHERE id=%s", $row['sc_trans_version_id'] );
@@ -72,7 +76,6 @@
                                         } ?>
                                     </form>
                                 </td>
-
                                 <td>
                                     <form action="/station/showstream" method="post">
                                     <button name="changeConfServ" value="<?php echo $row['id'] . '.edit' ?>" class="btn btn-secondary" ><img src="/image/fuge/pencil.png"></button>
