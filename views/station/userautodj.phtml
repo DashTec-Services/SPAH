@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.30
+ *  v 0.32
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -45,7 +45,7 @@
                                     $account = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);
                                     echo '<td><a href="' . $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'] . '">' . $row['stream_userName'] . '</a><br>';
 
-                                    echo $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'];
+
                                     $wert= 'http://'.$_SERVER['HTTP_HOST'] . ':' . $account['PortBase'];
                                     $fp = @fsockopen($_SERVER['HTTP_HOST'], $account['PortBase'], $errno, $errstr, 1);
                                     if ($fp)  {

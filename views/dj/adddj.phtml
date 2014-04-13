@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.30
+ *  v 0.32
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
