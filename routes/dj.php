@@ -26,7 +26,7 @@ $app->get('/dj/add', function () use ($app) {
 
     $max_dj = DB::queryFirstRow("SELECT * FROM accounts WHERE id=%s", $_SESSION['account_id']);
 
-    if($max_dj['dj_limit_count'] > $counter){
+    if($max_dj['dj_limit_count'] > $counter OR $max_dj['dj_limit_count'] == NULL ){
         $SPMenu = new SP\Menu\MenuInclusion();
         $SPMenu->MenuInclude($app);
         $app->render('dj/adddj.phtml');
