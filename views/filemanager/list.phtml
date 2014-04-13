@@ -49,13 +49,13 @@
                             foreach ($results as $row) {
                                 $mp3titel = DB::query("SELECT * FROM mp3 WHERE id=%s", $row['mp3_id']);
                                 foreach ($mp3titel as $title) {
-                                    echo '<form action="/sap/filemanager/list" method="post"><tr>';
+                                    echo '<form action="/filemanager/list" method="post"><tr>';
                                     echo "<td>".$title['org_file_titel']."</td> \n";
                                     $MB = $title['size'] / 1048576;
                                     echo "<td>".round($MB, 2)." MB</td> \n";
                                     echo "<td>".$title['bitrate']."</td> \n";
                                     echo "<td>".$TIMEFUNC->seconds2Time($title['playtime'])."</td> \n";
-                                    echo '<td><button class="btn btn-danger" type="submit" value="DelFromDB.'.$row['id'].'" name="DelFromDB" >Löschen</button></td>';
+                                    echo '<td><button class="btn btn-danger" type="submit" value="'.$row['id'].'" name="DelFromDB" >Löschen</button></td>';
                                     echo '</tr></form>';
 
                                     $Size += $title['size'];

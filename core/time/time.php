@@ -49,8 +49,8 @@ class time {
         $zeit['min'] = floor(($sekunden%3600) / 60);
         $zeit['sek'] = $sekunden%60;
 
-        return "Tage:".$zeit['tag']." Std.:".$zeit['std']."
-               Min:".$zeit['min']." Sek:".$zeit['sek'];
+        return $zeit['tag']." Tage  ".$zeit['std']." Stunden
+               ".$zeit['min']." Minuten ".$zeit['sek']." Sekunden";
 
     }
 

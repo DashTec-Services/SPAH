@@ -50,14 +50,22 @@
                                             $counter = DB::count();
                                             echo "<td>" . $counter . "</td> \n";
                                             echo "<td> </td> \n";
-                                            echo '<td>
+                                            echo '<td>'; ?>
                                             <select name="pllstaction" onchange="this.form.submit()" >
                                             <option>bitte wählen</option>
                                             <option value="activ#' . $row['id'] . '">Bearbeiten</option>
                                             <option value="play#' . $row['id'] . '">Zufällig</option>
                                             <option value="del#' . $row['id'] . '">Löschen</option>
                                             </select>
-                                            </td> ' . "\n";
+
+
+                                            <button class="btn btn-warning" value="<?php $row['id'] ?>" name="playListAction" ><img src="/image/fuge/pencil.png" ></button>
+                                            <button class="btn btn-info" value="<?php $row['id'] ?>" name="playListAction" ><img src="/image/fuge/arrow-circle.png" ></button>
+                                            <button name="changeConfServ" value="<?php echo $row['id'] . '.clear' ?>" class="btn btn-danger" ><img src="/image/fuge/cross-circle.png"></button>
+
+
+                                            </td>
+                                            <?php
                                             echo '</tr></form>';
                                         }
                                         ?>

@@ -17,26 +17,50 @@ $app->get('/filemanager/list', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('filemanager/list.phtml', compact('Users'));
-})->name('list');
+})->name('Users');
 
 $app->get('/filemanager/playlist', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('filemanager/playlist.phtml', compact('Users'));
-})->name('list');
+})->name('Users');
 
 $app->get('/filemanager/upload', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('filemanager/upload.phtml', compact('Users'));
-})->name('list');
+})->name('Users');
 
 $app->get('/filemanager/playlist/edit', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('filemanager/editplaylist.phtml', compact('Users'));
-})->name('list');
+})->name('Users');
 
+
+
+
+/*
+ *    -Übersicht aller Datein-
+ */
+$app->post('/filemanager/list', function () use ($app) {
+if(isset($_POST['DelFromDB']) and !empty($_POST['DelFromDB'])){
+    DB::delete('mp3_usr_rel', "id=%s", $_POST['DelFromDB']);
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('filemanager/list.phtml');
+    $sp_growl = new core\sp_special\growl();
+    $sp_growl->writeGrowl('success', _('Datei gelöscht'), _('Die Datei wurde gelöscht!'));
+}
+})->name('Users');
+
+
+
+
+
+/*
+ *      POST Datein
+ */
 $app->post('/filemanager/playlist', function () use ($app) {
     if (isset($_POST['pllstaction'])){
         $changer = explode("#",$_POST['pllstaction']);
@@ -95,12 +119,10 @@ $app->post('/filemanager/playlist', function () use ($app) {
         $SPMenu->MenuInclude($app);
         $app->render('filemanager/editplaylist.phtml', compact('Users'));
     }
-})->name('doLogin');
+})->name('Users');
 
 
-
-
-
+# Upload-Funktionen
 $app->post('/filemanager/upload', function () use ($app) {
 
 
@@ -613,4 +635,4 @@ if($isLast == 'true')
 
 
 
-})->name('doLogin');
+})->name('Users');
