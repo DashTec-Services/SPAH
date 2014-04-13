@@ -321,24 +321,31 @@ if($_SESSION['Setup_Done'] == true){
                 if (version_compare(phpversion(), '5.5', '<')) {
                     echo 'Sie benutzen PHP: ' . phpversion() .'<b> ein UPDATE IST erforderlich!</b>';
                 }else{
-                    echo 'Sie benutzen PHP: ' . phpversion() .'<b>!</b>';
+                   # echo 'Sie benutzen PHP: ' . phpversion() .'<b>!</b>';
+                }
+
+
+                if (function_exists('curl_version')) {
+                   # echo '<p class="message success">'._('<b>"cURL"</b> wurde gefunden').'</p>';
+                } else {
+                    echo '<p class="message error">'._('<b>"cURL"</b> wurde nicht gefunden!').'</p>';
                 }
 
 
                 if ($rights == '777') {
-                    echo '<p class="message success">'._('Ordner <b>"shoutcast"</b> besitzt die erforderlichen Rechte').'</p>';
+                    #echo '<p class="message success">'._('Ordner <b>"shoutcast"</b> besitzt die erforderlichen Rechte').'</p>';
                 } else {
                     echo '<p class="message error">'._('Ordner <b>"shoutcast"</b> besitzt <b>NICHT</b> die erforderlichen Rechte').'</p>';
                 }
 
                 if (extension_loaded('ssh2')) {
-                    echo '<p class="message success">'._('Erweiterung: <b>"ssh2"</b> gefunden').'</p>';
+                   # echo '<p class="message success">'._('Erweiterung: <b>"ssh2"</b> gefunden').'</p>';
                 } else {
                     echo '<p class="message error">'._('Erweiterung: <b>"ssh2" - NICHT</b> gefunden').'</p>';
                 }
 
                 if (extension_loaded('mysql')) {
-                    echo '<p class="message success">'._('Erweiterung: <b>"MySql"</b> gefunden ').'</p>';
+                  #  echo '<p class="message success">'._('Erweiterung: <b>"MySql"</b> gefunden ').'</p>';
                 } else {
                     echo '<p class="message error">'._('Erweiterung: <b>"MySql" - NICHT</b> gefunden ').'</p>';
                 }
@@ -346,7 +353,7 @@ if($_SESSION['Setup_Done'] == true){
                 if (extension_loaded('safe_mode')) {
                     echo '<p class="message error">'._('Erweiterung: <b>"safe_mode" - NICHT</b> ist ON').'</p>';
                 } else {
-                    echo '<p class="message success">'._('Erweiterung: <b>"safe_mode"</b> is OFF! ').'</p>';
+                  #  echo '<p class="message success">'._('Erweiterung: <b>"safe_mode"</b> is OFF! ').'</p>';
                 }
 
 

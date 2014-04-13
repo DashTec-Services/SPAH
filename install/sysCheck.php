@@ -33,7 +33,7 @@
 date_default_timezone_set('Europe/Berlin');
 
 # PHP Versionen prüfen
-if (version_compare(phpversion(), '5.6', '<')) {
+if (version_compare(phpversion(), '5.5', '<')) {
     echo 'Sie benutzen PHP: ' . phpversion() .'<b> ein UPDATE IST erforderlich!</b>';
     $error = true;
 }

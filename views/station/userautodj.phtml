@@ -43,7 +43,22 @@
                                 foreach ($results as $row) {
                                     echo '<form action="/station/autodj" method="post"><tr>';
                                     $account = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);
-                                    echo '<td><a href="' . $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'] . '">' . $row['stream_userName'] . '</a></td>';
+                                    echo '<td><a href="' . $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'] . '">' . $row['stream_userName'] . '</a><br>';
+
+                                    echo $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'];
+                                    $wert= 'http://'.$_SERVER['HTTP_HOST'] . ':' . $account['PortBase'];
+                                    $fp = @fsockopen($_SERVER['HTTP_HOST'], $account['PortBase'], $errno, $errstr, 1);
+                                    if ($fp)  {
+                                        fclose($fp);
+                                        $xmsluser = new \core\sp_special\StationXML();
+                                    $all = $xmsluser->getXMLParms($account['PortBase'], '123');
+                                    echo _('Zuhörer aktuell: ').$all->CURRENTLISTENERS .'<br>';
+                                    echo _('Zuhörer maximal: ').$all->PEAKLISTENERS .'<br>';
+                                    echo _('Zuhörer maximal (Serverconf): ').$all->MAXLISTENERS .'<br>';
+                                    echo _('Aktueller Song: ').$all->SONGTITLE .'<br>';
+                                    }
+                                    echo '</td>';
+
                                     echo "<td>" . $account['MaxUser'] . "</td> \n";
                                     echo "<td>" . $account['PortBase'] . "</td> \n";
                                     ?>
@@ -101,6 +116,8 @@
                             </table>
                         </div>
                         <!-- /widget-content -->
+
+
                     </div>
                     <!-- /widget -->
                 </div>
