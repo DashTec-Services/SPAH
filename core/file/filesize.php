@@ -20,6 +20,7 @@ class filesize{
     public function format_filesize($size) {
         $arr_units = array(
             'KB',
+            'Kibi',
             'MB',
             'GB',
             'TB',

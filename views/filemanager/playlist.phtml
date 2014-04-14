@@ -51,19 +51,9 @@
                                             echo "<td>" . $counter . "</td> \n";
                                             echo "<td> </td> \n";
                                             echo '<td>'; ?>
-                                            <select name="pllstaction" onchange="this.form.submit()" >
-                                            <option>bitte wählen</option>
-                                            <option value="activ#' . $row['id'] . '">Bearbeiten</option>
-                                            <option value="play#' . $row['id'] . '">Zufällig</option>
-                                            <option value="del#' . $row['id'] . '">Löschen</option>
-                                            </select>
-
-
-                                            <button class="btn btn-warning" value="<?php $row['id'] ?>" name="playListAction" ><img src="/image/fuge/pencil.png" ></button>
-                                            <button class="btn btn-info" value="<?php $row['id'] ?>" name="playListAction" ><img src="/image/fuge/arrow-circle.png" ></button>
-                                            <button name="changeConfServ" value="<?php echo $row['id'] . '.clear' ?>" class="btn btn-danger" ><img src="/image/fuge/cross-circle.png"></button>
-
-
+                                            <button class="btn btn-warning" value="<?= $row['id'] ?>" name="editPlaylst" ><img src="/image/fuge/pencil.png" ></button>
+                                            <button class="btn btn-info" value="<?= $row['id'] ?>" name="playListAction" ><img src="/image/fuge/arrow-circle.png" ></button>
+                                            <button name="delPlaylst" value="<?= $row['id']?>" class="btn btn-danger" ><img src="/image/fuge/cross-circle.png"></button>
                                             </td>
                                             <?php
                                             echo '</tr></form>';
