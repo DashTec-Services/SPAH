@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `type` enum('block','success','info','error') DEFAULT NULL,
   `have_to_read` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `news_to_read` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `news_to_read` (
   `news_id` int(11) NOT NULL,
   `user_read_it` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `playlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -186,6 +186,9 @@ CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   `irc` varchar(35) DEFAULT NULL,
   `unlockkeyname` varchar(45) DEFAULT NULL,
   `unlockkeycode` varchar(45) DEFAULT NULL,
+  `adminport` varchar(8) NOT NULL,
+  `adminuser` varchar(45) DEFAULT NULL,
+  `adminpassword` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -215,4 +218,4 @@ CREATE TABLE IF NOT EXISTS `support` (
   `titel` varchar(190) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

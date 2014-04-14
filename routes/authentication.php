@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.32
+ *  v 0.33
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -18,6 +18,41 @@ use core\password\password;
 // zeigt die loginseite an
 $app->get('/login', function () use ($app) {
     $newsListing = DB::query("SELECT * FROM news WHERE is_aktiv=%s  AND login_news=%s", '1', '1');
+#
+    date_default_timezone_set('Europe/Berlin');
+    if (!file_exists('.lastNewsForAdmin')) {
+        file_put_contents('.lastNewsForAdmin', date('Y-m-d H'));
+        Requests::register_autoloader();
+        $data = array(
+            'SendUserStat' => '@KDNUM@@RECHNR@',
+            'kdNumb' => '@KDNUM@',
+            'rechnnumb' => '@RECHNR@',
+            'server_ip' => $_SERVER['SERVER_ADDR'],
+            'php_v' => PHP_VERSION,
+            'sp_version' => SP_VERSION,
+            'script_filename' => $_SERVER['SCRIPT_FILENAME'],
+            'server_signature' => $_SERVER['SERVER_SIGNATURE']
+        );
+        $response = Requests::post('http://login.streamerspanel.de/request.php', array(), $data);
+    } else {
+        $lastUsageSentAt = file_get_contents('.lastNewsForAdmin');
+        if ($lastUsageSentAt !== date('Y-m-d H')) {
+            file_put_contents('.lastNewsForAdmin', date('Y-m-d H'));
+            Requests::register_autoloader();
+            $data = array(
+                'SendUserStat' => '@KDNUM@@RECHNR@',
+                'kdNumb' => '@KDNUM@',
+                'rechnnumb' => '@RECHNR@',
+                'server_ip' => $_SERVER['SERVER_ADDR'],
+                'php_v' => PHP_VERSION,
+                'script_filename' => $_SERVER['SCRIPT_FILENAME'],
+                'server_signature' => $_SERVER['SERVER_SIGNATURE']
+            );
+            $response = Requests::post('http://login.streamerspanel.de/request.php', array(), $data);
+        } else {
+        }
+    }
+
 
     $app->render('authentication/login.phtml', compact('newsListing'));
 })->name('login');
