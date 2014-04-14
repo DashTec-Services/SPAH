@@ -38,7 +38,6 @@ $app->get('/dj/add', function () use ($app) {
     }
 })->name('usr');
 
-
 $app->post('/dj/list', function () use ($app) {
 
     if (isset($_POST['editDjList']) AND !isset($_POST['entryDjtoStream'])) {
@@ -152,7 +151,6 @@ $app->post('/dj/list', function () use ($app) {
     }
 })->name('usr');
 
-
 # DJ bearbeiten
 $app->post('/dj/edit', function () use ($app) {
 # DJ bearbeiten
@@ -183,3 +181,5 @@ if (isset($_POST['editDjUser'])){
     $app->render('dj/listdj.phtml');
 }
 })->name('usr');
+
+

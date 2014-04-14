@@ -366,6 +366,40 @@ $app->post('/station/djfunction', function () use ($app) {
             $trans->killSc_Trans($changer['0']);
         }
     }
+
+    # DJ - Nächsten Song spielen
+    if(isset($_POST['kickdj'])){
+        $sc_trans_con = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $_POST['kickdj']);
+        $adminport = $sc_trans_con['adminport'];
+        $username = $sc_trans_con['adminuser'];
+        $password = $sc_trans_con['adminpassword'];
+        $context = stream_context_create(array(
+            'http' => array(
+                'header'  => "Authorization: Basic " . base64_encode("$username:$password")
+            )
+        ));
+        $data = file_get_contents('http://sappview.streamerspanel.com:'.$adminport.'/kickdj', false, $context);
+    }
+
+
+    # DJ - Nächsten Song spielen
+    if(isset($_POST['dj_nextSong'])){
+        $sc_trans_con = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $_POST['dj_nextSong']);
+        $adminport = $sc_trans_con['adminport'];
+        $username = $sc_trans_con['adminuser'];
+        $password = $sc_trans_con['adminpassword'];
+        $context = stream_context_create(array(
+            'http' => array(
+                'header'  => "Authorization: Basic " . base64_encode("$username:$password")
+            )
+        ));
+        $data = file_get_contents('http://sappview.streamerspanel.com:'.$adminport.'/nextsong', false, $context);
+    }
+
+
+
+
+
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('spwelcome/dj.phtml', compact('license'));
