@@ -23,7 +23,6 @@ $app->get('/dj/add', function () use ($app) {
 
     DB::query("SELECT * FROM dj_accounts WHERE dj_of_user_id=%s", $_SESSION['account_id']);
     $counter = DB::count();
-
     $max_dj = DB::queryFirstRow("SELECT * FROM accounts WHERE id=%s", $_SESSION['account_id']);
 
     if($max_dj['dj_limit_count'] > $counter OR $max_dj['dj_limit_count'] == NULL ){
@@ -36,9 +35,7 @@ $app->get('/dj/add', function () use ($app) {
         $app->render('dj/listdj.phtml');
         $growl = new core\sp_special\growl();
         $growl->writeGrowl('warning','Aktion ist nicht möglich!','Sie haben die maximale Anzahl an DJ-Benutzer erreicht!');
-
     }
-
 })->name('usr');
 
 
@@ -113,7 +110,6 @@ $app->post('/dj/list', function () use ($app) {
     if(isset($_POST['entryDjtoStream'])){
 
 
-
         DB::insert('dj_accounts', array(
             'dj_of_sc_rel_id' => $_POST['entryDjtoStream'],
             'dj_of_user_id' => $_SESSION['account_id'],
@@ -130,7 +126,7 @@ $app->post('/dj/list', function () use ($app) {
 
 
     if (isset($_POST['entryDjUser'])){
-        DB::update('accounts', array(
+        DB::insert('accounts', array(
             'kundennummer' => $_SESSION['account_id'].'-'.$_POST['dj_name'],
             'vorname' => $_POST['vorname'],
             'nachname' => $_POST['nachname'],
@@ -145,7 +141,7 @@ $app->post('/dj/list', function () use ($app) {
             'is_aktiv' => '1',
             'dj_name' => $_POST['dj_name'],
             'dj_of_user_id' => $_SESSION['account_id']
-        ), "id=%s",  $_SESSION['DJID']);
+        ));
 
 
         $SPMenu = new SP\Menu\MenuInclusion();
