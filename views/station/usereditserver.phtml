@@ -121,7 +121,7 @@
                     </label>
                     <label class="radio">
                         <input type="radio" name="encoder_1" id="validateRadio2"
-                               value="aacp" <?php if ($sc_trans['encoder_1'] == 'aacp') {
+                               value="aac" <?php if ($sc_trans['encoder_1'] == 'aac') {
                             echo 'checked=""';
                         } ?>>
                         <?php echo _('AAC'); ?>
@@ -210,6 +210,7 @@
                 <div class="controls">
                     <input type="text" class="input-large" name="TitleFormat"
                            value="<? echo $sc_serv['TitleFormat']; ?>" id="input01">
+                    Justin Radio: %s
                 </div>
             </div>
             <div class="control-group">

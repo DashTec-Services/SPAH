@@ -43,7 +43,7 @@
                                 foreach ($results as $row) {
                                     echo '<form action="/station/autodj" method="post"><tr>';
                                     $account = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $row['sc_serv_conf_id']);
-                                    echo '<td><a href="' . $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'] . '">' . $row['stream_userName'] . '</a><br>';
+                                    echo '<td><a href="http://' . $_SERVER['HTTP_HOST'] . ':' . $account['PortBase'] . '" target="_blank">' . $row['stream_userName'] . '</a><br>';
 
 
                                     $wert= 'http://'.$_SERVER['HTTP_HOST'] . ':' . $account['PortBase'];

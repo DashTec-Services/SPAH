@@ -50,11 +50,14 @@ foreach($result as $wert => $key){
     echo 'PHP-Modul "' .$key . '" <b>NICHT vorhanden!</b><br>';
     $errorMod = true;
 }
-if (isset($errorMod) or $error == true){
-    echo "<h1><b>S:P - Das System erfüllt NICHT die Anforderungen zur Installation</h1></b>";
-}else{
-    echo "<h1><b>S:P - Das System erfüllt die Anforderungen zur Installation</h1></b>";
+if (isset($errorMod)){
+    if($error == true){
+        echo '<h1 style="color: red"><b>S:P - Das System erfüllt <p style="font-size: 40pt;">NICHT</p> die Anforderungen zur Installation    </h1></b>';
+    }else{
+        echo '<h1  style="color: #0cff00"><b>S:P - Das System erfüllt die Anforderungen zur Installation</h1></b>';
+    }
 }
+
 
 $loaded_extensions = get_loaded_extensions();
 natcasesort($loaded_extensions);

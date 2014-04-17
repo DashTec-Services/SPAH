@@ -16,17 +16,17 @@ session_start();
 include_once '../core/password/password.php';
 include_once '../core/DB.php';
 
-if(!isset($_SESSION['cryptpass'])){
-    $passw = new \core\password\password();
-    $pass = $passw->generatePassword();
-    $cryptpass = $passw->createPassword($pass);
-    $_SESSION['pass'] = $pass;
-   $_SESSION['cryptpass'] = $cryptpass;
+
+
+if(!isset($_SESSION['pass'])){
+$passw = new \core\password\password();
+$pass = $passw->generatePassword();
+$cryptpass = $passw->createPassword($pass);
+$_SESSION['pass'] = $pass;
+$_SESSION['cryptpass'] = $cryptpass;
 }
 
-
 if (isset($_POST['finsih'])){
-
 
     $_SESSION['dbname'] = $_POST['dbname'];
     $_SESSION['dbuser'] = $_POST['dbuser'];
@@ -66,7 +66,6 @@ if (mysqli_connect_error()) {
         . mysqli_connect_error());
 }
 
-
 $sql = file_get_contents($sql_filename);
 if (!$sql){
     die ('Error opening file');
@@ -74,17 +73,7 @@ if (!$sql){
 
 mysqli_multi_query($mysqli,$sql);
 
-    DB::insert('config', array(
-        'server_ip' => $_SESSION['serverip'],
-        'adminMail' => $_SESSION['adminmail'],
-        'root_user' => $_SESSION['sshuser'],
-        'root_password' => $_SESSION['sshpass'],
-        'ssh_port' => $_SESSION['ssh_port'],
-        'doc_root' => $_SESSION['serverdocroot'],
-        'default_local' => $_SESSION['local'],
-        'sp_titel' => 'S:P fresh install'
-    ));
-
+    sleep(10);
     DB::insert('accounts', array(
         'kundennummer' => 'spadmin',
         'mail' => $_SESSION['adminmail'],
@@ -101,6 +90,17 @@ mysqli_multi_query($mysqli,$sql);
         'usr_grp' => 'adm'
     ));
 
+    DB::insert('config', array(
+        'server_ip' => $_SESSION['serverip'],
+        'adminMail' => $_SESSION['adminmail'],
+        'root_user' => $_SESSION['sshuser'],
+        'root_password' => $_SESSION['sshpass'],
+        'ssh_port' => $_SESSION['ssh_port'],
+        'doc_root' => $_SESSION['serverdocroot'],
+        'default_local' => $_SESSION['local'],
+        'sp_titel' => 'S:P fresh install'
+    ));
+
 $mysqli->close();
 
     $file = "../index.php";
@@ -114,23 +114,15 @@ $mysqli->close();
 
 $_SESSION['Setup_Done'] = true;
 
-
 }
 
-if($_SESSION['Setup_Done'] == true){
+if(isset($_SESSION['Setup_Done'])){
     session_unset();
     session_destroy();
 	
 	    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/");
     exit;
 }
-
-
-
-
-
-
-
 
 
 
@@ -315,51 +307,51 @@ if($_SESSION['Setup_Done'] == true){
             <div class="well">
                 <?php
 
-                echo _('Systemanforderungen') .'<br>';
+                echo _('<b>Systemanforderungen</b>') .'<br><br>';
                 $rights = substr(sprintf('%o', fileperms('../shoutcast')), -3);
 
                 if (version_compare(phpversion(), '5.5', '<')) {
                     echo 'Sie benutzen PHP: ' . phpversion() .'<b> ein UPDATE IST erforderlich!</b>';
                 }else{
-                   # echo 'Sie benutzen PHP: ' . phpversion() .'<b>!</b>';
+                    #echo 'Sie benutzen PHP: ' . phpversion() .'<b>!</b>';
                 }
 
 
                 if (function_exists('curl_version')) {
-                   # echo '<p class="message success">'._('<b>"cURL"</b> wurde gefunden').'</p>';
+                    echo '<p class="message success">'._('<b style="color: green">"cURL"</b> wurde gefunden').'</p>';
                 } else {
-                    echo '<p class="message error">'._('<b>"cURL"</b> wurde nicht gefunden!').'</p>';
+                    echo '<p class="message error">'._('<b style="color: red">"cURL"</b> wurde nicht gefunden!').'</p>';
                 }
 
 
                 if ($rights == '777') {
-                    #echo '<p class="message success">'._('Ordner <b>"shoutcast"</b> besitzt die erforderlichen Rechte').'</p>';
+                    echo '<p class="message success">'._('Ordner <b style="color: green">"shoutcast"</b> besitzt die erforderlichen Rechte').'</p>';
                 } else {
-                    echo '<p class="message error">'._('Ordner <b>"shoutcast"</b> besitzt <b>NICHT</b> die erforderlichen Rechte').'</p>';
+                    echo '<p class="message error">'._('Ordner <b style="color: red">"shoutcast"</b> besitzt <b style="color: red">NICHT</b> die erforderlichen Rechte').'</p>';
                 }
 
                 if (extension_loaded('ssh2')) {
-                   # echo '<p class="message success">'._('Erweiterung: <b>"ssh2"</b> gefunden').'</p>';
+                    echo '<p class="message success">'._('Erweiterung: <b style="color: green">"ssh2"</b> gefunden').'</p>';
                 } else {
-                    echo '<p class="message error">'._('Erweiterung: <b>"ssh2" - NICHT</b> gefunden').'</p>';
+                    echo '<p class="message error">'._('Erweiterung: <b style="color: red">"ssh2" - NICHT</b> gefunden').'</p>';
                 }
 
                 if (extension_loaded('mysql')) {
-                  #  echo '<p class="message success">'._('Erweiterung: <b>"MySql"</b> gefunden ').'</p>';
+                    echo '<p class="message success">'._('Erweiterung: <b style="color: green">"MySql"</b> gefunden ').'</p>';
                 } else {
-                    echo '<p class="message error">'._('Erweiterung: <b>"MySql" - NICHT</b> gefunden ').'</p>';
+                    echo '<p class="message error">'._('Erweiterung: <b style="color: red">"MySql" - NICHT</b> gefunden ').'</p>';
                 }
 
                 if (extension_loaded('safe_mode')) {
-                    echo '<p class="message error">'._('Erweiterung: <b>"safe_mode" - NICHT</b> ist ON').'</p>';
+                    echo '<p class="message error">'._('Erweiterung: <b style="color: red">"safe_mode" - NICHT</b> ist ON').'</p>';
                 } else {
-                  #  echo '<p class="message success">'._('Erweiterung: <b>"safe_mode"</b> is OFF! ').'</p>';
+                   echo '<p class="message success">'._('Erweiterung: <b style="color: green">"safe_mode"</b> is OFF! ').'</p>';
                 }
 
 
 
                 if ($rights == '777' AND !extension_loaded('safe_mode') AND extension_loaded('mysql') && extension_loaded('ssh2') && $rights == '777' ){
-                    echo '<a href="st2.php"><button type="button" name="step2">'._('Schritt 2').'</button></a>';
+
                     $_SESSION['step1'] = 'true';
                 }else{
                     echo '<p class="message error">'._('Es müssen alle Überprüfungen bestanden werden!!').'</p>';

@@ -34,7 +34,10 @@ $app->post('/station/add', function() use ($app){
      *          5           1.9.9
      */
 if(isset($_POST['addstreamswitch'])){
-   if($_POST['addstreamswitch'] == '1'){
+    // Session ID der Stream-Version speichern
+    $_SESSION['streamID'] = $_POST['addstreamswitch'];
+
+   if($_POST['addstreamswitch'] == '3'){
        $SPMenu = new SP\Menu\MenuInclusion();
        $SPMenu->MenuInclude($app);
        $app->render('streamAddSelct/sc20.phtml', compact('license'));
@@ -44,7 +47,7 @@ if(isset($_POST['addstreamswitch'])){
        $demo = new \core\demo\demomod();
        $demo->CheckDemo($_SESSION['demo_mod']);
 
-   }elseif($_POST['addstreamswitch'] == '2' OR $_POST['addstreamswitch'] == '5'){
+   }elseif($_POST['addstreamswitch'] == '1' OR $_POST['addstreamswitch'] == '2'){
        $SPMenu = new SP\Menu\MenuInclusion();
        $SPMenu->MenuInclude($app);
        $app->render('streamAddSelct/sc198.phtml', compact('license'));
@@ -72,8 +75,22 @@ if (isset($_POST['addsrv']) AND $_SESSION['demo_mod'] == false) {
 
     $FolderDir = $DocRoot . "/shoutcastconf/" . $serverPort;
 
-    // Ordner anlegen
-    mkdir($FolderDir, 0700);
+    if (is_dir($FolderDir)) {
+        function deleteDirectory($dir) {
+            if (!file_exists($dir)) return true;
+            if (!is_dir($dir)) return unlink($dir);
+            foreach (scandir($dir) as $item) {
+                if ($item == '.' || $item == '..') continue;
+                if (!deleteDirectory($dir.DIRECTORY_SEPARATOR.$item)) return false;
+            }
+            return rmdir($dir);
+        }
+        deleteDirectory($FolderDir);
+        mkdir($FolderDir, 0700);
+    } else {
+        mkdir($FolderDir, 0700);
+    }
+
 
     DB::insert('sc_serv_conf', array(
         'MaxUser' => $formData['MaxUser'],
@@ -81,15 +98,15 @@ if (isset($_POST['addsrv']) AND $_SESSION['demo_mod'] == false) {
         'PortBase' => $formData['PortBase'],
         'logfile' => $FolderDir . '/sc_serv.log',
         'RealTime' => '1',
-        'ScreenLog' => '0',
-        'ShowLastSongs' => '0',
-        //'TchLog' => 'NULL',
-        //'WebLog' => 'NULL',
+        'ScreenLog' => '1',
+        'ShowLastSongs' => '10',
+        'TchLog' => 'yes',
+        'WebLog' => 'no',
         'W3CEnable' => 'Yes',
-        'W3CLog' => $FolderDir . '/sc_w3c.log',
-        //'SrcIP' => '',
-        //'DestIP' => '',
-        //'Yport' => '',
+        'W3CLog' => $FolderDir . '/W3CLog.log',
+        'SrcIP' => 'ANY',
+        'DestIP' => 'ANY',
+        'Yport' => '80',
         'NameLookups' => '0',
         // 'RelayPort' => '',
         // 'RelayServer' => '',
@@ -117,8 +134,6 @@ if (isset($_POST['addsrv']) AND $_SESSION['demo_mod'] == false) {
     } else {
         $IsPublic = 0;
     }
-
-
     DB::insert('sc_trans_conf', array(
         'encoder_1' => $formData['encoder_1'],
         'bitrate_1' => $formData['bitrate_1'],
@@ -152,6 +167,11 @@ if (isset($_POST['addsrv']) AND $_SESSION['demo_mod'] == false) {
         //'unlockkeycode' =>''
     ));
     $sc_trans_id = DB::insertId();
+
+
+
+
+
 
 
     DB::insert('sc_rel', array(

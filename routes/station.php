@@ -279,9 +279,28 @@ $app->post('/station/showstream', function () use ($app) {
             // TODO: Sichern prüfen ob Server den User gehört!
             $_SESSION['sec_rel_id'] = $_POST['changeConfServ'];
             $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
+            $serverPort = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
             DB::delete('sc_rel', "id=%s", $changer['0']);
             DB::delete('sc_serv_conf', "id=%s", $sc_rel['sc_serv_conf_id']);
             DB::delete('sc_trans_conf', "id=%s", $sc_rel['sc_trans_id']);
+
+            // Ordner löschen
+            $config = DB::queryFirstRow("SELECT doc_root FROM config WHERE id=%s", '1');
+            $DocRoot = $config['doc_root'];
+            $FolderDir = $DocRoot . "/shoutcastconf/" . $serverPort['PortBase'];
+            function deleteDirectory($dir) {
+                if (!file_exists($dir)) return true;
+                if (!is_dir($dir)) return unlink($dir);
+                foreach (scandir($dir) as $item) {
+                    if ($item == '.' || $item == '..') continue;
+                    if (!deleteDirectory($dir.DIRECTORY_SEPARATOR.$item)) return false;
+                }
+                return rmdir($dir);
+            }
+            deleteDirectory($FolderDir);
+
+
+
 
             $SPMenu = new SP\Menu\MenuInclusion();
             $SPMenu->MenuInclude($app);
@@ -378,7 +397,9 @@ $app->post('/station/djfunction', function () use ($app) {
                 'header'  => "Authorization: Basic " . base64_encode("$username:$password")
             )
         ));
-        $data = file_get_contents('http://sappview.streamerspanel.com:'.$adminport.'/kickdj', false, $context);
+        $sc_trans_con = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $_POST['kickdj']);
+        $ServerIp = DB::queryFirstRow("SELECT * FROM config WHERE id=%s",'1');
+        $data = file_get_contents($ServerIp['server_ip'].':'.$adminport.'/kickdj', false, $context);
     }
 
 
@@ -393,11 +414,9 @@ $app->post('/station/djfunction', function () use ($app) {
                 'header'  => "Authorization: Basic " . base64_encode("$username:$password")
             )
         ));
-        $data = file_get_contents('http://sappview.streamerspanel.com:'.$adminport.'/nextsong', false, $context);
+        $ServerIp = DB::queryFirstRow("SELECT * FROM config WHERE id=%s",'1');
+        $data = file_get_contents($ServerIp['server_ip'].':'.$adminport.'/nextsong', false, $context);
     }
-
-
-
 
 
     $SPMenu = new SP\Menu\MenuInclusion();
