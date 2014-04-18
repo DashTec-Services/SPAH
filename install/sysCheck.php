@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.33
+ *  v 0.35
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -51,11 +51,13 @@ foreach($result as $wert => $key){
     $errorMod = true;
 }
 if (isset($errorMod)){
-    if($error == true){
+    if($error == true or $errorMod == true){
         echo '<h1 style="color: red"><b>S:P - Das System erfüllt <p style="font-size: 40pt;">NICHT</p> die Anforderungen zur Installation    </h1></b>';
     }else{
         echo '<h1  style="color: #0cff00"><b>S:P - Das System erfüllt die Anforderungen zur Installation</h1></b>';
     }
+}else{
+    echo '<h1  style="color: #0cff00"><b>S:P - Das System erfüllt die Anforderungen zur Installation</h1></b>';
 }
 
 

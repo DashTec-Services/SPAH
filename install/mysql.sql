@@ -1,4 +1,5 @@
 
+
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kundennummer` varchar(35) NOT NULL,
@@ -33,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   `default_local` varchar(5) NOT NULL,
   `adminMail` varchar(55) NOT NULL,
   `wartungsmodus` tinyint(1) NOT NULL,
+  `sp_version` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -75,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `type` enum('block','success','info','error') DEFAULT NULL,
   `have_to_read` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `news_to_read` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `news_to_read` (
   `news_id` int(11) NOT NULL,
   `user_read_it` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `playlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -203,10 +205,10 @@ CREATE TABLE IF NOT EXISTS `sc_version` (
 
 INSERT INTO `sc_version` (`id`, `name`, `file_name`, `version`, `typ`) VALUES
 (1, 'ShoutCast 1.9.8', '1.9.8_sc_serv.bin', '1.9.8', 'serv'),
-(2, 'ShoutCast 2.0', '2_sc_serv.bin', '2', 'serv'),
-(3, 'Trans-x86', 'sc_trans86.bin', '2', 'trans'),
+(2, 'ShoutCast 1.9.9', '1.9.9_sc_serv.bin', '1.9.9', 'serv'),
+(3, 'ShoutCast 2.0', '2_sc_serv.bin', '2', 'serv'),
 (4, 'Trans-x64', 'sc_trans64.bin', '2', 'trans'),
-(5, 'ShoutCast 1.9.9', '1.9.9_sc_serv.bin', '1.9.9', 'serv');
+(5, 'Trans-x86', 'sc_trans86.bin', '2', 'trans');
 
 CREATE TABLE IF NOT EXISTS `support` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

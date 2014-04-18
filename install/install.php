@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.33
+ *  v 0.35
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -103,7 +103,7 @@ mysqli_multi_query($mysqli,$sql);
 
 $mysqli->close();
 
-    $file = "../index.php";
+    $file = "../conf.php";
     $content = file_get_contents($file);
     $content = str_replace('@DBUSER@', $_SESSION['dbuser'], $content);
     $content = str_replace('@DBPASS@', $_POST['dbpass'], $content);

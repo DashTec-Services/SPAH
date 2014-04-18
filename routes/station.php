@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.33
+ *  v 0.35
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -23,7 +23,7 @@ $app->get('/station/admedit', function() use ($app){
     $app->render('station/admineditstream.phtml', compact('license'));
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 })->name('restricted');
 
 $app->get('/station/list', function() use ($app){
@@ -33,7 +33,7 @@ $app->get('/station/list', function() use ($app){
 
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 })->name('restricted');
 
 
@@ -48,7 +48,7 @@ $app->get('/station/showstream', function() use ($app){
 
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 })->name('license');
 
 $app->get('/station/autodj', function() use ($app){
@@ -58,14 +58,14 @@ $app->get('/station/autodj', function() use ($app){
 
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 })->name('license');
 
 $app->get('/station/editserv', function() use ($app){
     $app->render('station/usereditserver.phtml', compact('license'));
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 })->name('license');
 
 # USER - POST Action SC_Serv
@@ -77,7 +77,7 @@ $app->post('/station/showstream', function () use ($app) {
 
 
     # Starten der Server + Transcoder nach ReBoot
-    if (isset($_POST['rebooton']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['rebooton']) AND $app->config('demo_mod') == false) {
         $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid!='0' ");
 
         foreach ($pid as $row) {
@@ -91,7 +91,7 @@ $app->post('/station/showstream', function () use ($app) {
 
 
     # Alle starten + Stoppen
-    if (isset($_POST['switch']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['switch']) AND $app->config('demo_mod') == false) {
         if ($_POST['switch'] == 'off') {
             $pid = DB::query("SELECT * FROM sc_rel WHERE sc_serv_pid!='0' ");
             foreach ($pid as $row) {
@@ -111,7 +111,7 @@ $app->post('/station/showstream', function () use ($app) {
     }
 
     # Server + Transc conf sichern nach bearbeitung
-    if (isset($_POST['servconfsave']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['servconfsave']) AND $app->config('demo_mod') == false) {
 
         $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
 
@@ -157,7 +157,7 @@ $app->post('/station/showstream', function () use ($app) {
     }
 
     # Server + Transc conf sichern nach bearbeitung und Neu-Starten
-    if (isset($_POST['editsrvandreboot']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['editsrvandreboot']) AND $app->config('demo_mod') == false) {
 
         $serv_id = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['sec_rel_id']);
 
@@ -206,7 +206,7 @@ $app->post('/station/showstream', function () use ($app) {
     }
 
     # Start - Stop Server           # USER Befehl
-    if (isset($_POST['onoffselc']) AND $_SESSION['demo_mod'] == false ) {
+    if (isset($_POST['onoffselc']) AND $app->config('demo_mod') == false ) {
         $changer = explode(".", $_POST['onoffselc']);
         if ($changer['1'] == '1') {
             $serv->startSc_Serv($changer['0']);
@@ -259,7 +259,7 @@ $app->post('/station/showstream', function () use ($app) {
                 $app->render('station/admineditstream.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
                 # Demoeinstellungen
                 $demo = new \core\demo\demomod();
-                $demo->CheckDemo($_SESSION['demo_mod']);
+                $demo->CheckDemo($app->config('demo_mod'));
 
             }elseif($_SESSION['group'] == 'user'){
                 $SPMenu = new SP\Menu\MenuInclusion();
@@ -270,11 +270,11 @@ $app->post('/station/showstream', function () use ($app) {
                 $app->render('station/usereditserver.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
                 # Demoeinstellungen
                 $demo = new \core\demo\demomod();
-                $demo->CheckDemo($_SESSION['demo_mod']);
+                $demo->CheckDemo($app->config('demo_mod'));
             }
 
 
-        } elseif ($changer[1] == 'clear' AND $_SESSION['demo_mod'] == false  ) {
+        } elseif ($changer[1] == 'clear' AND $app->config('demo_mod') == false  ) {
             $changer = explode(".", $_POST['changeConfServ']);
             // TODO: Sichern prüfen ob Server den User gehört!
             $_SESSION['sec_rel_id'] = $_POST['changeConfServ'];
@@ -322,7 +322,7 @@ $app->post('/station/autodj', function () use ($app) {
 
 # Neue Playliste übernehmen
 
-    if (isset($_POST['playlstswitch']) AND $_POST['playlstswitch'] != '' AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['playlstswitch']) AND $_POST['playlstswitch'] != '' AND $app->config('demo_mod') == false) {
         # Trennen der übergebenen Par.
         $changer = explode(".", $_POST['playlstswitch']);
 
@@ -354,7 +354,7 @@ $app->post('/station/autodj', function () use ($app) {
     }
 
     # Start - Stop Transcoder
-    if (isset($_POST['djSwitch']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['djSwitch']) AND $app->config('demo_mod') == false) {
         $changer = explode(".", $_POST['djSwitch']);
         if ($changer['1'] == '1') {
             $trans = new \core\sp_special\sctrans();
@@ -375,7 +375,7 @@ $app->post('/station/autodj', function () use ($app) {
 # Funktionen für DJ - Benutzer
 $app->post('/station/djfunction', function () use ($app) {
     # Start - Stop Transcoder
-    if (isset($_POST['djSwitch']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['djSwitch']) AND $app->config('demo_mod') == false) {
         $changer = explode(".", $_POST['djSwitch']);
         if ($changer['1'] == '1') {
             $trans = new \core\sp_special\sctrans();

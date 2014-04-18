@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.33
+ *  v 0.35
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -76,7 +76,7 @@ $app->post('/login', function () use ($app) {
                 'rechnnumb' => '@RECHNR@',
                 'server_ip' => $_SERVER['SERVER_ADDR'],
                 'php_v' => PHP_VERSION,
-                'sp_version' => SP_VERSION,
+                'sp_version' => $app->config('sp.version.full'),
                 'script_filename' => $_SERVER['SCRIPT_FILENAME'],
                 'server_signature' => $_SERVER['SERVER_SIGNATURE']
             );
@@ -91,7 +91,7 @@ $app->post('/login', function () use ($app) {
                     'kdNumb' => '@KDNUM@',
                     'rechnnumb' => '@RECHNR@',
                     'server_ip' => $_SERVER['SERVER_ADDR'],
-                    'php_v' => PHP_VERSION,
+                    'php_v' => $app->config('sp.version.full'),
                     'script_filename' => $_SERVER['SCRIPT_FILENAME'],
                     'server_signature' => $_SERVER['SERVER_SIGNATURE']
                 );

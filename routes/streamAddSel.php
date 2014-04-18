@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.33
+ *  v 0.35
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -20,7 +20,7 @@ $app->get('/station/add', function() use ($app){
 
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 
 })->name('license');
 
@@ -45,7 +45,7 @@ if(isset($_POST['addstreamswitch'])){
 
        # Demoeinstellungen
        $demo = new \core\demo\demomod();
-       $demo->CheckDemo($_SESSION['demo_mod']);
+       $demo->CheckDemo($app->config('demo_mod'));
 
    }elseif($_POST['addstreamswitch'] == '1' OR $_POST['addstreamswitch'] == '2'){
        $SPMenu = new SP\Menu\MenuInclusion();
@@ -54,7 +54,7 @@ if(isset($_POST['addstreamswitch'])){
        $_SESSION['sc_serv_version'] =  $_POST['addstreamswitch'];
        # Demoeinstellungen
        $demo = new \core\demo\demomod();
-       $demo->CheckDemo($_SESSION['demo_mod']);
+       $demo->CheckDemo($app->config('demo_mod'));
    }else{
        $SPMenu = new SP\Menu\MenuInclusion();
        $SPMenu->MenuInclude($app);
@@ -63,7 +63,7 @@ if(isset($_POST['addstreamswitch'])){
 }
 
 # Server hinzufügen
-if (isset($_POST['addsrv']) AND $_SESSION['demo_mod'] == false) {
+if (isset($_POST['addsrv']) AND $app->config('demo_mod') == false) {
 
     $config = DB::queryFirstRow("SELECT doc_root FROM config WHERE id=%s", '1');
     $DocRoot = $config['doc_root'];

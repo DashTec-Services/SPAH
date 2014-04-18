@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.33
+ *  v 0.35
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -23,7 +23,7 @@ $app->get('/server/conf', function () use ($app) {
 
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
-    $demo->CheckDemo($_SESSION['demo_mod']);
+    $demo->CheckDemo($app->config('demo_mod'));
 })->name('not-restricted');
 
 $app->get('/server/license', function () use ($app) {
@@ -37,7 +37,7 @@ $app->get('/server/license', function () use ($app) {
 $app->post('/server/conf', function () use ($app) {
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
-    if (isset($_POST['saveserverconf']) AND $_SESSION['demo_mod'] == false) {
+    if (isset($_POST['saveserverconf']) AND $app->config('demo_mod') == false) {
 
         $fromwork = new core\postget\postgetcoll();
         $mywork[] = $fromwork->collvars('POST');
