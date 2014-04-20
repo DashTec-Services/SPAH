@@ -1,5 +1,4 @@
 
-
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kundennummer` varchar(35) NOT NULL,
@@ -194,6 +193,7 @@ CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+
 CREATE TABLE IF NOT EXISTS `sc_version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
@@ -221,3 +221,4 @@ CREATE TABLE IF NOT EXISTS `support` (
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+

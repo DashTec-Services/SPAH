@@ -6,14 +6,12 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.35
+ *  v 0.36
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
  *  Lizenz: http://login.streamerspanel.de/user/terms
  */
- 
- 
  
 ?>
 
@@ -44,7 +42,7 @@ echo '<b>DOC-ROOT: </b>'.$_SERVER['DOCUMENT_ROOT']. '<br><br>';
 
 # PHP Module und Extensions Prüfen
 $allMods = get_loaded_extensions();
-$impoMods = array('date','json', 'ssh2', 'curl', 'mcrypt','json');
+$impoMods = array('date','json', 'ssh2', 'curl', 'mcrypt','json', 'gettext');
 $result = array_diff($impoMods, $allMods);
 foreach($result as $wert => $key){
     echo 'PHP-Modul "' .$key . '" <b>NICHT vorhanden!</b><br>';

@@ -1,30 +1,27 @@
 <?php
 /**
-* Created by David Schomburg (DashTec - Services)
-*      www.dashtec.de
-*
-*  S:P (StreamersPanel)
-*  Support: http://board.streamerspanel.de
-*
-*  v 0.35
-*
-*  Kundennummer:   @KDNUM@
-*  Lizenznummer:   @RECHNR@
-*  Lizenz: http://login.streamerspanel.de/user/terms
-*/
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.36
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ *  Lizenz: http://login.streamerspanel.de/user/terms
+ */
 
 # Prüfung das install_DIR gelöscht wurde
-if(is_dir("./install") ){
-    die(_('Bitte den "install" Ordner löschen'));
-}
 
 
 $app = new \Slim\Slim([
-    'sp.version' =>     '0.35',
-    'db.user' =>        '@DBUSER@',
-    'db.password' =>    '@DBPASS@',
-    'db.name' =>        '@DBNAME@',
-    'demo_mod' =>       '@DEMOMOD@',
+    'sp.version' => '0.36',
+    'db.user' => '@DBUSER@',
+    'db.password' => '@DBPASS@',
+    'db.name' => '@DBNAME@',
+    'demo_mod' => @DEMOMOD@,
     'view' => new \SP\Views\MyUltimateView(),
     'templates.path' => __DIR__ . '/views',
     'db.host' => 'localhost',
@@ -44,4 +41,3 @@ $app = new \Slim\Slim([
         ],
     ],
 ]);
-

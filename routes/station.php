@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.35
+ *  v 0.36
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -190,8 +190,8 @@ $app->post('/station/showstream', function () use ($app) {
 
         $serv->killSc_Serv($_SESSION['sec_rel_id']);
         $trans->killSc_Trans($_SESSION['sec_rel_id']);
-        $trans->startSc_Trans($_SESSION['sec_rel_id']);
         $serv->startSc_Serv($_SESSION['sec_rel_id']);
+        $trans->startSc_Trans($_SESSION['sec_rel_id']);
 
         # Laden der Übersicht nach Änderungen
         if($_SESSION['group'] == 'adm'){

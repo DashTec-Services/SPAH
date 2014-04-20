@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.35
+ *  v 0.36
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -17,6 +17,12 @@ use core\password\password;
 
 // zeigt die loginseite an
 $app->get('/login', function () use ($app) {
+
+    if(is_dir("./install") ){
+        // TODO Realease activate
+        die(_('Bitte den "install" Ordner löschen'));
+    }
+
     $newsListing = DB::query("SELECT * FROM news WHERE is_aktiv=%s  AND login_news=%s", '1', '1');
     $app->render('authentication/login.phtml', compact('newsListing'));
 })->name('login');
@@ -63,45 +69,6 @@ $app->post('/login', function () use ($app) {
     $_SESSION['USERNAME'] = $account['vorname'].' '. $account['nachname'];
 
 
-    $handle=@fopen("http://login.streamerspanel.de/request.php","r");
-    if ($handle AND $_SESSION['group'] == 'adm')
-    {
-        date_default_timezone_set('Europe/Berlin');
-        if (!file_exists('.lastNewsForAdmin')) {
-            file_put_contents('.lastNewsForAdmin', date('Y-m-d H'));
-            Requests::register_autoloader();
-            $data = array(
-                'SendUserStat' => '@KDNUM@@RECHNR@',
-                'kdNumb' => '@KDNUM@',
-                'rechnnumb' => '@RECHNR@',
-                'server_ip' => $_SERVER['SERVER_ADDR'],
-                'php_v' => PHP_VERSION,
-                'sp_version' => $app->config('sp.version.full'),
-                'script_filename' => $_SERVER['SCRIPT_FILENAME'],
-                'server_signature' => $_SERVER['SERVER_SIGNATURE']
-            );
-            $response = Requests::post('http://login.streamerspanel.de/request.php', array(), $data);
-        } else {
-            $lastUsageSentAt = file_get_contents('.lastNewsForAdmin');
-            if ($lastUsageSentAt !== date('Y-m-d H')) {
-                file_put_contents('.lastNewsForAdmin', date('Y-m-d H'));
-                Requests::register_autoloader();
-                $data = array(
-                    'SendUserStat' => '@KDNUM@@RECHNR@',
-                    'kdNumb' => '@KDNUM@',
-                    'rechnnumb' => '@RECHNR@',
-                    'server_ip' => $_SERVER['SERVER_ADDR'],
-                    'php_v' => $app->config('sp.version.full'),
-                    'script_filename' => $_SERVER['SCRIPT_FILENAME'],
-                    'server_signature' => $_SERVER['SERVER_SIGNATURE']
-                );
-                $response = Requests::post('http://login.streamerspanel.de/request.php', array(), $data);
-            } else {
-            }
-        }
-    }else{
-        echo "NICHTS GEFUNDEN!";
-    }
 
 
 

@@ -6,126 +6,12 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.35
+ *  v 0.36
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
  *  Lizenz: http://login.streamerspanel.de/user/terms
  */
-session_start();
-include_once '../core/password/password.php';
-include_once '../core/DB.php';
-
-
-
-if(!isset($_SESSION['pass'])){
-$passw = new \core\password\password();
-$pass = $passw->generatePassword();
-$cryptpass = $passw->createPassword($pass);
-$_SESSION['pass'] = $pass;
-$_SESSION['cryptpass'] = $cryptpass;
-}
-
-if (isset($_POST['finsih'])){
-
-    $_SESSION['dbname'] = $_POST['dbname'];
-    $_SESSION['dbuser'] = $_POST['dbuser'];
-    $_SESSION['dbpass'] = $_POST['dbpass'];
-
-    $_SESSION['serverip'] = $_POST['serverip'];
-    $_SESSION['sshuser'] = $_POST['sshuser'];
-    $_SESSION['sshpass'] = $_POST['sshpass'];
-    $_SESSION['ssh_port'] = $_POST['ssh_port'];
-    $_SESSION['serverdocroot'] = $_POST['serverdocroot'];
-
-    $_SESSION['adminvname'] = $_POST['adminvname'];
-    $_SESSION['adminnname'] = $_POST['adminnname'];
-
-    $_SESSION['adminstreet'] = $_POST['adminstreet'];
-    $_SESSION['hnum'] = $_POST['hnum'];
-    $_SESSION['adminzip'] = $_POST['adminzip'];
-    $_SESSION['admintown'] = $_POST['admintown'];
-    $_SESSION['adminphone'] = $_POST['adminphone'];
-    $_SESSION['adminmail'] = $_POST['adminmail'];
-
-    $_SESSION['local'] = $_POST['local'];
-
-    DB::$user = $_SESSION['dbuser'];
-    DB::$password = $_SESSION['dbpass'];
-    DB::$dbName = $_SESSION['dbname'];
-    DB::$host = 'localhost';
-    DB::$port = '3306';
-    DB::$encoding = 'utf8';
-
-
-$sql_filename = 'mysql.sql';
-$mysqli = new mysqli('localhost', $_SESSION['dbuser'], $_SESSION['dbpass'], $_SESSION['dbname']);
-
-if (mysqli_connect_error()) {
-    die('Connect Error (' . mysqli_connect_errno() . ') '
-        . mysqli_connect_error());
-}
-
-$sql = file_get_contents($sql_filename);
-if (!$sql){
-    die ('Error opening file');
-}
-
-mysqli_multi_query($mysqli,$sql);
-
-    sleep(10);
-    DB::insert('accounts', array(
-        'kundennummer' => 'spadmin',
-        'mail' => $_SESSION['adminmail'],
-        'vorname' => $_SESSION['adminvname'],
-        'nachname' => $_SESSION['adminnname'],
-        'street' => $_SESSION['adminstreet'],
-        'hausnummer' => $_SESSION['hnum'],
-        'plz' => $_SESSION['adminzip'],
-        'telefon' => $_SESSION['adminphone'],
-        'ort' => $_SESSION['admintown'],
-        'password' => $_SESSION['cryptpass'],
-        'local' => $_SESSION['local'],
-        'is_aktiv' => '1',
-        'usr_grp' => 'adm'
-    ));
-
-    DB::insert('config', array(
-        'server_ip' => $_SESSION['serverip'],
-        'adminMail' => $_SESSION['adminmail'],
-        'root_user' => $_SESSION['sshuser'],
-        'root_password' => $_SESSION['sshpass'],
-        'ssh_port' => $_SESSION['ssh_port'],
-        'doc_root' => $_SESSION['serverdocroot'],
-        'default_local' => $_SESSION['local'],
-        'sp_titel' => 'S:P fresh install'
-    ));
-
-$mysqli->close();
-
-    $file = "../conf.php";
-    $content = file_get_contents($file);
-    $content = str_replace('@DBUSER@', $_SESSION['dbuser'], $content);
-    $content = str_replace('@DBPASS@', $_POST['dbpass'], $content);
-    $content = str_replace('@DBNAME@', $_SESSION['dbname'], $content);
-    $content = str_replace('@DEMOMOD@', $_POST['demoMod'], $content);
-    file_put_contents($file, $content);
-
-
-$_SESSION['Setup_Done'] = true;
-
-}
-
-if(isset($_SESSION['Setup_Done'])){
-    session_unset();
-    session_destroy();
-	
-	    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/");
-    exit;
-}
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -176,7 +62,7 @@ if(isset($_SESSION['Setup_Done'])){
 
     <div class="container">
 
-        <h1><a href="./install.php"><?= _('S:P Installation') ?></a></h1>
+        <h1><a href="./index.php"><?= _('S:P Installation') ?></a></h1>
 
         <div id="info">
 
@@ -232,7 +118,7 @@ if(isset($_SESSION['Setup_Done'])){
 
 
 
-<form action="./install.php" method="POST" class="form-horizontal">
+<form action="./index.php" method="POST" class="form-horizontal">
 
 <div id="wizard" class="swMain">
 
@@ -300,6 +186,27 @@ if(isset($_SESSION['Setup_Done'])){
                 </div>
             </div>
 
+            <div class="control-group">
+                <label class="control-label" for="dbpass"><?= _('DB Host') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="bizaddress1" name="dbhost" value="localhost">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="dbpass"><?= _('DB Port') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="bizaddress1" name="dbport" value="3306">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="dbpass"><?= _('DB Encoding') ?></label>
+                <div class="controls">
+                    <input type="text" class="input-large" id="bizaddress1" name="encoding" value="utf8">
+                </div>
+            </div>
+
         </div> <!-- /span6 -->
 
         <div class="span5 offset1">
@@ -307,8 +214,10 @@ if(isset($_SESSION['Setup_Done'])){
             <div class="well">
                 <?php
 
+
                 echo _('<b>Systemanforderungen</b>') .'<br><br>';
-                $rights = substr(sprintf('%o', fileperms('../shoutcast')), -3);
+
+
 
                 if (version_compare(phpversion(), '5.5', '<')) {
                     echo 'Sie benutzen PHP: ' . phpversion() .'<b> ein UPDATE IST erforderlich!</b>';
@@ -324,7 +233,8 @@ if(isset($_SESSION['Setup_Done'])){
                 }
 
 
-                if ($rights == '777') {
+                $rights = substr(sprintf('%o', fileperms('./shoutcast')), -4);
+                if ($rights == '775') {
                     echo '<p class="message success">'._('Ordner <b style="color: green">"shoutcast"</b> besitzt die erforderlichen Rechte').'</p>';
                 } else {
                     echo '<p class="message error">'._('Ordner <b style="color: red">"shoutcast"</b> besitzt <b style="color: red">NICHT</b> die erforderlichen Rechte').'</p>';
@@ -345,7 +255,7 @@ if(isset($_SESSION['Setup_Done'])){
                 if (extension_loaded('safe_mode')) {
                     echo '<p class="message error">'._('Erweiterung: <b style="color: red">"safe_mode" - NICHT</b> ist ON').'</p>';
                 } else {
-                   echo '<p class="message success">'._('Erweiterung: <b style="color: green">"safe_mode"</b> is OFF! ').'</p>';
+                    echo '<p class="message success">'._('Erweiterung: <b style="color: green">"safe_mode"</b> is OFF! ').'</p>';
                 }
 
 
@@ -426,7 +336,7 @@ if(isset($_SESSION['Setup_Done'])){
 
 
             <div class="well">
-<p><?= _('ssh Daten') ?></p>
+                <p><?= _('ssh Daten') ?></p>
 
             </div>
 
@@ -517,7 +427,7 @@ if(isset($_SESSION['Setup_Done'])){
             <div class="well">
 
 
-                </div>
+            </div>
 
         </div> <!-- /span6 -->
 
@@ -537,9 +447,10 @@ if(isset($_SESSION['Setup_Done'])){
     <div class="row-fluid">
 
         <div class="span6">
-<p><?= _('Admin - Benutzer') ?>: spadmin
-    <br>
-    <?= _('Admin - Passwort') ?>:  <?= $_SESSION['pass']; ?></p>
+            <p><?= _('Admin - Benutzer') ?>: spadmin
+                <br>
+                <?= _('Admin - Passwort') ?>:  <?= $_SESSION['pass']; ?></p>
+
             <br />
 
             <div class="control-group">
@@ -566,7 +477,7 @@ if(isset($_SESSION['Setup_Done'])){
 
             <div class="alert alert-error">
                 <h4 class="alert-heading"><?= _('Warnung') ?></h4>
-                <p><?= _('Der Ordner install ist noch vorhanden!') ?></p>
+                <p><?= _('Der Ordner install ist noch vorhanden! Bitte löschen Sie den Ordner.') ?></p>
             </div> <!-- ./alert -->
 
 
