@@ -47,13 +47,13 @@
                                 ?>
                                 <td>
                                 <?php
-                                 if ($row['login_news'] == '1') {?>
-                                     <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="login_news" ><?= _('Nein') ?></button>
+                                 if ($row['login_news'] == '0') {?>
+                                     <button class="btn btn-danger" value="<?php echo $row['id'] . '.1' ?>" name="login_news" ><?= _('Nein') ?></button>
                                  <?php
                                  }
-                                 if ($row['login_news'] == '0') {
+                                 if ($row['login_news'] == '1') {
                                      ?>
-                                <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="login_news" ><?= _('Ja') ?></button>
+                                <button class="btn btn-success" value="<?php echo $row['id'] . '.0' ?>" name="login_news" ><?= _('Ja') ?></button>
                                      <?php
                                  }
                                     ?>
@@ -61,26 +61,26 @@
                                 </td>
                                 <td>
                                     <?php
-                                    if ($row['is_aktiv'] == '1') {?>
-                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="is_aktiv" ><?= _('Nein') ?></button>
+                                    if ($row['is_aktiv'] == '0') {?>
+                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.1' ?>" name="is_aktiv" ><?= _('Nein') ?></button>
                                     <?php
                                     }
-                                    if ($row['is_aktiv'] == '0') {
+                                    if ($row['is_aktiv'] == '1') {
                                         ?>
-                                        <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="is_aktiv" ><?= _('Ja') ?></button>
+                                        <button class="btn btn-success" value="<?php echo $row['id'] . '.0' ?>" name="is_aktiv" ><?= _('Ja') ?></button>
                                     <?php
                                     }
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    if ($row['have_to_read'] == '1') {?>
-                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.0' ?>" name="have_to_read" ><?= _('Nein') ?></button>
+                                    if ($row['have_to_read'] == '0') {?>
+                                        <button class="btn btn-danger" value="<?php echo $row['id'] . '.1' ?>" name="have_to_read" ><?= _('Nein') ?></button>
                                     <?php
                                     }
-                                    if ($row['have_to_read'] == '0') {
+                                    if ($row['have_to_read'] == '1') {
                                         ?>
-                                        <button class="btn btn-success" value="<?php echo $row['id'] . '.1' ?>" name="have_to_read" ><?= _('Ja') ?></button>
+                                        <button class="btn btn-success" value="<?php echo $row['id'] . '.0' ?>" name="have_to_read" ><?= _('Ja') ?></button>
                                     <?php
                                     }
                                     ?>

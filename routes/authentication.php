@@ -20,7 +20,7 @@ $app->get('/login', function () use ($app) {
 
     if(is_dir("./install") ){
         // TODO Realease activate
-        die(_('Bitte den "install" Ordner löschen'));
+       # die(_('Bitte den "install" Ordner löschen'));
     }
 
     $newsListing = DB::query("SELECT * FROM news WHERE is_aktiv=%s  AND login_news=%s", '1', '1');

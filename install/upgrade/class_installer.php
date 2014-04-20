@@ -28,13 +28,13 @@ class installer
     static  $versions = array(
         '035'    => '0.35',
         '036'    => '0.36',
-        '037'    => '0.37',
+        #'037'    => '0.37',
     );
 
     /*      RELEASE Was ist zu tun?
      *  1. Suche und ersetze alle Version n z.B v 0.36
-     *  2.
-     *
+     *  2. In der _conf.php Version von Hand anpassen
+     *  3. In dieser Datei $sp_version und $install_sp_version_long anpassen
      *
      *
      */
@@ -43,17 +43,12 @@ class installer
     public function __construct($app)
     {
 
-
-
-
         # Check Requirements      >>>>>     IF FAIL STOP AND SHOW ERROR
         $this->compareRequiremendCheck($app);
         if ( $this->compareRequiremendCheck($app) == true){
             $this->ShowErrorToUser();
-
             die();
         }
-
 
 
         # Prüfen ob DB Verbindung besteht !NOT makeInstall
@@ -67,11 +62,6 @@ class installer
                 include_once dirname(__FILE__).'/../init_install.php';
             }
         }
-
-
-
-
-
     }
 
 
@@ -92,9 +82,6 @@ class installer
             foreach($result as $wert => $key){
                 echo '>> <b>'.$key . '</b><br>';
             }
-
-
-
         }
     }
 

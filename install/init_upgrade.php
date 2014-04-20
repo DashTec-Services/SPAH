@@ -26,7 +26,7 @@ $upgrad= new class_upgrade($app);
 
     <div class="container">
 
-        <h1><a href="./index.php">S:P Upgrade</a></h1>
+        <h1><a href="./index.php"><?= _('S:P Upgrade') ?></a></h1>
 
         <div id="info">
 
@@ -38,7 +38,7 @@ $upgrad= new class_upgrade($app);
 
                 <div class="info-details">
 
-                    <h4>S:P Upgrade</h4>
+                    <h4><?= _('S:P Upgrade') ?></h4>
 
                     <p>
                         <?= installer::$sp_version; ?>
@@ -69,7 +69,7 @@ $upgrad= new class_upgrade($app);
 <div class="widget-header">
     <h3>
         <i class="icon-magic"></i>
-        Upgrade-Wizard
+        <?= _('Upgrade-Wizard') ?>
     </h3>
 </div> <!-- /widget-header -->
 
@@ -84,7 +84,7 @@ $upgrad= new class_upgrade($app);
 
 <div id="step-1">
 
-    <h3>S:P Upgrade</h3>
+    <h3><?= _('S:P Upgrade')?></h3>
 
 
     <br />
@@ -92,7 +92,7 @@ $upgrad= new class_upgrade($app);
 
 
     <form action="index.php" method="post">
-        <button class="btn btn-info" name="DOUPGNOW" >Upgrade-now</button>
+        <button class="btn btn-info" name="DOUPGNOW" ><?= _('Upgrade - Start') ?></button>
     </form>
     <?php
     if(!isset($_SESSION['step_merker'])){
