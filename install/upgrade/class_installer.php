@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -21,8 +21,8 @@ class installer
      *              !!!!!!!!!!!! BITTE KEINE ÄNDERUNGEN NACH DIESER ZEILE   !!!!!!!!!!!!
      *
      */
-    static  $sp_version= "v 0.36";
-    static  $install_sp_version_long = "0.36";
+    static  $sp_version= "v 0.37";
+    static  $install_sp_version_long = "0.37";
     static  $impoPHPv = '5.5';
     static  $impoMods = array('date','json', 'ssh2', 'curl', 'mcrypt','json','gettext');
     static  $versions = array(
@@ -32,10 +32,10 @@ class installer
     );
 
     /*      RELEASE Was ist zu tun?
-     *  1. Suche und ersetze alle Version n z.B v 0.36
-     *  2. In der _conf.php Version von Hand anpassen
+     *  1. Suche und ersetze alle Version n z.B v 0.37
+     *  2. In der _conf.php die Version von Hand anpassen
      *  3. In dieser Datei $sp_version und $install_sp_version_long anpassen
-     *
+     *  4. Router -> authentication.php Zeile 23 Einkommentieren
      *
      */
 

@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -14,6 +14,9 @@
  */
 
 $app->get('/station/add', function() use ($app){
+
+    $_SESSION['stationAddmerker'] = true;
+
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('streamAddSelct/streamswitch.phtml', compact('license'));
@@ -22,7 +25,7 @@ $app->get('/station/add', function() use ($app){
     $demo = new \core\demo\demomod();
     $demo->CheckDemo($app->config('demo_mod'));
 
-})->name('license');
+})->name('restricted');
 
 $app->post('/station/add', function() use ($app){
 
@@ -34,47 +37,41 @@ $app->post('/station/add', function() use ($app){
      *          5           1.9.9
      */
 if(isset($_POST['addstreamswitch'])){
+
     // Session ID der Stream-Version speichern
-    $_SESSION['streamID'] = $_POST['addstreamswitch'];
+   $_SESSION['streamID'] = $_POST['addstreamswitch'];  #sc_version ID
 
-   if($_POST['addstreamswitch'] == '3'){
-       $SPMenu = new SP\Menu\MenuInclusion();
-       $SPMenu->MenuInclude($app);
-       $app->render('streamAddSelct/sc20.phtml', compact('license'));
-       $_SESSION['sc_serv_version'] =  $_POST['addstreamswitch'];
 
-       # Demoeinstellungen
-       $demo = new \core\demo\demomod();
-       $demo->CheckDemo($app->config('demo_mod'));
 
-   }elseif($_POST['addstreamswitch'] == '1' OR $_POST['addstreamswitch'] == '2'){
-       $SPMenu = new SP\Menu\MenuInclusion();
-       $SPMenu->MenuInclude($app);
-       $app->render('streamAddSelct/sc198.phtml', compact('license'));
-       $_SESSION['sc_serv_version'] =  $_POST['addstreamswitch'];
-       # Demoeinstellungen
-       $demo = new \core\demo\demomod();
-       $demo->CheckDemo($app->config('demo_mod'));
-   }else{
-       $SPMenu = new SP\Menu\MenuInclusion();
-       $SPMenu->MenuInclude($app);
-       $app->render('station/adminshowlist.phtml', compact('license'));
-   }
+
+
+    $select_SCServ_FileName = DB::queryFirstRow("SELECt * FROM sc_version WHERE id=%s",$_POST['addstreamswitch']);
+    $select_SCTrans_FileName = DB::queryFirstRow("SELECt * FROM sc_version WHERE id=%s",'4');
+
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('stationconf/'.$select_SCServ_FileName['editTempName'].$_SESSION['group'].'.phtml', compact('license'));
+    $app->render('stationconf/'.$select_SCTrans_FileName['editTempName'].$_SESSION['group'].'.phtml');
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($app->config('demo_mod'));
 }
 
-# Server hinzufügen
+/*
+ *      Stream-Server   Hinzufügen
+ */
 if (isset($_POST['addsrv']) AND $app->config('demo_mod') == false) {
 
+    # $_SESSION['streamID'] ID Der sc_verion version
+
+    # Laden der Konfiguration
     $config = DB::queryFirstRow("SELECT doc_root FROM config WHERE id=%s", '1');
-    $DocRoot = $config['doc_root'];
+    $DocRoot = $config['doc_root'];     # Auslesen von doc_root
 
-    $serverPort = $_POST['PortBase'];
+    $FolderDir = $DocRoot . "/shoutcastconf/" . $_POST['sc_serv']['PortBase'];    # Folder Pfad anlegen
 
-    $form = new \core\postget\postgetcoll();
-    $formData = $form->collvars('POST');
 
-    $FolderDir = $DocRoot . "/shoutcastconf/" . $serverPort;
-
+    # Ordner mit Port als Bezeichnung erstellen
     if (is_dir($FolderDir)) {
         function deleteDirectory($dir) {
             if (!file_exists($dir)) return true;
@@ -91,99 +88,79 @@ if (isset($_POST['addsrv']) AND $app->config('demo_mod') == false) {
         mkdir($FolderDir, 0700);
     }
 
-
-    DB::insert('sc_serv_conf', array(
-        'MaxUser' => $formData['MaxUser'],
-        'Password' => $formData['Password'],
-        'PortBase' => $formData['PortBase'],
-        'logfile' => $FolderDir . '/sc_serv.log',
-        'RealTime' => '1',
-        'ScreenLog' => '1',
-        'ShowLastSongs' => '10',
-        'TchLog' => 'yes',
-        'WebLog' => 'no',
-        'W3CEnable' => 'Yes',
-        'W3CLog' => $FolderDir . '/W3CLog.log',
-        'SrcIP' => 'ANY',
-        'DestIP' => 'ANY',
-        'Yport' => '80',
-        'NameLookups' => '0',
-        // 'RelayPort' => '',
-        // 'RelayServer' => '',
-        'AdminPassword' => $formData['AdminPassword'],
-        'AutoDumpUsers' => '0',
-        'AutoDumpSourceTime' => '30',
-        //'ContentDir' => '',
-        //'IntroFile' => '',
-        //'BackupFile' => '',
-        //'TitleFormat' => '',
-        //'URLFormat' => '',
-        'PublicServer' => $formData['PublicServer'],
-        'AllowRelay' => 'Yes',
-        'AllowPublicRelay' => 'Yes',
-        'MetaInterval' => '32768',
-        //'ListenerTimer' => '',
-        //'BanFile' => '',
-        // 'RipFile' => '',
-        // 'RIPOnly' => '',
-    ));
+    /*
+     *      Eintragen der Daten in die DB
+     */
+    DB::insert('sc_serv_conf',  $_POST['sc_serv']  );
     $sc_serv_id = DB::insertId();
 
-    if ($formData['PublicServer'] == 'public') {
-        $IsPublic = 1;
-    } else {
-        $IsPublic = 0;
-    }
-    DB::insert('sc_trans_conf', array(
-        'encoder_1' => $formData['encoder_1'],
-        'bitrate_1' => $formData['bitrate_1'],
-        'samplerate_1' => $formData['samplerate_1'],
-        'channels_1' => $formData['channels_1'],
-        'outprotocol_1' => '1',
-        'serverip_1' => '127.0.0.1',
-        'serverport_1' => $serverPort,
-        'password_1' => $formData['Password'],
-        //'streamurl' => '',
-        // 'genre' => '',
-        'public' => $IsPublic,
-        'log' => '1',
-        //'playlistfile' => '',
-        //'shuffle' =>'',
-        'xfade' => '2',
-        'xfadethreshold' => '20',
-        'logfile' => $FolderDir . '/sc_trans.log',
-        'screenlog' => '1',
-        'applyreplaygain' => '0',
-        'calculatereplaygain' => '0',
-        'djport' => $formData['djport'],
-        'djpassword' => $formData['djpassword'],
-        'autodumpsourcetime' => '30',
-        'djcapture' => '0',
-        //'streamtitle' =>'',
-        //'aim' => '',
-        //'icq' => '',
-        //'irc' => '',
-        //'unlockkeyname' =>'',
-        //'unlockkeycode' =>''
-    ));
+    $sc_Trans_value = $_POST['sc_trans'];
+
+    $sc_Trans_value['serverport'] = $_POST['sc_serv']['PortBase'];
+    $sc_Trans_value['password'] = $_POST['sc_serv']['Password'];
+
+
+    DB::insert('sc_trans_conf',  $sc_Trans_value  );
     $sc_trans_id = DB::insertId();
 
 
 
-
-
-
-
     DB::insert('sc_rel', array(
-        'accounts_id' => $formData['usr_id'],
+        'accounts_id' => $_POST['usr_id'],
         'sc_serv_conf_id' => $sc_serv_id,
-        'sc_serv_version_id' => $_SESSION['sc_serv_version'],
+        'sc_serv_version_id' => $_SESSION['streamID'],
         'stream_userName' => 'Dein neuer Stream',
         'sc_trans_id' => $sc_trans_id,
-        'sc_trans_version_id' => $formData['sc_trans_version']
+        'sc_trans_version_id' => $_POST['sc_trans_version']
     ));
+
 
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('station/adminshowlist.phtml', compact('license'));
-}})->name('license');
+}
+
+/*
+ *      Stream-Server bearbeiten
+ */
+if(isset($_POST['admeditServ'])){
+
+    #echo '<pre>';
+    #echo print_r($_POST);
+
+    DB::update('sc_serv_conf', array(
+        'MaxUser' => $_POST['sc_serv']['MaxUser'],
+        'Password' => $_POST['sc_serv']['Password'],
+        'AdminPassword'   => $_POST['sc_serv']['AdminPassword'],
+        'ShowLastSongs'     => $_POST['sc_serv']['ShowLastSongs']
+    ), "id=%s", $_SESSION['serv_id']);
+
+    DB::update('sc_trans_conf', array(
+        'encoder'       => $_POST['sc_trans']['encoder'],
+        'adminport' => $_POST['sc_trans']['adminport'],
+        'channels' => $_POST['sc_trans']['channels'],
+        'adminpassword'        => $_POST['sc_serv']['AdminPassword'],
+        'samplerate'     => $_POST['sc_trans']['samplerate'],
+        'djpassword'         => $_POST['sc_trans']['djpassword']
+    ), "id=%s",  $_SESSION['trans_id']);
+
+    unset($_SESSION['serv_id']);
+    unset($_SESSION['trans_id']);
+
+    $SPMenu = new SP\Menu\MenuInclusion();
+    $SPMenu->MenuInclude($app);
+    $app->render('station/adminshowlist.phtml', compact('license'));
+
+    $sp_growl = new core\sp_special\growl();
+
+
+    $sp_growl->writeGrowl('warning',_('Neustart ist erforderlich!'),'');
+    # Demoeinstellungen
+    $demo = new \core\demo\demomod();
+    $demo->CheckDemo($app->config('demo_mod'));
+}
+
+
+
+
+})->name('restricted');

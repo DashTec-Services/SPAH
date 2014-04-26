@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kundennummer` varchar(35) NOT NULL,
@@ -34,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   `adminMail` varchar(55) NOT NULL,
   `wartungsmodus` tinyint(1) NOT NULL,
   `sp_version` varchar(15) DEFAULT NULL,
+  `upd_message` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `dj_accounts` (
   `dj_of_sc_rel_id` int(11) NOT NULL,
   `dj_accounts_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `mp3` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -157,14 +157,14 @@ CREATE TABLE IF NOT EXISTS `sc_serv_conf` (
 
 CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `encoder_1` varchar(10) NOT NULL DEFAULT 'aacp',
-  `bitrate_1` varchar(15) NOT NULL DEFAULT '56000',
-  `samplerate_1` varchar(10) DEFAULT NULL,
-  `channels_1` varchar(2) DEFAULT NULL,
-  `outprotocol_1` varchar(5) NOT NULL DEFAULT '3',
-  `serverip_1` varchar(20) NOT NULL DEFAULT '127.0.0.1',
-  `serverport_1` varchar(10) DEFAULT NULL,
-  `password_1` varchar(150) DEFAULT NULL,
+  `encoder` varchar(10) NOT NULL DEFAULT 'aac',
+  `bitrate` varchar(15) NOT NULL DEFAULT '56000',
+  `samplerate` varchar(10) DEFAULT NULL,
+  `channels` varchar(2) DEFAULT NULL,
+  `outprotocol` varchar(5) NOT NULL DEFAULT '1',
+  `serverip` varchar(20) NOT NULL DEFAULT '127.0.0.1',
+  `serverport` varchar(10) DEFAULT NULL,
+  `password` varchar(150) DEFAULT NULL,
   `streamurl` varchar(150) DEFAULT NULL,
   `genre` varchar(150) DEFAULT NULL,
   `public` varchar(10) DEFAULT NULL,
@@ -193,22 +193,22 @@ CREATE TABLE IF NOT EXISTS `sc_trans_conf` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `sc_version` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
   `file_name` varchar(45) NOT NULL,
   `version` varchar(7) NOT NULL,
   `typ` enum('serv','trans') NOT NULL,
+  `editTempName` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
-INSERT INTO `sc_version` (`id`, `name`, `file_name`, `version`, `typ`) VALUES
-(1, 'ShoutCast 1.9.8', '1.9.8_sc_serv.bin', '1.9.8', 'serv'),
-(2, 'ShoutCast 1.9.9', '1.9.9_sc_serv.bin', '1.9.9', 'serv'),
-(3, 'ShoutCast 2.0', '2_sc_serv.bin', '2', 'serv'),
-(4, 'Trans-x64', 'sc_trans64.bin', '2', 'trans'),
-(5, 'Trans-x86', 'sc_trans86.bin', '2', 'trans');
+INSERT INTO `sc_version` (`id`, `name`, `file_name`, `version`, `typ`, `editTempName`) VALUES
+(1, 'ShoutCast 1.9.8', '1.9.8_sc_serv.bin', '1.9.8', 'serv', 'sc10serv_'),
+(2, 'ShoutCast 1.9.9', '1.9.9_sc_serv.bin', '1.9.9', 'serv', 'sc10serv_'),
+(3, 'ShoutCast 2.0', '2_sc_serv.bin', '2', 'serv', 'sc20serv_'),
+(4, 'Trans-x64', 'sc_trans64.bin', '2', 'trans', 'sc20trans_'),
+(5, 'Trans-x86', 'sc_trans86.bin', '2', 'trans', 'sc20trans_');
 
 CREATE TABLE IF NOT EXISTS `support` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -221,4 +221,3 @@ CREATE TABLE IF NOT EXISTS `support` (
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-

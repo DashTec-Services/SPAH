@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -20,7 +20,7 @@ class class_upgrade_036 {
     public $NEXT_SHORT_VERSION = '037';
     public $VERSION_COMPAT_STARTS = ''; #Beginning version compatibility
     public $VERSION_COMPAT_ENDS   = ''; #Ending version compatibility
-    public $UPGRADE_STEPS = '2';
+    public $UPGRADE_STEPS = '0';
 
     /**
      * Step #1

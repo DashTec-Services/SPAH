@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -17,7 +17,7 @@
 
 
 $app = new \Slim\Slim([
-    'sp.version' => '0.36',
+    'sp.version' => '0.37',
     'db.user' => '@DBUSER@',
     'db.password' => '@DBPASS@',
     'db.name' => '@DBNAME@',

@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -27,6 +27,7 @@ $app->get('/station/admedit', function() use ($app){
 })->name('restricted');
 
 $app->get('/station/list', function() use ($app){
+    unset($_SESSION['stationAddmerker']);
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
     $app->render('station/adminshowlist.phtml', compact('license'));
@@ -36,11 +37,6 @@ $app->get('/station/list', function() use ($app){
     $demo->CheckDemo($app->config('demo_mod'));
 })->name('restricted');
 
-
-/*
- *      USER ROUTES
- */
-
 $app->get('/station/showstream', function() use ($app){
     $SPMenu = new SP\Menu\MenuInclusion();
     $SPMenu->MenuInclude($app);
@@ -49,7 +45,11 @@ $app->get('/station/showstream', function() use ($app){
     # Demoeinstellungen
     $demo = new \core\demo\demomod();
     $demo->CheckDemo($app->config('demo_mod'));
-})->name('license');
+})->name('user');
+
+/*
+ *      USER ROUTES
+ */
 
 $app->get('/station/autodj', function() use ($app){
     $SPMenu = new SP\Menu\MenuInclusion();
@@ -242,9 +242,12 @@ $app->post('/station/showstream', function () use ($app) {
     }
 
     # Laden der Konfiguration für die Ausgabe der Servereinstellungen
+    # Verwendung in adminshowlist
     if (isset($_POST['changeConfServ'])) {
+        # Übergabe der Action an VAR
         $changer = explode(".", $_POST['changeConfServ']);
 
+        # Wenn Action == edit
         if ($changer[1] == 'edit') {
             $changer = explode(".", $_POST['changeConfServ']);
             // TODO: Sichern prüfen ob Server den User gehört!
@@ -272,9 +275,10 @@ $app->post('/station/showstream', function () use ($app) {
                 $demo = new \core\demo\demomod();
                 $demo->CheckDemo($app->config('demo_mod'));
             }
+        }
 
-
-        } elseif ($changer[1] == 'clear' AND $app->config('demo_mod') == false  ) {
+        # Wenn Action == clear
+        if ($changer[1] == 'clear' AND $app->config('demo_mod') == false  ) {
             $changer = explode(".", $_POST['changeConfServ']);
             // TODO: Sichern prüfen ob Server den User gehört!
             $_SESSION['sec_rel_id'] = $_POST['changeConfServ'];
@@ -299,9 +303,6 @@ $app->post('/station/showstream', function () use ($app) {
             }
             deleteDirectory($FolderDir);
 
-
-
-
             $SPMenu = new SP\Menu\MenuInclusion();
             $SPMenu->MenuInclude($app);
             $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
@@ -311,17 +312,49 @@ $app->post('/station/showstream', function () use ($app) {
             $sp_growl->writeGrowl('success', _('Server gelöscht'), '');
 
         }
+
+        # Benutzer eines Streams ändern
+        if ($changer[1] == 'changeUser'){
+
+            $_SESSION['StreamID'] = $changer[0];
+            # Seite laden
+            $SPMenu = new SP\Menu\MenuInclusion();
+            $SPMenu->MenuInclude($app);
+            $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $changer['0']);
+            $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
+            $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
+            $app->render('station/adminshowlist.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+
+            $app->render('station/changeStreamUser.phtml', compact('sc_serv'));
+        }
     }
+})->name('usr');
+
+$app->post('/station/changeowner', function () use ($app) {
+
+    if (isset($_POST['updateUser'])){
+
+        DB::update('sc_rel', array(
+            'accounts_id' => $_POST['ownerchange']
+        ), "id=%s", $_SESSION['StreamID']);
+
+        # Seite laden
+        $SPMenu = new SP\Menu\MenuInclusion();
+        $SPMenu->MenuInclude($app);
+        $sc_rel = DB::queryFirstRow("SELECT * FROM sc_rel WHERE id=%s", $_SESSION['StreamID']);
+        $sc_serv = DB::queryFirstRow("SELECT * FROM sc_serv_conf WHERE id=%s", $sc_rel['sc_serv_conf_id']);
+        $sc_trans = DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $sc_rel['sc_trans_id']);
+        $app->render('station/adminshowlist.phtml', compact('sc_serv', 'sc_trans', 'sc_rel'));
+    }
+})->name('restricted');
 
 
-})->name('doLogin');
+
 
 # User POST SC_Trans
 $app->post('/station/autodj', function () use ($app) {
 
-
 # Neue Playliste übernehmen
-
     if (isset($_POST['playlstswitch']) AND $_POST['playlstswitch'] != '' AND $app->config('demo_mod') == false) {
         # Trennen der übergebenen Par.
         $changer = explode(".", $_POST['playlstswitch']);
@@ -370,7 +403,6 @@ $app->post('/station/autodj', function () use ($app) {
     $SPMenu->MenuInclude($app);
     $app->render('station/userautodj.phtml', compact('license'));
 })->name('doLogin');
-
 
 # Funktionen für DJ - Benutzer
 $app->post('/station/djfunction', function () use ($app) {

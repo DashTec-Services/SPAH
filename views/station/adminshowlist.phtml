@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -78,9 +78,14 @@
                                 </td>
                                 <td>
                                     <form action="/station/showstream" method="post">
-                                    <button name="changeConfServ" value="<?php echo $row['id'] . '.edit' ?>" class="btn btn-secondary" ><img src="/image/fuge/pencil.png"></button>
                                     <button name="changeConfServ" value="<?php echo $row['id'] . '.clear' ?>" class="btn btn-danger" ><img src="/image/fuge/cross-circle.png" alt="Löschen"></button>
+                                    <button name="changeConfServ" value="<?php echo $row['id'] . '.changeUser' ?>" class="btn btn-danger" ><img src="/image/fuge/users.png" ></button>
                                     </form>
+
+                                    <form action="/stationaddeditcontrol/selectStream" method="post">
+                                        <button name="streamtoEdit" value="<?php echo $row['id'] . '.edit' ?>" class="btn btn-secondary" ><img src="/image/fuge/pencil.png"></button>
+                                    </form>
+
                                 </td>
                                 <?php
                                 echo '</tr>';
@@ -97,6 +102,7 @@
 
                                         <button type="submit" value="rebooton" name="switch" class="btn btn-info"><?php echo _('Server Neustart'); ?></button>
                                         <button type="submit" value="off" name="switch" class="btn btn-danger"><?php echo _('Alle Server Aus'); ?></button>
+
                                     </td>
                                     <td>
 

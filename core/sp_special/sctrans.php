@@ -6,7 +6,7 @@
  *  S:P (StreamersPanel)
  *  Support: http://board.streamerspanel.de
  *
- *  v 0.36
+ *  v 0.37
  *
  *  Kundennummer:   @KDNUM@
  *  Lizenznummer:   @RECHNR@
@@ -36,8 +36,8 @@ class sctrans
         $Sc_Serv_conf = \DB::queryFirstRow("SELECT * FROM sc_trans_conf WHERE id=%s", $Sc_serv_conf_id);
 
 # Proof if Dir exist
-        if (is_dir("shoutcastconf/" . $Sc_Serv_conf['serverport_1']) == false) {
-            $this->creatDirHome($Sc_Serv_conf['serverport_1']);
+        if (is_dir("shoutcastconf/" . $Sc_Serv_conf['serverport']) == false) {
+            $this->creatDirHome($Sc_Serv_conf['serverport']);
         }
 
 # ColumList aus der Datenbank
@@ -45,7 +45,7 @@ class sctrans
         $Sc_Serv['trans'] = ''; # Array für die Spalte
 
 # Datei öffnen
-        $datei = fopen($_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $Sc_Serv_conf['serverport_1'] . '/sc_trans.conf', 'w');
+        $datei = fopen($_SERVER['DOCUMENT_ROOT'] . '/shoutcastconf/' . $Sc_Serv_conf['serverport'] . '/sc_trans.conf', 'w');
         foreach ($columns as $column) {
             $Sc_Serv['trans'][$column] = $Sc_Serv_conf[$column]; # Speichert alles in einem Array für Fehlerauswerung
         }

@@ -1,0 +1,177 @@
+<?php
+/**
+ * Created by David Schomburg (DashTec - Services)
+ *      www.dashtec.de
+ *
+ *  S:P (StreamersPanel)
+ *  Support: http://board.streamerspanel.de
+ *
+ *  v 0.37
+ *
+ *  Kundennummer:   @KDNUM@
+ *  Lizenznummer:   @RECHNR@
+ *  Lizenz: http://login.streamerspanel.de/user/terms
+ */
+?>
+
+
+    <div id="appendprepend" class="widget widget-form">
+
+        <div class="widget-header">
+            <h3>
+                <i class="icon-pencil"></i>
+                <?php echo _('Transcoder Einstellungen'); ?>
+            </h3>
+        </div>
+        <!-- /widget-header -->
+
+        <div class="widget-content">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label"><?php echo _('Streamt als'); ?></label>
+
+                    <div class="controls">
+                        <label class="radio">
+                            <input type="radio" name="sc_trans[encoder]" id="validateRadio1" value="mp3" <?php if(isset($sc_trans['encoder']) == 'mp3'){echo 'checked="checked"';} ?>>
+                            <?php echo _('MP3'); ?> <?php echo _('License from Shoutcast (required license)'); ?>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="sc_trans[encoder]" id="validateRadio2" value="aac"  <?php if(isset($sc_trans['encoder']) == 'aac'){echo 'checked="checked"';} ?>>
+                            <?php echo _('AAC'); ?>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="input01"><?php echo _('Admin-Port'); ?></label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" name="sc_trans[adminport]" id="input01" value="<?php if(isset($sc_trans['encoder'])){echo $sc_trans['encoder']; } ?>"><br>
+                        <?php echo _('bitte beachte die bereits verwendeten Ports inkl. den neu- angegebenen Streamport'); ?>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="input01"><?php echo _('Admin - User'); ?></label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" name="sc_trans[channels]" value="<?php if(isset($sc_trans['channels'])){echo $sc_trans['channels']; }else{echo 'channels';} ?>" id="input01">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="input01"><?php echo _('Admin - Passwort (Administration des Servers)'); ?></label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" name="sc_trans[adminpassword]" value="<?php if(isset($sc_trans['adminpassword'])){echo $sc_trans['adminpassword']; } ?>"  id="input01">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="input01"><?php echo _('Samplerate'); ?></label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" name="sc_trans[samplerate]" value="<?php if(isset($sc_trans['samplerate'])){echo $sc_trans['samplerate']; }else{echo '44100';} ?>" id="input01">
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="select01"><?php echo _('Bitrate'); ?></label>
+
+                    <div class="controls">
+                        <select id="select01" name="sc_trans[bitrate]">
+                            <option <?php if(isset($sc_trans['bitrate']) == '128000'){echo 'selected';} ?>><?php echo _('128000'); ?></option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="select01"><?php echo _('Samplerate'); ?></label>
+
+                    <div class="controls">
+                        <select id="select01" name="sc_trans[samplerate]">
+                            <option><?php echo _('44100'); ?></option>
+
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="select01"><?php echo _('Kanäle'); ?></label>
+
+                    <div class="controls">
+                        <select id="select01" name="sc_trans[channels]">
+                            <option><?php echo _('1'); ?></option>
+                            <option><?php echo _('2'); ?></option>
+                            <option><?php echo _('3'); ?></option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="input01"><?php echo _('DJ-Password'); ?></label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" name="sc_trans[djpassword]" id="input01">
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                   <?php
+                   if (!isset($_SESSION['stationAddmerker'])){
+                   ?>
+                       <button type="submit" name="admeditServ" class="btn btn-danger btn-large"><i class="icon-star"></i>
+                           <?php echo _('Speichern'); ?>
+                       </button>
+                    <?php
+                   }else{?>
+                       <button type="submit" name="addsrv" class="btn btn-danger btn-large"><i class="icon-star"></i>
+                           <?php echo _('Hinzufügen'); ?>
+                       </button>
+                       <?php
+                   }
+                    ?>
+
+
+
+
+
+
+                </div>
+            </fieldset>
+        </div>
+        <!-- /widget-content -->
+    </div>
+    </div>
+    <!-- div span8 -->
+
+    <div class="span4">
+        <div id="formToc" class="widget highlight">
+            <div class="widget-header">
+                <h3><b> <?php echo _('Please note'); ?></b></h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <p>
+                    <?php echo _('Anlegen eines ShoutCast v2.0 Servers'); ?>
+                </p>
+            </div>
+            <!-- /widget-content -->
+        </div>
+        <!-- /widget -->
+    </div>
+    <!-- /.span4 -->
+    </div>
+    <!-- /row -->
+    </form>
+    </div>
+    <!-- /.container -->
+    </div> <!-- /#content -->
+<?php require __DIR__ . '/../footer.phtml' ?>
